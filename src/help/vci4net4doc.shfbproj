@@ -1,0 +1,101 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <!-- The configuration and platform will be used to determine which
+         assemblies to include from solution and project documentation
+         sources -->
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{be972fc1-fe90-495f-8132-6ac9c1b69c63}</ProjectGuid>
+    <SHFBSchemaVersion>2017.9.26.0</SHFBSchemaVersion>
+    <!-- AssemblyName, Name, and RootNamespace are not used by SHFB but Visual
+         Studio adds them anyway -->
+    <AssemblyName>Documentation</AssemblyName>
+    <RootNamespace>Documentation</RootNamespace>
+    <Name>Documentation</Name>
+    <!-- SHFB properties -->
+    <OutputPath>Help\</OutputPath>
+    <HtmlHelpName>vci4net4</HtmlHelpName>
+    <ProjectSummary>
+    </ProjectSummary>
+    <MissingTags>AutoDocumentCtors, TypeParameter</MissingTags>
+    <VisibleItems>InheritedMembers, InheritedFrameworkMembers, Protected, SealedProtected, EditorBrowsableNever, NonBrowsable</VisibleItems>
+    <HtmlHelp1xCompilerPath>
+    </HtmlHelp1xCompilerPath>
+    <HtmlHelp2xCompilerPath>
+    </HtmlHelp2xCompilerPath>
+    <SandcastlePath>
+    </SandcastlePath>
+    <WorkingPath>
+    </WorkingPath>
+    <CppCommentsFixup>True</CppCommentsFixup>
+    <FrameworkVersion>.NET Framework 4.5</FrameworkVersion>
+    <IncludeFavorites>True</IncludeFavorites>
+    <HelpTitle>IXXAT VCI V4 .NET 4.0 API</HelpTitle>
+    <CopyrightHref>http://www.ixxat.de</CopyrightHref>
+    <CopyrightText>Copyright IXXAT Automation GmbH 2018</CopyrightText>
+    <FeedbackEMailAddress>support%40ixxat.de</FeedbackEMailAddress>
+    <PresentationStyle>VS2013</PresentationStyle>
+    <ComponentConfigurations>
+      <ComponentConfig id="Code Block Component" enabled="False">
+        <component id="Code Block Component" type="SandcastleBuilder.Components.CodeBlockComponent" assembly="{@SHFBFolder}SandcastleBuilder.Components.dll">
+          <!-- Base path for relative filenames in source attributes
+                 (optional) -->
+          <basePath value="{@ProjectFolder}" />
+          <!-- Connect to language filter (optional).  If omitted,
+                 language filtering is enabled by default. -->
+          <languageFilter value="true" />
+          <!-- Code colorizer options (required).
+                 Attributes:
+                    Language syntax configuration file (required)
+                    XSLT style file (required)
+                    "Copy" image file URL (required)
+                    Default language (optional)
+                    Enable line numbering (optional)
+                    Enable outlining (optional)
+                    Tab size override (optional, 0 = Use syntax file setting)
+                    Use language name as default title (optional) -->
+          <colorizer syntaxFile="{@SHFBFolder}Colorizer\highlight.xml" styleFile="{@SHFBFolder}Colorizer\highlight.xsl" copyImageUrl="../icons/CopyCode.gif" language="cs" numberLines="false" outlining="false" tabSize="0" defaultTitle="true" />
+        </component>
+      </ComponentConfig>
+    </ComponentConfigurations>
+    <DocumentationSources>
+      <DocumentationSource sourceFile="..\..\bin\Release\net40\Ixxat.Vci4.Contract.dll" xmlns="" />
+      <DocumentationSource sourceFile="..\..\bin\Release\net40\Ixxat.Vci4.Contract.xml" xmlns="" />
+      <DocumentationSource sourceFile="..\..\bin\Release\net40\Ixxat.Vci4.dll" xmlns="" />
+      <DocumentationSource sourceFile="..\..\bin\Release\net40\Ixxat.Vci4.xml" xmlns="" />
+    </DocumentationSources>
+    <NamespaceSummaries>
+      <NamespaceSummaryItem name="(global)" isDocumented="False" xmlns="" />
+      <NamespaceSummaryItem name="&lt;CppImplementationDetails&gt;" isDocumented="True" xmlns="" />
+      <NamespaceSummaryItem name="&lt;CrtImplementationDetails&gt;" isDocumented="True" xmlns="" />
+      <NamespaceSummaryItem name="Ixxat.Vci4" isDocumented="True" xmlns="">Contains all types required for working with VCI V4 in .NET 4.0 projects.</NamespaceSummaryItem>
+      <NamespaceSummaryItem name="Ixxat.Vci4.Bal" isDocumented="True" xmlns="">Contains all types required to access the BAL (Bus Access Layer) of a field bus adapter.</NamespaceSummaryItem>
+      <NamespaceSummaryItem name="Ixxat.Vci4.Bal.Can" isDocumented="True" xmlns="">Containes the types required for working with a CAN controller of a field bus adapter.</NamespaceSummaryItem>
+      <NamespaceSummaryItem name="Ixxat.Vci4.Bal.Lin" isDocumented="True" xmlns="">Containes the types required for working with a LIN controller of a field bus adapter.</NamespaceSummaryItem>
+    </NamespaceSummaries>
+    <HelpFileVersion>1.0.0.0</HelpFileVersion>
+    <Language>en-US</Language>
+    <RootNamespaceContainer>False</RootNamespaceContainer>
+    <NamespaceGrouping>False</NamespaceGrouping>
+    <Preliminary>False</Preliminary>
+    <SdkLinkTarget>Blank</SdkLinkTarget>
+    <WarnOnMissingSourceContext>False</WarnOnMissingSourceContext>
+    <HelpFileFormat>HtmlHelp1</HelpFileFormat>
+    <SyntaxFilters>Standard</SyntaxFilters>
+    <CleanIntermediates>True</CleanIntermediates>
+    <KeepLogFile>True</KeepLogFile>
+    <DisableCodeBlockComponent>False</DisableCodeBlockComponent>
+    <IndentHtml>False</IndentHtml>
+    <BuildAssemblerVerbosity>OnlyWarningsAndErrors</BuildAssemblerVerbosity>
+  </PropertyGroup>
+  <!-- There are no properties for these two groups but they need to appear in
+       order for Visual Studio to perform the build. -->
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+  </PropertyGroup>
+  <!-- Import the SHFB build targets -->
+  <Import Project="$(SHFBROOT)\SandcastleHelpFileBuilder.targets" />
+</Project>

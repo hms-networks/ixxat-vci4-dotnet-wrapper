@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28010.2019
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{A6A9BFFF-D76A-4B8A-AB87-2209BD9F9178}") = "vcinet", "impl\vcinet_sn.vcxproj", "{B4A553A1-88F6-4E5E-9960-EE6F2F4EDC41}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B4A553A1-88F6-4E5E-9960-EE6F2F4EDC41}.Debug|x64.ActiveCfg = Debug|x64
+		{B4A553A1-88F6-4E5E-9960-EE6F2F4EDC41}.Debug|x64.Build.0 = Debug|x64
+		{B4A553A1-88F6-4E5E-9960-EE6F2F4EDC41}.Debug|x86.ActiveCfg = Debug|Win32
+		{B4A553A1-88F6-4E5E-9960-EE6F2F4EDC41}.Debug|x86.Build.0 = Debug|Win32
+		{B4A553A1-88F6-4E5E-9960-EE6F2F4EDC41}.Release|x64.ActiveCfg = Release|x64
+		{B4A553A1-88F6-4E5E-9960-EE6F2F4EDC41}.Release|x64.Build.0 = Release|x64
+		{B4A553A1-88F6-4E5E-9960-EE6F2F4EDC41}.Release|x86.ActiveCfg = Release|Win32
+		{B4A553A1-88F6-4E5E-9960-EE6F2F4EDC41}.Release|x86.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {DC5AD19C-9279-4087-A0F3-7F4E22E8541E}
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,121 @@
+<!--
+
+  Main MSBUILD file
+    Needs the following parameters:
+      Version:          version number, e.g. 4.1.0-beta
+      SourceRevisionId: git hash
+      RepositoryUrl:    git repo url
+      RepositoryType:   e.g. git
+      RepositoryBranch: e.g. main
+    Execute this with:
+      msbuild -p:Version=4.1.0-beta -p:SourceRevisionId=2342340aa495a33574f48616ab58c9477a3bc34d -p:RepositoryUrl=https://github.com/HMS/Ixxat.VCI4 -p:RepositoryType=git -p:RepositoryBranch=main
+
+-->
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
+    <PropertyGroup>
+        <Version Condition="'$(Version)' == ''">1.0.0.0</Version>
+        <AssemblyVersion Condition="'$(AssemblyVersion)' == ''">$(Version.Split('-')[0])</AssemblyVersion>
+        <FileVersion Condition="'$(FileVersion)' == ''">$(Version.Split('-')[0])</FileVersion>
+        <InformationalVersion Condition="'$(InformationalVersion)' == ''">$(Version)</InformationalVersion>
+        <Authors Condition="'$(Authors)' == ''">HMS Networks, AB</Authors>
+        <Description Condition="'$(Description)' == ''">Access CAN interfaces from Ixxat/HMS Networks via .NET and VCI4-API</Description>
+        <Copyright Condition="'$(Copyright)' == ''">Copyright (c) 2018-2022 HMS Networks, AB</Copyright>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <ContractProject Include="src\contract\Ixxat.Vci4.Contract.csproj">
+        </ContractProject>
+        <LoaderProject Include="src\loader\Ixxat.Vci4.csproj">
+        </LoaderProject>
+        <NativeProject Include="src\impl\vcinet.vcxproj">
+        </NativeProject>
+        <NativeProjectStrongNamed Include="\src\impl\vcinet_sn.vcxproj">
+        </NativeProjectStrongNamed>
+    </ItemGroup>
+
+    <Target Name="compile_managed_components">
+        <!-- restore nuget packages -->
+        <Exec Command="dotnet.exe restore @(ContractProject)" />
+        <Exec Command="dotnet.exe restore @(LoaderProject)" />
+
+        <MSBuild Projects="@(ContractProject)" Targets="Rebuild" Properties="Configuration=Release" />
+        <MSBuild Projects="@(LoaderProject)"   Targets="Rebuild" Properties="Configuration=Release" />
+    </Target>
+
+    <Target Name="compile_native_components" DependsOnTargets="compile_managed_components">
+        <MSBuild Projects="@(NativeProject)" Targets="Rebuild" Properties="Configuration=Release;Platform=Win32;Framework=net40"/>
+        <MSBuild Projects="@(NativeProject)" Targets="Rebuild" Properties="Configuration=Release;Platform=x64;Framework=net40"/>
+        <MSBuild Projects="@(NativeProject)" Targets="Rebuild" Properties="Configuration=Release;Platform=Win32;Framework=netcoreapp3.1"/>
+        <MSBuild Projects="@(NativeProject)" Targets="Rebuild" Properties="Configuration=Release;Platform=x64;Framework=netcoreapp3.1"/>
+    </Target>
+
+    <ItemGroup>
+        <Net40Binaries      Include=".\src\impl\bin\Release\net40\vcinet*.dll" />
+        <Net40Destination   Include="net40" />
+        <NetCoreBinaries    Include=".\src\impl\bin\Release\netcoreapp3.1\vcinet*.dll" />
+        <NetCoreDestination Include="net5.0-windows;net6.0-windows;netcoreapp3.1" />
+    </ItemGroup>
+
+    <Target Name="copy_and_sign_components" DependsOnTargets="compile_native_components">
+
+        <!-- todo: sign native components -->
+        <!-- todo: sign managed components -->
+
+        <!-- copy native binaries -->
+        <Copy SourceFiles="@(Net40Binaries)"   DestinationFolder="./bin/Release/%(Net40Destination.Identity)" />
+        <ItemGroup>
+             <ToCopy Include="@(NetCoreBinaries)">
+               <Destination>./bin/Release/%(NetCoreDestination.Identity)</Destination>
+             </ToCopy>
+        </ItemGroup>
+        <Copy SourceFiles="@(ToCopy)" DestinationFolder="%(Destination)" />
+
+    </Target>
+
+    <PropertyGroup>
+        <NugetTargetDir>nuget</NugetTargetDir>
+    </PropertyGroup>
+
+    <PropertyGroup>
+        <Namespace>
+            <Namespace Prefix="nuget" Uri="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd" />
+        </Namespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <Packagefiles Condition="'$(AssemblyKeyFileAttribute)' == ''" Include="Ixxat.Vci4.nuspec" />
+        <Packagefiles Condition="'$(AssemblyKeyFileAttribute)' != ''" Include="Ixxat.Vci4.StrongName.nuspec" />
+        <Packagefiles Include="Ixxat.Vci4.Manual.nuspec" />
+    </ItemGroup>
+
+    <Target Name="buildnugetpackage" Inputs="@(Packagefiles)" Outputs="%(Identity).Dummy">
+        <!-- poke version number -->
+        <XmlPoke
+            XmlInputPath="$(NugetTargetDir)/%(Packagefiles.Identity)"
+            Value="$(Version)"
+            Query="/nuget:package/nuget:metadata/nuget:version"
+            Namespaces="$(Namespace)"/>
+
+        <!-- poke git commit hash -->
+        <XmlPoke
+            XmlInputPath="$(NugetTargetDir)/%(Packagefiles.Identity)"
+            Value="$(SourceRevisionId)"
+            Query="/nuget:package/nuget:metadata/nuget:repository/@commit"
+            Namespaces="$(Namespace)"/>
+
+        <!-- pack via nuget -->
+        <Exec WorkingDirectory="$(NugetTargetDir)" Command="c:\ut\nuget\6.3.0\nuget.exe pack @(Packagefiles)" />
+    </Target>
+
+    <Target Name="createnugetpackages" DependsOnTargets="copy_and_sign_components">
+
+        <!-- delete any .nupkg files -->
+        <Delete Files="$(NugetTargetDir)\*.nupkg" />
+
+        <CallTarget Targets="buildnugetpackage" />
+    
+    </Target>
+
+    <Target Name="Build" DependsOnTargets="createnugetpackages">
+    </Target>
+</Project>

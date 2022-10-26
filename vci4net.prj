@@ -107,11 +107,12 @@
         <Exec WorkingDirectory="$(NugetTargetDir)" Command="c:\ut\nuget\6.3.0\nuget.exe pack @(Packagefiles)" />
     </Target>
 
-    <Target Name="createnugetpackages" DependsOnTargets="copy_and_sign_components">
+    <Target Name="createnugetpackages">
 
         <!-- delete any .nupkg files -->
         <Delete Files="$(NugetTargetDir)\*.nupkg" />
 
+        <CallTarget Targets="copy_and_sign_components" />
         <CallTarget Targets="buildnugetpackage" />
     
     </Target>

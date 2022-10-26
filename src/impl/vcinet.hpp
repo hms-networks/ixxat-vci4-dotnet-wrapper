@@ -9,18 +9,17 @@
 
 #pragma once
 
-/*************************************************************************
-** include files
-*************************************************************************/
 
 #include ".\Device Manager\devman.hpp"
 
+// function pointer declarations
 typedef HRESULT (VCIAPI *VciInitializeDyn)();
 typedef HRESULT (VCIAPI *VciGetVersionDyn)(OUT PVCIVERSIONINFO pVersInfo);
 typedef HRESULT (VCIAPI *VciGetDeviceManagerDyn)(OUT ::IVciDeviceManager** ppDevMan);
 typedef HRESULT (VCIAPI *VciFormatErrorWDyn)(IN HRESULT hrError, OUT PWCHAR pszError, IN  UINT32 dwLength);
 typedef HRESULT (VCIAPI *Vci3FormatErrorDyn)(IN HRESULT hrError, OUT PCHAR pszError);
 
+// function pointers for dynamically loaded VCI4 entry points
 extern HANDLE hVciLib;
 extern VciInitializeDyn VciInitializeFunc;
 extern VciGetVersionDyn VciGetVersionFunc;
@@ -28,9 +27,7 @@ extern VciGetDeviceManagerDyn VciGetDeviceManagerFunc;
 extern VciFormatErrorWDyn VciFormatErrorWFunc;
 extern Vci3FormatErrorDyn Vci3FormatErrorFunc;
 
-/*************************************************************************
-** namespace Ixxat.Vci4
-*************************************************************************/
+
 namespace Ixxat {
   namespace Vci4 {
 

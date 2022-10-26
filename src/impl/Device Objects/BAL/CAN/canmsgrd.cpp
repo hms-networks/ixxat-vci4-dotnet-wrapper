@@ -7,15 +7,9 @@
  all rights reserved
 *****************************************************************************/
 
-/*************************************************************************
-** include files
-*************************************************************************/
 #include "canmsgrd.hpp"
 #include "vcinet.hpp"
 
-/*************************************************************************
-** used namespaces
-*************************************************************************/
 using namespace Ixxat::Vci4::Bal::Can;
 
 #pragma warning(disable:4669) // 'type cast' : unsafe conversion
@@ -246,7 +240,8 @@ void CanMessageReader::Lock()
 /// </exception>
 /// <exception cref="ObjectDisposedException">
 ///   Object is already disposed.
-/// </exception>//*****************************************************************************
+/// </exception>
+//*****************************************************************************
 void CanMessageReader::Unlock()
 {
   if (nullptr != m_pRxFifo)

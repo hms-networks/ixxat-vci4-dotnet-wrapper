@@ -9,22 +9,14 @@
 
 #pragma once
 
-/*************************************************************************
-** include files
-*************************************************************************/
 #include <vcisdk.h>
 
-/*************************************************************************
-** namespace Ixxat.Vci4.Bal.Can
-*************************************************************************/
+
 namespace Ixxat {
   namespace Vci4 {
     namespace Bal {
       namespace Can {
 
-/*************************************************************************
-** used namespaces
-*************************************************************************/
 using namespace System;
 using namespace System::Reflection;
 using namespace System::Runtime::InteropServices;

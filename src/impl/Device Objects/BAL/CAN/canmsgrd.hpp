@@ -9,26 +9,17 @@
 
 #pragma once
 
-/*************************************************************************
-** include files
-*************************************************************************/
 #include <vcisdk.h>
-
 #include "canmsg.hpp"
 #include "canmsg2.hpp"
 
-/*************************************************************************
-** namespace Ixxat.Vci4.Bal.Can
-*************************************************************************/
+
 namespace Ixxat {
   namespace Vci4 {
     namespace Bal {
       namespace Can {
 
 
-/*************************************************************************
-** used namespace
-*************************************************************************/
 using namespace System::Threading;
 using namespace System::Runtime::InteropServices;
 

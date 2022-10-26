@@ -7,19 +7,13 @@
  all rights reserved
 *****************************************************************************/
 
-/*************************************************************************
-** include files
-*************************************************************************/
 #include <windows.h>
 #include "vcinet.hpp"
 
-
-/*************************************************************************ö
-** used namespaces
-*************************************************************************/
 using namespace Ixxat::Vci4;
 using namespace System::IO;
 
+// function pointers for dynamically loaded VCI4 entry points
 HANDLE hVciLib = NULL;
 VciInitializeDyn VciInitializeFunc = NULL;
 VciGetVersionDyn VciGetVersionFunc = NULL;

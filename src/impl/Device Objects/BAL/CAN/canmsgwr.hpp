@@ -66,10 +66,7 @@ private ref class CanMessageWriter : public ICanMessageWriter
 };
 
 
-
-
 } // end of namespace Can
 } // end of namespace Bal
 } // end of namespace Vci4
 } // end of namespace Ixxat
-

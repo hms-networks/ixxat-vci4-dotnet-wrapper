@@ -26,26 +26,26 @@ namespace Ixxat.Vci4.Bal.Can
   public struct mgdCANCYCLICTXMSG
   {
     ///<summary>cycle time for the message in ticks</summary>
-    public ushort wCycleTime;
+    public ushort         wCycleTime;
     ///<summary>auto increment mode (see CAN_CTXMSG_INC_ const)</summary>
-    public byte bIncrMode;
+    public byte           bIncrMode;
     ///<summary>index of the byte within abData[] to increment</summary>
-    public byte bByteIndex; 
+    public byte           bByteIndex; 
     ///<summary>CAN message identifier (INTEL format)</summary>
-    public uint dwMsgId;
+    public uint           dwMsgId;
     ///<summary>message information (bit field)</summary>
-    public mgdCANMSGINFO uMsgInfo;
+    public mgdCANMSGINFO  uMsgInfo;
     ///<summary>message data</summary>
     // (UINT8[8] is native declaration and
     // array<UINT8> is not what we want !!)
-    public byte bData1;
-    public byte bData2;
-    public byte bData3;
-    public byte bData4;
-    public byte bData5;
-    public byte bData6;
-    public byte bData7;
-    public byte bData8;
+    public byte           bData1;
+    public byte           bData2;
+    public byte           bData3;
+    public byte           bData4;
+    public byte           bData5;
+    public byte           bData6;
+    public byte           bData7;
+    public byte           bData8;
   };
 
   // enable: CS1591: Missing XML comment for publicly visible type or member

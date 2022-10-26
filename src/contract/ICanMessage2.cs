@@ -43,7 +43,7 @@ namespace Ixxat.Vci4.Bal.Can
     ///<summary>message data</summary>
     // (UINT8[8] is native declaration and
     // array<UINT8> is not what we want !!)
-    public byte         bData1;     
+    public byte         bData1;
     public byte         bData2;
     public byte         bData3;
     public byte         bData4;

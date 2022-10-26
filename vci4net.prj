@@ -19,7 +19,7 @@
         <InformationalVersion Condition="'$(InformationalVersion)' == ''">$(Version)</InformationalVersion>
         <Authors Condition="'$(Authors)' == ''">HMS Networks, AB</Authors>
         <Description Condition="'$(Description)' == ''">Access CAN interfaces from Ixxat/HMS Networks via .NET and VCI4-API</Description>
-        <Copyright Condition="'$(Copyright)' == ''">Copyright (c) 2018-2022 HMS Networks, AB</Copyright>
+        <Copyright Condition="'$(Copyright)' == ''">Copyright (C) 2016-2022 HMS Technology Center Ravensburg GmbH</Copyright>
     </PropertyGroup>
 
     <ItemGroup>

@@ -33,9 +33,9 @@
     <FrameworkVersion>.NET Framework 4.5</FrameworkVersion>
     <IncludeFavorites>True</IncludeFavorites>
     <HelpTitle>IXXAT VCI V4 .NET 4.0 API</HelpTitle>
-    <CopyrightHref>http://www.ixxat.de</CopyrightHref>
-    <CopyrightText>Copyright IXXAT Automation GmbH 2018</CopyrightText>
-    <FeedbackEMailAddress>support%40ixxat.de</FeedbackEMailAddress>
+    <CopyrightHref>https://www.ixxat.com</CopyrightHref>
+    <CopyrightText>Copyright (C) 2016-2022 HMS Technology Center Ravensburg GmbH, all rights reserved</CopyrightText>
+    <FeedbackEMailAddress>support%40ixxat.com</FeedbackEMailAddress>
     <PresentationStyle>VS2013</PresentationStyle>
     <ComponentConfigurations>
       <ComponentConfig id="Code Block Component" enabled="False">

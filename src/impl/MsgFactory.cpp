@@ -1,11 +1,9 @@
-/*****************************************************************************
- IXXAT Automation GmbH
-******************************************************************************
- Summary : Message factory implementation
- Compiler: 
-******************************************************************************
- all rights reserved
-*****************************************************************************/
+// SPDX-License-Identifier: MIT
+//----------------------------------------------------------------------------
+// Summary  : Message factory implementation
+// Copyright: Copyright (C) 2016-2022 HMS Technology Center Ravensburg GmbH, 
+//            all rights reserved
+//----------------------------------------------------------------------------
 
 #include <windows.h>
 #include "vcinet.hpp"

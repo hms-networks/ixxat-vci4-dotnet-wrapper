@@ -1,11 +1,9 @@
-/*****************************************************************************
- IXXAT Automation GmbH
-******************************************************************************
- Summary : Implementation of the LIN control class.
- Compiler: Microsoft VC++ 8
-******************************************************************************
- all rights reserved
-*****************************************************************************/
+// SPDX-License-Identifier: MIT
+//----------------------------------------------------------------------------
+// Summary  : Implementation of the LIN control class.
+// Copyright: Copyright (C) 2016-2022 HMS Technology Center Ravensburg GmbH, 
+//            all rights reserved
+//----------------------------------------------------------------------------
 
 #include "linctl.hpp"
 #include "vcinet.hpp"

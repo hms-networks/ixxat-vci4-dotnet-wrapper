@@ -1,14 +1,11 @@
-/*****************************************************************************
- IXXAT Automation GmbH
-******************************************************************************
- Summary : Declarations for the VCI server object.
- Compiler: Microsoft VC++ 8
-******************************************************************************
- all rights reserved
-*****************************************************************************/
+// SPDX-License-Identifier: MIT
+//----------------------------------------------------------------------------
+// Summary  : Declarations for the VCI server object.
+// Copyright: Copyright (C) 2016-2022 HMS Technology Center Ravensburg GmbH, 
+//            all rights reserved
+//----------------------------------------------------------------------------
 
 #pragma once
-
 
 #include ".\Device Manager\devman.hpp"
 

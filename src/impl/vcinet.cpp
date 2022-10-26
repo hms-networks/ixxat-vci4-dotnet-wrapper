@@ -1,11 +1,9 @@
-/*****************************************************************************
- IXXAT Automation GmbH
-******************************************************************************
- Summary : Implementation for the VCI server object.
- Compiler: Microsoft VC++ 8
-******************************************************************************
- all rights reserved
-*****************************************************************************/
+// SPDX-License-Identifier: MIT
+//----------------------------------------------------------------------------
+// Summary  : Implementation for the VCI server object.
+// Copyright: Copyright (C) 2016-2022 HMS Technology Center Ravensburg GmbH, 
+//            all rights reserved
+//----------------------------------------------------------------------------
 
 #include <windows.h>
 #include "vcinet.hpp"

@@ -1,11 +1,9 @@
-/*****************************************************************************
- IXXAT Automation GmbH
-******************************************************************************
- Summary : Implementation of the CAN message reader class.
- Compiler: Microsoft VC++ 8
-******************************************************************************
- all rights reserved
-*****************************************************************************/
+// SPDX-License-Identifier: MIT
+//----------------------------------------------------------------------------
+// Summary  : Implementation of the CAN message reader class.
+// Copyright: Copyright (C) 2016-2022 HMS Technology Center Ravensburg GmbH, 
+//            all rights reserved
+//----------------------------------------------------------------------------
 
 #include "canmsgrd.hpp"
 #include "vcinet.hpp"

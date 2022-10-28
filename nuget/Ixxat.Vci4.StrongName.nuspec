@@ -43,8 +43,8 @@
     <file src="..\bin\Release\net40\Ixxat.Vci4.xml" target="lib\net40" />
     <file src="..\bin\Release\net40\Ixxat.Vci4.Contract.dll" target="lib\net40" />
     <file src="..\bin\Release\net40\Ixxat.Vci4.Contract.xml" target="lib\net40" />
-    <file src="..\bin\Release\net40\vcinet\vcinet.x86.dll" target="build\net40\vcinet" />
-    <file src="..\bin\Release\net40\vcinet\vcinet.x64.dll" target="build\net40\vcinet" />
+    <file src="..\bin\Release\net40\vcinet\vcinet.x86.dll" target="build\net40" />
+    <file src="..\bin\Release\net40\vcinet\vcinet.x64.dll" target="build\net40" />
     <file src="..\bin\Release\net5.0-windows\Ixxat.Vci4.dll" target="lib\net5.0-windows10.0" />
     <file src="..\bin\Release\net5.0-windows\Ixxat.Vci4.xml" target="lib\net5.0-windows10.0" />
     <file src="..\bin\Release\net5.0-windows\Ixxat.Vci4.Contract.dll" target="lib\net5.0-windows10.0" />

@@ -23,46 +23,48 @@
     <dependencies>
       <group targetFramework="net40">
       </group>
-      <group targetFramework="net5.0-windows7.0">
+      <group targetFramework="net5.0-windows10.0">
       </group>
-      <group targetFramework="net6.0-windows7.0">
+      <group targetFramework="net6.0-windows10.0">
       </group>
       <group targetFramework="netcoreapp3.1">
       </group>
     </dependencies>
     <references>
-      <reference file="Ixxat.Vci4.dll" />
-      <reference file="Ixxat.Vci4.Contract.dll" />
     </references>
   </metadata>
   <files>
     <file src="..\images\HMSLogo.png" target="images\" />
     <file src="build\Ixxat.Vci4.targets" target="build\net40" />
-    <file src="build\Ixxat.Vci4.targets" target="build\net5.0-windows7.0" />
-    <file src="build\Ixxat.Vci4.targets" target="build\net6.0-windows7.0" />
-    <file src="build\Ixxat.Vci4.targets" target="build\netcoreapp3.1" />
+    <file src="build\Ixxat.Vci4.NetCore.targets" target="build\net5.0-windows10.0\Ixxat.Vci4.targets" />
+    <file src="build\Ixxat.Vci4.NetCore.targets" target="build\net6.0-windows10.0\Ixxat.Vci4.targets" />
+    <file src="build\Ixxat.Vci4.NetCore.targets" target="build\netcoreapp3.1\Ixxat.Vci4.targets" />
     <file src="..\bin\Release\net40\Ixxat.Vci4.dll" target="lib\net40" />
     <file src="..\bin\Release\net40\Ixxat.Vci4.xml" target="lib\net40" />
     <file src="..\bin\Release\net40\Ixxat.Vci4.Contract.dll" target="lib\net40" />
     <file src="..\bin\Release\net40\Ixxat.Vci4.Contract.xml" target="lib\net40" />
-    <file src="..\bin\Release\net40\vcinet.x86.dll" target="build\net40" />
-    <file src="..\bin\Release\net40\vcinet.x64.dll" target="build\net40" />
-    <file src="..\bin\Release\net5.0-windows\Ixxat.Vci4.dll" target="lib\net5.0-windows7.0" />
-    <file src="..\bin\Release\net5.0-windows\Ixxat.Vci4.xml" target="lib\net5.0-windows7.0" />
-    <file src="..\bin\Release\net5.0-windows\Ixxat.Vci4.Contract.dll" target="lib\net5.0-windows7.0" />
-    <file src="..\bin\Release\net5.0-windows\Ixxat.Vci4.Contract.xml" target="lib\net5.0-windows7.0" />
-    <file src="..\bin\Release\net5.0-windows\vcinet.x86.dll" target="build\net5.0-windows7.0" />
-    <file src="..\bin\Release\net5.0-windows\vcinet.x64.dll" target="build\net5.0-windows7.0" />
-    <file src="..\bin\Release\net6.0-windows\Ixxat.Vci4.dll" target="lib\net6.0-windows7.0" />
-    <file src="..\bin\Release\net6.0-windows\Ixxat.Vci4.xml" target="lib\net6.0-windows7.0" />
-    <file src="..\bin\Release\net6.0-windows\Ixxat.Vci4.Contract.xml" target="lib\net6.0-windows7.0" />
-    <file src="..\bin\Release\net6.0-windows\vcinet.x86.dll" target="build\net6.0-windows7.0" />
-    <file src="..\bin\Release\net6.0-windows\vcinet.x64.dll" target="build\net6.0-windows7.0" />
+    <file src="..\bin\Release\net40\vcinet\vcinet.x86.dll" target="build\net40\vcinet" />
+    <file src="..\bin\Release\net40\vcinet\vcinet.x64.dll" target="build\net40\vcinet" />
+    <file src="..\bin\Release\net5.0-windows\Ixxat.Vci4.dll" target="lib\net5.0-windows10.0" />
+    <file src="..\bin\Release\net5.0-windows\Ixxat.Vci4.xml" target="lib\net5.0-windows10.0" />
+    <file src="..\bin\Release\net5.0-windows\Ixxat.Vci4.Contract.dll" target="lib\net5.0-windows10.0" />
+    <file src="..\bin\Release\net5.0-windows\Ixxat.Vci4.Contract.xml" target="lib\net5.0-windows10.0" />
+    <file src="..\bin\Release\net5.0-windows\vcinet\vcinet.x86.dll" target="build\net5.0-windows10.0" />
+    <file src="..\bin\Release\net5.0-windows\vcinet\vcinet.x64.dll" target="build\net5.0-windows10.0" />
+    <file src="..\bin\Release\net5.0-windows\vcinet\Ijwhost.dll" target="build\net5.0-windows10.0" />
+    <file src="..\bin\Release\net6.0-windows\Ixxat.Vci4.dll" target="lib\net6.0-windows10.0" />
+    <file src="..\bin\Release\net6.0-windows\Ixxat.Vci4.xml" target="lib\net6.0-windows10.0" />
+    <file src="..\bin\Release\net6.0-windows\Ixxat.Vci4.Contract.dll" target="lib\net6.0-windows10.0" />
+    <file src="..\bin\Release\net6.0-windows\Ixxat.Vci4.Contract.xml" target="lib\net6.0-windows10.0" />
+    <file src="..\bin\Release\net6.0-windows\vcinet\vcinet.x86.dll" target="build\net6.0-windows10.0" />
+    <file src="..\bin\Release\net6.0-windows\vcinet\vcinet.x64.dll" target="build\net6.0-windows10.0" />
+    <file src="..\bin\Release\net6.0-windows\vcinet\Ijwhost.dll" target="build\net6.0-windows10.0" />
     <file src="..\bin\Release\netcoreapp3.1\Ixxat.Vci4.dll" target="lib\netcoreapp3.1" />
     <file src="..\bin\Release\netcoreapp3.1\Ixxat.Vci4.xml" target="lib\netcoreapp3.1" />
     <file src="..\bin\Release\netcoreapp3.1\Ixxat.Vci4.Contract.dll" target="lib\netcoreapp3.1" />
     <file src="..\bin\Release\netcoreapp3.1\Ixxat.Vci4.Contract.xml" target="lib\netcoreapp3.1" />
-    <file src="..\bin\Release\netcoreapp3.1\vcinet.x86.dll" target="build\netcoreapp3.1" />
-    <file src="..\bin\Release\netcoreapp3.1\vcinet.x64.dll" target="build\netcoreapp3.1" />
+    <file src="..\bin\Release\netcoreapp3.1\vcinet\vcinet.x86.dll" target="build\netcoreapp3.1" />
+    <file src="..\bin\Release\netcoreapp3.1\vcinet\vcinet.x64.dll" target="build\netcoreapp3.1" />
+    <file src="..\bin\Release\netcoreapp3.1\vcinet\Ijwhost.dll" target="build\netcoreapp3.1" />
   </files>
 </package>

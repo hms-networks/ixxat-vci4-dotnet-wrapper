@@ -1,0 +1,10 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Target Name="CopyNativeLibs" AfterTargets="Build">
+    <ItemGroup>
+      <NativeLibs    Include="$(MSBuildThisFileDirectory)\vcinet.x??.dll" />
+      <DotNetHostLib Include="$(MSBuildThisFileDirectory)\Ijwhost.dll" />
+    </ItemGroup>
+    <Copy SourceFiles="@(NativeLibs)"    DestinationFolder="$(OutDir)\vcinet" />
+    <Move SourceFiles="@(DotNetHostLib)" DestinationFolder="$(OutDir)\vcinet" Condition="Exists('%(FullPath)')" />
+  </Target>
+</Project>

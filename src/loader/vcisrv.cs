@@ -41,7 +41,7 @@ namespace Ixxat.Vci4
     {
       bool isRunningAs64Bit = (IntPtr.Size == 8);
 
-      string assemblyName = "vcinet" + (isRunningAs64Bit ? ".x64" : ".x86") + ".dll";
+      string assemblyName = "vcinet\\vcinet" + (isRunningAs64Bit ? ".x64" : ".x86") + ".dll";
 
       Assembly? entryassembly = Assembly.GetEntryAssembly();
       if (entryassembly == null)

@@ -24,7 +24,7 @@
         <Authors Condition="'$(Authors)' == ''">HMS Networks</Authors>
         <CompanyName>HMS Technology Center Ravensburg GmbH</CompanyName>
         <Description Condition="'$(Description)' == ''">Access CAN interfaces from Ixxat/HMS Networks via .NET and VCI4-API</Description>
-        <Copyright Condition="'$(Copyright)' == ''">Copyright (C) 2016-2022 HMS Technology Center Ravensburg GmbH</Copyright>
+        <Copyright Condition="'$(Copyright)' == ''">Copyright (C) 2016-2022 HMS Technology Center Ravensburg GmbH, all rights reserved</Copyright>
     </PropertyGroup>
 
     <Target Name="WriteLibVerHeader" BeforeTargets="compile_native_components">

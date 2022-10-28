@@ -24,15 +24,7 @@ device access component on top of the VCI4 C++-API.
 
 ## For users
 
-Users of the VCI4 .NET Wrapper should first install ansd use the precompiled components provided via NuGet.
-See documentation of your .NET development environment on how to reference components from NuGet.
-
-Because of different developer needs we provide multiple versions of this component:
-
-- Ixxat.Vci4            (not strong named    ) https://www.nuget.org/packages/Ixxat.Vci4
-- Ixxat.Vci4.StrongName (strong named variant) https://www.nuget.org/packages/Ixxat.Vci4.StrongName
-
-There are two addional versions for .NET Core but are obsolete, and should not be used for new projects.
+See the user documentation in /doc/README.md
 
 
 ## For developers
@@ -67,10 +59,10 @@ The VCI4 .NET wrapper sits on top of the VCI4 C++ API so you need the VCI4 drive
 
 ### Source tree overview
 
-\src\contract  Contract assembly 
-\src\help      Help file builder project
-\src\loader    Loader component
-\src\impl      Component implementation (
+    \src\contract  Contract assembly 
+    \src\help      Help file builder project
+    \src\loader    Loader component
+    \src\impl      Component implementation (
 
 
 ## Further documentation

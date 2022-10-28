@@ -1,7 +1,6 @@
-﻿
-Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28010.2019
+﻿Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32616.157
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{A6A9BFFF-D76A-4B8A-AB87-2209BD9F9178}") = "vcinet", "impl\vcinet_sn.vcxproj", "{B4A553A1-88F6-4E5E-9960-EE6F2F4EDC41}"
 EndProject

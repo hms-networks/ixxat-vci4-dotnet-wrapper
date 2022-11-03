@@ -642,7 +642,7 @@ namespace CanConNet
             break;
 
           if (!Char.IsControl(ch))
-            resultText+=ch;
+            resultText.Append(ch);
         }
       }
       else

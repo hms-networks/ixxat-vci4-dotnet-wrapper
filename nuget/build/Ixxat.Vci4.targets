@@ -3,6 +3,6 @@
     <ItemGroup>
       <NativeLibs    Include="$(MSBuildThisFileDirectory)\vcinet.x??.dll" />
     </ItemGroup>
-    <Copy SourceFiles="@(NativeLibs)" DestinationFolder="$(OutDir)\vcinet" />
+    <Copy SourceFiles="@(NativeLibs)"    DestinationFolder="$(OutDir)\vcinet" />
   </Target>
 </Project>

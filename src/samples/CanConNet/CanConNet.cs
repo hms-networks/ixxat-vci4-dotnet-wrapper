@@ -1,26 +1,15 @@
-//////////////////////////////////////////////////////////////////////////
-// HMS Technology Center Ravensburg GmbH
-//////////////////////////////////////////////////////////////////////////
-/**
-  Demo application for the IXXAT VCI .NET-API.
+// SPDX-License-Identifier: MIT
+//----------------------------------------------------------------------------
+// Summary  : Demo application for the IXXAT VCI .NET-API.
+//            This demo demonstrates the following VCI features
+//              - adapter selection
+//              - controller initialization
+//              - creation of a message channel
+//              - transmission/reception of CAN messages
+// Copyright: Copyright (C) 2016-2022 HMS Technology Center Ravensburg GmbH, 
+//            all rights reserved
+//----------------------------------------------------------------------------
 
-  @file "CanConNet.cs"
-
-  @note
-    This demo demonstrates the following VCI features
-    - adapter selection
-    - controller initialization
-    - creation of a message channel
-    - transmission / reception of CAN messages
-*/
-//////////////////////////////////////////////////////////////////////////
-// Copyright (C) 2016-2022
-// HMS Technology Center Ravensburg GmbH, all rights reserved
-//////////////////////////////////////////////////////////////////////////
-
-/*****************************************************************************
- * used namespaces
- ****************************************************************************/
 using System;
 using System.Text;
 using System.Collections;
@@ -29,10 +18,6 @@ using Ixxat.Vci4;
 using Ixxat.Vci4.Bal;
 using Ixxat.Vci4.Bal.Can;
 
-
-/*****************************************************************************
- * namespace CanConNet
- ****************************************************************************/
 namespace CanConNet
 {
   //##########################################################################

@@ -32,35 +32,71 @@ namespace Ixxat.Vci4
     //*****************************************************************************
     /// <summary>
     ///   Dynamically loads the platform dependent (x86, x64) server component.
+    /// 
+    ///   You could either specify
+    ///     - no path or relative path
+    ///         -> try to load relative to EXE and 
+    ///            second try relative to Loader DLL
+    ///     - absolute path
+    ///         -> try to load from given path
+    /// 
     /// </summary>
     /// <exception cref="InvalidOperationException">
     ///   Loading server component failed.
     /// </exception>
     //*****************************************************************************
-    static private void LoadServer() 
+    static private void LoadServer(string assemblyloadpath) 
     {
       bool isRunningAs64Bit = (IntPtr.Size == 8);
 
       string assemblyName = "vcinet\\vcinet" + (isRunningAs64Bit ? ".x64" : ".x86") + ".dll";
 
-      Assembly? entryassembly = Assembly.GetEntryAssembly();
-      if (entryassembly == null)
-        throw new InvalidOperationException("GetEntryAssembly did not return a valid assembly reference");
+      string archSpecificPath;
 
-      string? localToLoaderPath = Path.GetDirectoryName(new System.Uri(Assembly.GetCallingAssembly().Location).LocalPath);
-      string? localToExePath = Path.GetDirectoryName(new System.Uri(entryassembly.Location).LocalPath);
-
-      // check if file exists local to exe
-      string archSpecificPath = Path.Combine(localToExePath ?? "", assemblyName);
-      if (!File.Exists(archSpecificPath))
+      // Either
+      //   - no assemblyloadpath is specified or 
+      //   - assemblyloadpath is relative to the exe file
+      // then try to load
+      //   - first relative to EXE
+      //   - second relative to loader DLL
+      // If an absolute assemblyloadpath is specified
+      //   - try to load from there
+      if (string.IsNullOrEmpty(assemblyloadpath) || !Path.IsPathRooted(assemblyloadpath))
       {
-        // second try local to loader
-        archSpecificPath = Path.Combine(localToLoaderPath ?? "", assemblyName);
+        Assembly? entryassembly = Assembly.GetEntryAssembly();
+        if (entryassembly == null)
+          throw new InvalidOperationException("GetEntryAssembly did not return a valid assembly reference");
+
+        string? localToLoaderPath = Path.GetDirectoryName(new System.Uri(Assembly.GetCallingAssembly().Location).LocalPath);
+        string? localToExePath = Path.GetDirectoryName(new System.Uri(entryassembly.Location).LocalPath);
+
+        // check if file exists local to exe
+        string archSpecificPath_1 = archSpecificPath = Path.Combine(localToExePath ?? "", assemblyloadpath, assemblyName);
+        if (!File.Exists(archSpecificPath_1))
+        {
+          // second try local to loader
+          string archSpecificPath_2 = archSpecificPath = Path.Combine(localToLoaderPath ?? "", assemblyloadpath, assemblyName);
+          if (!File.Exists(archSpecificPath_2))
+          {
+            throw new InvalidOperationException(
+              String.Format("Did not find platform specific assembly ({0}) in {1} or {2}. Check your installation.",
+                assemblyName, archSpecificPath_1, archSpecificPath_2));
+          }
+        }
+      }
+      else
+      {
+        // Absolute assemblyloadpath is given here
+        // do not use vcinet subdirectory here
+        assemblyName = "vcinet" + (isRunningAs64Bit ? ".x64" : ".x86") + ".dll";
+
+        // check if file exists on the user specified path
+        archSpecificPath = Path.Combine(assemblyloadpath, assemblyName);
         if (!File.Exists(archSpecificPath))
         {
           throw new InvalidOperationException(
-            String.Format("Did not find platform specific assembly ({0}) in {1} or {2}. Check your installation.",
-              assemblyName, localToExePath, localToLoaderPath));
+            String.Format("Did not find platform specific assembly ({0}) in {1}. Check your installation.",
+              assemblyName, assemblyloadpath));
         }
       }
 
@@ -82,15 +118,36 @@ namespace Ixxat.Vci4
     /// <summary>
     ///   Returns the VCI server singleton.
     /// </summary>
+    /// <remarks>
+    ///   Path to mixed assemblies is automatically determined from the 
+    ///   EXE or the Loader assembly.
+    /// </remarks>
     /// <exception cref="InvalidOperationException">
     ///   Loading server component failed.
     /// </exception>
     //*****************************************************************************
     public static IVciServer? Instance()
     {
+      return Instance("");
+    }
+
+    //*****************************************************************************
+    /// <summary>
+    ///   Returns the VCI server singleton.
+    /// </summary>
+    /// <param name="assemblyloadpath">
+    ///   specify path where to load the necessary mixed assemblies from 
+    ///   (vcinet.x64.dll, vcinet.x86.dll)
+    /// </param>
+    /// <exception cref="InvalidOperationException">
+    ///   Loading server component failed.
+    /// </exception>
+    //*****************************************************************************
+    public static IVciServer? Instance(string assemblyloadpath)
+    {
       if (ms_instance == null)
       {
-        LoadServer();
+        LoadServer(assemblyloadpath);
       }
       return ms_instance;
     }

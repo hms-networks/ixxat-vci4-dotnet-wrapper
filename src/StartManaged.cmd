@@ -1,3 +1,4 @@
+@echo off
 rem
 rem path to VCISdk
 rem

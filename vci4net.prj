@@ -101,6 +101,9 @@
 
         <MSBuild Projects="$(ContractProject)" Targets="Rebuild" Properties="Configuration=Release" />
         <MSBuild Projects="$(LoaderProject)"   Targets="Rebuild" Properties="Configuration=Release" />
+
+        <MSBuild Projects="$(ContractProject)" Targets="Rebuild" Properties="Configuration=Debug" />
+        <MSBuild Projects="$(LoaderProject)"   Targets="Rebuild" Properties="Configuration=Debug" />
     </Target>
 
     <Target Name="compile_native_components" DependsOnTargets="compile_managed_components">
@@ -139,7 +142,7 @@
         <ManualPackagefile>Ixxat.Vci4.Manual.nuspec</ManualPackagefile>
     </PropertyGroup>
 
-    <Target Name="buildnugetpackage" Inputs="@(Packagefiles)" Outputs="%(Identity).Dummy">
+    <Target Name="buildnugetpackage">
         <!-- pack nuget package -->
         <Exec WorkingDirectory="$(NugetTargetDir)" Command="c:\ut\nuget\6.3.0\nuget.exe pack $(Packagefile) -Version $(Version) -p SourceRevisionId=$(SourceRevisionId)" />
         <!-- pack symbol package -->

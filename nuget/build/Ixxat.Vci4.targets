@@ -1,7 +1,8 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Target Name="CopyNativeLibs" AfterTargets="Build">
     <ItemGroup>
-      <NativeLibs    Include="$(MSBuildThisFileDirectory)\vcinet.x??.dll" />
+      <NativeLibs    Include="$(MSBuildThisFileDirectory)\vcinet.x86.dll" />
+      <NativeLibs    Include="$(MSBuildThisFileDirectory)\vcinet.x64.dll" />
     </ItemGroup>
     <Copy SourceFiles="@(NativeLibs)"    DestinationFolder="$(OutDir)\vcinet" />
   </Target>

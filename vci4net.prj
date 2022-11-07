@@ -112,6 +112,15 @@
         <MSBuild Projects="$(NativeProject)" Targets="Rebuild" Properties="Configuration=Release;Platform=x64;Framework=net5.0-windows" />
         <MSBuild Projects="$(NativeProject)" Targets="Rebuild" Properties="Configuration=Release;Platform=Win32;Framework=net6.0-windows" />
         <MSBuild Projects="$(NativeProject)" Targets="Rebuild" Properties="Configuration=Release;Platform=x64;Framework=net6.0-windows" />
+
+        <MSBuild Projects="$(NativeProject)" Targets="Rebuild" Properties="Configuration=Debug;Platform=Win32;Framework=net40" />
+        <MSBuild Projects="$(NativeProject)" Targets="Rebuild" Properties="Configuration=Debug;Platform=x64;Framework=net40" />
+        <MSBuild Projects="$(NativeProject)" Targets="Rebuild" Properties="Configuration=Debug;Platform=Win32;Framework=netcoreapp3.1" />
+        <MSBuild Projects="$(NativeProject)" Targets="Rebuild" Properties="Configuration=Debug;Platform=x64;Framework=netcoreapp3.1" />
+        <MSBuild Projects="$(NativeProject)" Targets="Rebuild" Properties="Configuration=Debug;Platform=Win32;Framework=net5.0-windows" />
+        <MSBuild Projects="$(NativeProject)" Targets="Rebuild" Properties="Configuration=Debug;Platform=x64;Framework=net5.0-windows" />
+        <MSBuild Projects="$(NativeProject)" Targets="Rebuild" Properties="Configuration=Debug;Platform=Win32;Framework=net6.0-windows" />
+        <MSBuild Projects="$(NativeProject)" Targets="Rebuild" Properties="Configuration=Debug;Platform=x64;Framework=net6.0-windows" />
     </Target>
 
     <PropertyGroup>
@@ -124,29 +133,19 @@
         </Namespace>
     </PropertyGroup>
 
-    <ItemGroup>
-        <Packagefiles Condition="'$(AssemblyKeyFileAttribute)' == ''" Include="Ixxat.Vci4.nuspec" />
-        <Packagefiles Condition="'$(AssemblyKeyFileAttribute)' != ''" Include="Ixxat.Vci4.StrongName.nuspec" />
-        <Packagefiles Include="Ixxat.Vci4.Manual.nuspec" />
-    </ItemGroup>
+    <PropertyGroup>
+        <Packagefile Condition="'$(AssemblyKeyFileAttribute)' == ''" >Ixxat.Vci4.nuspec</Packagefile>
+        <Packagefile Condition="'$(AssemblyKeyFileAttribute)' != ''" >Ixxat.Vci4.StrongName.nuspec</Packagefile>
+        <ManualPackagefile>Ixxat.Vci4.Manual.nuspec</ManualPackagefile>
+    </PropertyGroup>
 
     <Target Name="buildnugetpackage" Inputs="@(Packagefiles)" Outputs="%(Identity).Dummy">
-        <!-- poke version number -->
-        <XmlPoke
-            XmlInputPath="$(NugetTargetDir)/%(Packagefiles.Identity)"
-            Value="$(Version)"
-            Query="/nuget:package/nuget:metadata/nuget:version"
-            Namespaces="$(Namespace)"/>
-
-        <!-- poke git commit hash -->
-        <XmlPoke
-            XmlInputPath="$(NugetTargetDir)/%(Packagefiles.Identity)"
-            Value="$(SourceRevisionId)"
-            Query="/nuget:package/nuget:metadata/nuget:repository/@commit"
-            Namespaces="$(Namespace)"/>
-
-        <!-- pack via nuget -->
-        <Exec WorkingDirectory="$(NugetTargetDir)" Command="c:\ut\nuget\6.3.0\nuget.exe pack @(Packagefiles)" />
+        <!-- pack nuget package -->
+        <Exec WorkingDirectory="$(NugetTargetDir)" Command="c:\ut\nuget\6.3.0\nuget.exe pack $(Packagefile) -Version $(Version) -p SourceRevisionId=$(SourceRevisionId)" />
+        <!-- pack symbol package -->
+        <Exec WorkingDirectory="$(NugetTargetDir)" Command="c:\ut\nuget\6.3.0\nuget.exe pack $(Packagefile) -Version $(Version) -p SourceRevisionId=$(SourceRevisionId) -Symbols -SymbolPackageFormat snupkg" />
+        <!-- pack manual package -->
+        <Exec WorkingDirectory="$(NugetTargetDir)" Command="c:\ut\nuget\6.3.0\nuget.exe pack $(ManualPackagefile) -Version $(Version) -p SourceRevisionId=$(SourceRevisionId)" />
     </Target>
 
     <Target Name="createnugetpackages" DependsOnTargets="compile_managed_components">

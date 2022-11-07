@@ -56,7 +56,7 @@
   
   // Build number
   #define LIB_D_VERSION      0
-  #define LIB_D_VERSION_STR  LIB_VERSION_ASTEXT(LIB_C_VERSION)
+  #define LIB_D_VERSION_STR  LIB_VERSION_ASTEXT(LIB_D_VERSION)
   
   // debug/release
   //

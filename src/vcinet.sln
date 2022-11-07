@@ -11,6 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CanConNet", "samples\CanCon
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "vcinet", "impl\vcinet.vcxproj", "{0EAE5A22-FA4F-85F8-E30A-994CCF4B0C49}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LinConNet", "samples\LinConNet\LinConNet.csproj", "{7F33D969-FB5B-48F7-B216-2655377A7669}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -69,6 +71,18 @@ Global
 		{0EAE5A22-FA4F-85F8-E30A-994CCF4B0C49}.Release|x64.Build.0 = Release|x64
 		{0EAE5A22-FA4F-85F8-E30A-994CCF4B0C49}.Release|x86.ActiveCfg = Release|Win32
 		{0EAE5A22-FA4F-85F8-E30A-994CCF4B0C49}.Release|x86.Build.0 = Release|Win32
+		{7F33D969-FB5B-48F7-B216-2655377A7669}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7F33D969-FB5B-48F7-B216-2655377A7669}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7F33D969-FB5B-48F7-B216-2655377A7669}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{7F33D969-FB5B-48F7-B216-2655377A7669}.Debug|x64.Build.0 = Debug|Any CPU
+		{7F33D969-FB5B-48F7-B216-2655377A7669}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{7F33D969-FB5B-48F7-B216-2655377A7669}.Debug|x86.Build.0 = Debug|Any CPU
+		{7F33D969-FB5B-48F7-B216-2655377A7669}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7F33D969-FB5B-48F7-B216-2655377A7669}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7F33D969-FB5B-48F7-B216-2655377A7669}.Release|x64.ActiveCfg = Release|Any CPU
+		{7F33D969-FB5B-48F7-B216-2655377A7669}.Release|x64.Build.0 = Release|Any CPU
+		{7F33D969-FB5B-48F7-B216-2655377A7669}.Release|x86.ActiveCfg = Release|Any CPU
+		{7F33D969-FB5B-48F7-B216-2655377A7669}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

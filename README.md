@@ -59,11 +59,14 @@ The VCI4 .NET wrapper sits on top of the VCI4 C++ API so you need the VCI4 drive
 
 ### Source tree overview
 
-    \src\contract  Contract assembly 
+    \doc           user documentation
+    \images        package icon
+    \nuget         files for nuget packaging (manifest files)
+    \src\contract  Contract assembly
     \src\help      Help file builder project
-    \src\loader    Loader component
-    \src\impl      Component implementation (
-
+    \src\loader    Loader component (API entry point)
+    \src\impl      Component implementation (mixed assembly source)
+    \samples       minimal set of samples
 
 ## Further documentation
 

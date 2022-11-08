@@ -1,15 +1,18 @@
 # Open source releases
 
-## 4.1.0	28/10/2022
+## 4.1.0	08/11/2022
 
 First open sourced version (MIT license)
 
 - Loader: use Assembly.Location instead of deprecated Assembly.EscapedCodeBase
+- Loader: additional static Instance() which accepts an assemblyloadpath as parameter
 - additional TargetFrameworks net5.0-windows, net6.0-windows and netcoreapp3.1
-- lookup platform specific assembly first in exe path (Assembly.GetEntryAssembly()), then in the path where the loader is located (Assembly.GetCallingAssembly()) (#8111)
+- lookup platform specific assembly first in exe path (Assembly.GetEntryAssembly()), then in the path where the loader is located (Assembly.GetCallingAssembly()). These assemblies are now located in the <searchdir>/vcinet subdirectory to be able to deploy the correct Ijwhost.dll for each target. (#8111)
 - native components: use PlatformToolset v143 and WindowsTargetPlatformVersion 10.0.22000.0
 - update to VCI4 core revision 246
 - build: add Powershell/MSBuild based build script
+- manuals: update manuals to version 1.3
+
 
 # Older releases (binary only)
 

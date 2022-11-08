@@ -10,9 +10,12 @@ Param (
 #  
 #  .\build.ps1 -Version 4.1.0 [-AssemblyKeyFile mykeyfile.snk]
 #
+#  Version parameter is mandatory and specifies the component and package version for the final result.
+#  If you specify the AssemblyKeyFile parameter the given key is used to crete a strong named assembly.
+#  In this case the resulting package is named Ixxat.Vci4.StrongName.<version>.nupkg.
 #  To use the first snk file use
 #
-#  .\build.ps1 -Version 4.1.0 -AssemblyKeyFile $(Get-ChildItem -Filter mykeyfile.snk | Select-Object -First 1)
+#  .\build.ps1 -Version 4.1.0 -AssemblyKeyFile $(Get-ChildItem -Filter *.snk | Select-Object -First 1)
 #
 
 $ErrorActionPreference = "Stop"

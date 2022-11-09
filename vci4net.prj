@@ -1,5 +1,9 @@
 <!--
 
+  Attention:
+    Use build.ps1 to call this build file as it determines most parameters automatically.
+    See build.ps1 and readme for details.
+
   Main MSBUILD file
     Needs the following parameters:
       Version:          version number, e.g. 4.1.0-beta
@@ -7,8 +11,9 @@
       RepositoryUrl:    git repo url
       RepositoryType:   e.g. git
       RepositoryBranch: e.g. main
+      NugetClient:      e.g. .\downloads\nuget.exe
     Execute this with:
-      msbuild -p:Version=4.1.0-beta -p:SourceRevisionId=2342340aa495a33574f48616ab58c9477a3bc34d -p:RepositoryUrl=https://github.com/HMS/Ixxat.VCI4 -p:RepositoryType=git -p:RepositoryBranch=main
+      msbuild -p:Version=4.1.0-beta -p:SourceRevisionId=7a3bc34d -p:RepositoryUrl=https://github.com/HMS/Ixxat.VCI4 -p:RepositoryType=git -p:RepositoryBranch=main -p:NugetClient=.\downloads\nuget.exe
 
 -->
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
@@ -144,11 +149,11 @@
 
     <Target Name="buildnugetpackage">
         <!-- pack nuget package -->
-        <Exec WorkingDirectory="$(NugetTargetDir)" Command="c:\ut\nuget\6.3.0\nuget.exe pack $(Packagefile) -Version $(Version) -p SourceRevisionId=$(SourceRevisionId)" />
+        <Exec WorkingDirectory="$(NugetTargetDir)" Command="$NugetClient pack $(Packagefile) -Version $(Version) -p SourceRevisionId=$(SourceRevisionId)" />
         <!-- pack symbol package -->
-        <Exec WorkingDirectory="$(NugetTargetDir)" Command="c:\ut\nuget\6.3.0\nuget.exe pack $(Packagefile) -Version $(Version) -p SourceRevisionId=$(SourceRevisionId) -Symbols -SymbolPackageFormat snupkg" />
         <!-- pack manual package -->
-        <Exec WorkingDirectory="$(NugetTargetDir)" Command="c:\ut\nuget\6.3.0\nuget.exe pack $(ManualPackagefile) -Version $(Version) -p SourceRevisionId=$(SourceRevisionId)" />
+        <Exec WorkingDirectory="$(NugetTargetDir)" Command="$NugetClient pack $(Packagefile) -Version $(Version) -p SourceRevisionId=$(SourceRevisionId) -Symbols -SymbolPackageFormat snupkg" />
+        <Exec WorkingDirectory="$(NugetTargetDir)" Command="$NugetClient pack $(ManualPackagefile) -Version $(Version) -p SourceRevisionId=$(SourceRevisionId)" />
     </Target>
 
     <Target Name="createnugetpackages" DependsOnTargets="compile_managed_components">

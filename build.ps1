@@ -19,19 +19,15 @@ Param (
 #
 
 $ErrorActionPreference = "Stop"
-$LocateMSBuild = $true
-$MinimumMSBuildVersion = $true
+
+# locate msbuild
+$MSBuild = ""
+$MinimumMSBuildVersion = 17
 if (Get-Command msbuild -ErrorAction SilentlyContinue)
 {
-    $MSBuildVersion = [Version](msbuild /nologo /version)
-    $LocateMSBuild = $MSBuildVersion.Major -lt $MinimumMSBuildVersion
-    if (!$LocateMSBuild)
-    {
-        $MSBuild = "msbuild"
-    }
+    $MSBuild = "msbuild"
 }
-
-if ($LocateMSBuild)
+else
 {
     $MSBuildHome = @("Enterprise", "Professional", "BuildTools", "Community") |ForEach-Object {
         "C:\Program Files\Microsoft Visual Studio\2022\$_\MSBuild\Current"
@@ -39,12 +35,39 @@ if ($LocateMSBuild)
 
     if (!$MSBuildHome)
     {
-        throw "Failed to locate msbuild"
+        throw "Failed to locate msbuild home directory"
     }
 
     $MSBuild = "$MSBuildHome\bin\msbuild.exe"
 }
 
+if ($MSBuild -ne "")
+{
+    $MSBuildVersion = [Version](Invoke-Command { . $MSBuild /nologo /version })
+    if ($MSBuildVersion.Major -lt $MinimumMSBuildVersion)
+    {
+        throw 'msbuild version is {0}, but at least major version {1} is expected' -f $MSBuildVersion, $MinimumMSBuildVersion
+    }
+}
+else
+{
+    throw "Failed to locate msbuild"
+}
+
+# locate download nuget client
+$NugetLocalDir=".\downloads"
+$NugetFileName="nuget.exe"
+$NugetLocalPath=Join-Path -path $NugetLocalDir -childPath $NugetFileName
+$NugetCliUrl="https://dist.nuget.org/win-x86-commandline/latest/nuget.exe"
+if (!(Test-Path $NugetLocalPath)) {
+    if (!(Test-Path $NugetLocalDir)) {
+        New-Item -path . -name $NugetLocalDir -type directory
+    }
+
+    Invoke-WebRequest -Uri $NugetCliUrl -OutFile $NugetLocalPath
+}
+
+# check if specified AssemblyKeyFile is present
 if ($AssemblyKeyFile -ne "")
 {
     if (!(Test-Path $AssemblyKeyFile)) {
@@ -52,12 +75,14 @@ if ($AssemblyKeyFile -ne "")
     }
 }
 
+# now set properties and call MSBuild
 $Properties = @{
     Version = $Version
     SourceRevisionId = $(git rev-parse --short HEAD) || $(throw "Could not determine source revision")
     RepositoryUrl =    $(git remote get-url origin)  || $(throw "Could not determine repository URL")
     RepositoryType = "git"
     RepositoryBranch = "main"
+    NugetClient = $NugetLocalPath
     AssemblyKeyFileAttribute = $AssemblyKeyFile
 }
 

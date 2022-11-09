@@ -149,11 +149,11 @@
 
     <Target Name="buildnugetpackage">
         <!-- pack nuget package -->
-        <Exec WorkingDirectory="$(NugetTargetDir)" Command="$(NugetClient) pack $(Packagefile) -Version $(Version) -p SourceRevisionId=$(SourceRevisionId)" />
+        <Exec WorkingDirectory="$(NugetTargetDir)" Command="..\$(NugetClient) pack $(Packagefile) -Version $(Version) -p SourceRevisionId=$(SourceRevisionId)" />
         <!-- pack symbol package -->
         <!-- pack manual package -->
-        <Exec WorkingDirectory="$(NugetTargetDir)" Command="$(NugetClient) pack $(Packagefile) -Version $(Version) -p SourceRevisionId=$(SourceRevisionId) -Symbols -SymbolPackageFormat snupkg" />
-        <Exec WorkingDirectory="$(NugetTargetDir)" Command="$(NugetClient) pack $(ManualPackagefile) -Version $(Version) -p SourceRevisionId=$(SourceRevisionId)" />
+        <Exec WorkingDirectory="$(NugetTargetDir)" Command="..\$(NugetClient) pack $(Packagefile) -Version $(Version) -p SourceRevisionId=$(SourceRevisionId) -Symbols -SymbolPackageFormat snupkg" />
+        <Exec WorkingDirectory="$(NugetTargetDir)" Command="..\$(NugetClient) pack $(ManualPackagefile) -Version $(Version) -p SourceRevisionId=$(SourceRevisionId)" />
     </Target>
 
     <Target Name="createnugetpackages" DependsOnTargets="compile_managed_components">

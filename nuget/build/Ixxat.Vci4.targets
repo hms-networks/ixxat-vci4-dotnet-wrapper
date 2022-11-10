@@ -1,9 +1,14 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Target Name="CopyNativeLibs" AfterTargets="Build">
+  <Target Name="CopyNativeLibs_x86" AfterTargets="Build">
     <ItemGroup>
-      <NativeLibs    Include="$(MSBuildThisFileDirectory)\vcinet.x86.dll" />
-      <NativeLibs    Include="$(MSBuildThisFileDirectory)\vcinet.x64.dll" />
+      <NativeLibs    Include="$(MSBuildThisFileDirectory)\x86\vcinet.x86.dll" />
     </ItemGroup>
-    <Copy SourceFiles="@(NativeLibs)"    DestinationFolder="$(OutDir)\vcinet" />
+    <Copy SourceFiles="@(NativeLibs)"    DestinationFolder="$(OutDir)\vcinet\x86" />
+  </Target>
+  <Target Name="CopyNativeLibs_x64" AfterTargets="Build">
+    <ItemGroup>
+      <NativeLibs    Include="$(MSBuildThisFileDirectory)\x64\vcinet.x64.dll" />
+    </ItemGroup>
+    <Copy SourceFiles="@(NativeLibs)"    DestinationFolder="$(OutDir)\vcinet\x64" />
   </Target>
 </Project>

@@ -20,13 +20,14 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{0EAE5A22-FA4F-85F8-E30A-994CCF4B0C49}</ProjectGuid>
-    <Framework Condition=" '$(Framework)' == '' ">net40</Framework>
-    <TargetFrameworkVersion Condition=" '$(Framework)' == 'net40' ">v4.0</TargetFrameworkVersion>
-    <TargetFramework Condition=" '$(Framework)' == 'netcoreapp3.1' ">netcoreapp3.1</TargetFramework>
-    <TargetFramework Condition=" '$(Framework)' == 'net5.0-windows' ">net5.0-windows</TargetFramework>
-    <TargetFramework Condition=" '$(Framework)' == 'net6.0-windows' ">net6.0-windows</TargetFramework>
+    <Framework Condition="'$(Framework)' == ''">net6.0-windows</Framework>
+    <TargetFrameworkVersion Condition="'$(Framework)' == 'net40'">v4.0</TargetFrameworkVersion>
+    <TargetFramework Condition="'$(Framework)' == 'netcoreapp3.1'">netcoreapp3.1</TargetFramework>
+    <TargetFramework Condition="'$(Framework)' == 'net5.0-windows'">net5.0-windows</TargetFramework>
+    <TargetFramework Condition="'$(Framework)' == 'net6.0-windows'">net6.0-windows</TargetFramework>
     <BinBaseDir>..\..\bin\$(Configuration)\$(Framework)\</BinBaseDir>
-    <NativeBinBaseDir>$(BinBaseDir)\vcinet\</NativeBinBaseDir>
+    <NativeBinBaseDir Condition="'$(Platform)' == 'x64'">$(BinBaseDir)\vcinet\x64\</NativeBinBaseDir>
+    <NativeBinBaseDir Condition="'$(Platform)' == 'Win32'">$(BinBaseDir)\vcinet\x86\</NativeBinBaseDir>
     <OutputPath>$(NativeBinBaseDir)</OutputPath>
     <Keyword>ManagedCProj</Keyword>
     <RootNamespace>vcinet</RootNamespace>

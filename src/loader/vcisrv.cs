@@ -49,7 +49,8 @@ namespace Ixxat.Vci4
     {
       bool isRunningAs64Bit = (IntPtr.Size == 8);
 
-      string assemblyName = "vcinet\\vcinet" + (isRunningAs64Bit ? ".x64" : ".x86") + ".dll";
+      string archstr = (isRunningAs64Bit ? "x64" : "x86");
+      string assemblyName = "vcinet\\" + archstr + "\\vcinet." + archstr + ".dll";
 
       string archSpecificPath;
 
@@ -88,7 +89,7 @@ namespace Ixxat.Vci4
       {
         // Absolute assemblyloadpath is given here
         // do not use vcinet subdirectory here
-        assemblyName = "vcinet" + (isRunningAs64Bit ? ".x64" : ".x86") + ".dll";
+        assemblyName = + archstr + "\\vcinet." + archstr + ".dll";
 
         // check if file exists on the user specified path
         archSpecificPath = Path.Combine(assemblyloadpath, assemblyName);

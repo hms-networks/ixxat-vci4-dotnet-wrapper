@@ -20,52 +20,60 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{B4A553A1-88F6-4E5E-9960-EE6F2F4EDC41}</ProjectGuid>
-    <Framework Condition=" '$(Framework)' == '' ">net40</Framework>
-    <TargetFrameworkVersion Condition=" '$(Framework)' == 'net40' ">v4.0</TargetFrameworkVersion>
-    <TargetFramework Condition=" '$(Framework)' == 'netcoreapp3.1' ">netcoreapp3.1</TargetFramework>
+    <Framework Condition="'$(Framework)' == ''">net6.0-windows</Framework>
+    <TargetFrameworkVersion Condition="'$(Framework)' == 'net40'">v4.0</TargetFrameworkVersion>
+    <TargetFramework Condition="'$(Framework)' == 'netcoreapp3.1'">netcoreapp3.1</TargetFramework>
+    <TargetFramework Condition="'$(Framework)' == 'net5.0-windows'">net5.0-windows</TargetFramework>
+    <TargetFramework Condition="'$(Framework)' == 'net6.0-windows'">net6.0-windows</TargetFramework>
+    <BinBaseDir>..\..\bin\$(Configuration)\$(Framework)\</BinBaseDir>
+    <NativeBinBaseDir Condition="'$(Platform)' == 'x64'">$(BinBaseDir)\vcinet\x64\</NativeBinBaseDir>
+    <NativeBinBaseDir Condition="'$(Platform)' == 'Win32'">$(BinBaseDir)\vcinet\x86\</NativeBinBaseDir>
+    <OutputPath>$(NativeBinBaseDir)</OutputPath>
     <Keyword>ManagedCProj</Keyword>
     <RootNamespace>vcinet</RootNamespace>
     <WindowsTargetPlatformVersion>10.0.22000.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Framework)' == 'net40' ">
     <DefineConstants>NET40</DefineConstants>
-    <OutputPath>../../bin/$(Configuration)/$(Framework)/</OutputPath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Framework)' == 'netcoreapp3.1' ">
     <DefineConstants>NETCORE</DefineConstants>
-    <OutputPath>../../bin/$(Configuration)/$(Framework)/</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Framework)' == 'net5.0-windows' ">
+    <DefineConstants>NETCORE</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Framework)' == 'net6.0-windows' ">
+    <DefineConstants>NETCORE</DefineConstants>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup>
+    <CLRSupport Condition=" '$(Framework)' == 'net40' ">true</CLRSupport>
+    <CLRSupport Condition=" '$(Framework)' == 'netcoreapp3.1' ">NetCore</CLRSupport>
+    <CLRSupport Condition=" '$(Framework)' == 'net5.0-windows' ">NetCore</CLRSupport>
+    <CLRSupport Condition=" '$(Framework)' == 'net6.0-windows' ">NetCore</CLRSupport>
+  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
-    <CLRSupport Condition=" '$(Framework)' == 'net40' ">true</CLRSupport>
-    <CLRSupport Condition=" '$(Framework)' == 'netcoreapp3.1' ">NetCore</CLRSupport>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
-    <CLRSupport Condition=" '$(Framework)' == 'net40' ">true</CLRSupport>
-    <CLRSupport Condition=" '$(Framework)' == 'netcoreapp3.1' ">NetCore</CLRSupport>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
-    <CLRSupport Condition=" '$(Framework)' == 'net40' ">true</CLRSupport>
-    <CLRSupport Condition=" '$(Framework)' == 'netcoreapp3.1' ">NetCore</CLRSupport>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
-    <CLRSupport Condition=" '$(Framework)' == 'net40' ">true</CLRSupport>
-    <CLRSupport Condition=" '$(Framework)' == 'netcoreapp3.1' ">NetCore</CLRSupport>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
@@ -86,37 +94,25 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <OutDir>$(NativeBinBaseDir)</OutDir>
+    <IntDir>$(Platform)\$(Configuration)\$(Framework)\</IntDir>
+  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>false</LinkIncremental>
     <TargetName>vcinet.x86</TargetName>
-    <OutDir>$(SolutionDir)bin\$(Configuration)\$(Framework)\</OutDir>
-    <IntDir>$(Platform)\$(Configuration)\$(Framework)\</IntDir>
-    <LinkKeyFile>..\..\IXXATpublic.snk</LinkKeyFile>
-    <LinkDelaySign>true</LinkDelaySign>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>false</LinkIncremental>
     <TargetName>vcinet.x64</TargetName>
-    <OutDir>$(SolutionDir)bin\$(Configuration)\$(Framework)\</OutDir>
-    <IntDir>$(Platform)\$(Configuration)\$(Framework)\</IntDir>
-    <LinkDelaySign>true</LinkDelaySign>
-    <LinkKeyFile>..\..\IXXATpublic.snk</LinkKeyFile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
     <TargetName>vcinet.x86</TargetName>
-    <OutDir>$(SolutionDir)bin\$(Configuration)\$(Framework)\</OutDir>
-    <IntDir>$(Platform)\$(Configuration)\$(Framework)\</IntDir>
-    <LinkKeyFile>..\..\IXXATpublic.snk</LinkKeyFile>
-    <LinkDelaySign>true</LinkDelaySign>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
     <TargetName>vcinet.x64</TargetName>
-    <OutDir>$(SolutionDir)bin\$(Configuration)\$(Framework)\</OutDir>
-    <IntDir>$(Platform)\$(Configuration)\$(Framework)\</IntDir>
-    <LinkDelaySign>true</LinkDelaySign>
-    <LinkKeyFile>..\..\IXXATpublic.snk</LinkKeyFile>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -285,7 +281,7 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Ixxat.Vci4.Contract">
-      <HintPath>..\..\bin\$(Configuration)\$(Framework)\Ixxat.Vci4.Contract.dll</HintPath>
+      <HintPath>$(BinBaseDir)\Ixxat.Vci4.Contract.dll</HintPath>
     </Reference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -89,7 +89,7 @@ namespace Ixxat.Vci4
       {
         // Absolute assemblyloadpath is given here
         // do not use vcinet subdirectory here
-        assemblyName = + archstr + "\\vcinet." + archstr + ".dll";
+        assemblyName = archstr + "\\vcinet." + archstr + ".dll";
 
         // check if file exists on the user specified path
         archSpecificPath = Path.Combine(assemblyloadpath, assemblyName);

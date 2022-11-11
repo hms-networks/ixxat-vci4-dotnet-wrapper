@@ -4,6 +4,7 @@
       <NativeLibs_x86    Include="$(MSBuildThisFileDirectory)\x86\vcinet.x86.dll" />
     </ItemGroup>
     <Copy SourceFiles="@(NativeLibs_x86)"    DestinationFolder="$(OutDir)\vcinet\x86" />
+  </Target>
   <Target Name="CopyNativeLibs_x64" AfterTargets="Build">
     <ItemGroup>
       <NativeLibs_x64    Include="$(MSBuildThisFileDirectory)\x64\vcinet.x64.dll" />

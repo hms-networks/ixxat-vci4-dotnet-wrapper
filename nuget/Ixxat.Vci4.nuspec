@@ -1,0 +1,83 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>Ixxat.Vci4</id>
+    <version>1.0.0</version>
+    <authors>HMS Networks</authors>
+    <owners>HMS Networks</owners>
+    <license type="expression">MIT</license>
+    <projectUrl>https://github.com/hms-networks/ixxat-vci4-dotnet-wrapper</projectUrl>
+    <icon>images\HMSLogo.png</icon>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Use Ixxat.Vci4 package to access CAN interfaces from Ixxat/HMS Networks via .NET and VCI4-API. This package supports net40/net5.0-windows/net6.0-windows and netcoreapp3.1. Mixed assemblies depend on universal runtime (VCRUNTIME140.dll).</description>
+    <releaseNotes>Resolved issues:
+- Loader: use Assembly.Location instead of deprecated Assembly.EscapedCodeBase
+- support TargetFrameworks net40, net5.0-windows, net6.0-windows and netcoreapp3.1
+- lookup platform specific assembly first in exe path (Assembly.GetEntryAssembly()), then in the path where the loader is located (Assembly.GetCallingAssembly()) (#8111)
+- native components: use PlatformToolset v143 and WindowsTargetPlatformVersion 10.0.22000.0
+- update to VCI4 core revision 246
+    </releaseNotes>
+    <readme>docs\README.md</readme>
+    <repository type="git" url="https://github.com/hms-networks/ixxat-vci4-dotnet-wrapper" branch="main" commit="$SourceRevisionId$" />
+    <copyright>Copyright (C) 2018-2022</copyright>
+    <tags>VCI4 CAN Lin Ixxat HMS</tags>
+    <dependencies>
+      <group targetFramework="net40">
+      </group>
+      <group targetFramework="net5.0-windows10.0">
+      </group>
+      <group targetFramework="net6.0-windows10.0">
+      </group>
+      <group targetFramework="netcoreapp3.1">
+      </group>
+    </dependencies>
+    <references>
+    </references>
+  </metadata>
+  <files>
+    <file src="..\images\HMSLogo.png" target="images\" />
+    <file src="..\README.md" target="docs\" />
+    <file src="build\Ixxat.Vci4.targets" target="build\net40\Ixxat.Vci4.targets" />
+    <file src="build\Ixxat.Vci4.NetCore.targets" target="build\net5.0-windows10.0\Ixxat.Vci4.targets" />
+    <file src="build\Ixxat.Vci4.NetCore.targets" target="build\net6.0-windows10.0\Ixxat.Vci4.targets" />
+    <file src="build\Ixxat.Vci4.NetCore.targets" target="build\netcoreapp3.1\Ixxat.Vci4.targets" />
+    <file src="..\bin\Release\net40\Ixxat.Vci4.dll" target="lib\net40" />
+    <file src="..\bin\Release\net40\Ixxat.Vci4.xml" target="lib\net40" />
+    <file src="..\bin\Release\net40\Ixxat.Vci4.pdb" target="lib\net40" />
+    <file src="..\bin\Release\net40\Ixxat.Vci4.Contract.dll" target="lib\net40" />
+    <file src="..\bin\Release\net40\Ixxat.Vci4.Contract.xml" target="lib\net40" />
+    <file src="..\bin\Release\net40\Ixxat.Vci4.Contract.pdb" target="lib\net40" />
+    <file src="..\bin\Release\net40\vcinet\x86\vcinet.x86.dll" target="build\net40\x86" />
+    <file src="..\bin\Release\net40\vcinet\x64\vcinet.x64.dll" target="build\net40\x64" />
+    <file src="..\bin\Release\net5.0-windows\Ixxat.Vci4.dll" target="lib\net5.0-windows10.0" />
+    <file src="..\bin\Release\net5.0-windows\Ixxat.Vci4.xml" target="lib\net5.0-windows10.0" />
+    <file src="..\bin\Release\net5.0-windows\Ixxat.Vci4.pdb" target="lib\net5.0-windows10.0" />
+    <file src="..\bin\Release\net5.0-windows\Ixxat.Vci4.Contract.dll" target="lib\net5.0-windows10.0" />
+    <file src="..\bin\Release\net5.0-windows\Ixxat.Vci4.Contract.xml" target="lib\net5.0-windows10.0" />
+    <file src="..\bin\Release\net5.0-windows\Ixxat.Vci4.Contract.pdb" target="lib\net5.0-windows10.0" />
+    <file src="..\bin\Release\net5.0-windows\vcinet\x86\vcinet.x86.dll" target="build\net5.0-windows10.0\x86" />
+    <file src="..\bin\Release\net5.0-windows\vcinet\x86\Ijwhost.dll" target="build\net5.0-windows10.0\x86" />
+    <file src="..\bin\Release\net5.0-windows\vcinet\x64\vcinet.x64.dll" target="build\net5.0-windows10.0\x64" />
+    <file src="..\bin\Release\net5.0-windows\vcinet\x64\Ijwhost.dll" target="build\net5.0-windows10.0\x64" />
+    <file src="..\bin\Release\net6.0-windows\Ixxat.Vci4.dll" target="lib\net6.0-windows10.0" />
+    <file src="..\bin\Release\net6.0-windows\Ixxat.Vci4.xml" target="lib\net6.0-windows10.0" />
+    <file src="..\bin\Release\net6.0-windows\Ixxat.Vci4.pdb" target="lib\net6.0-windows10.0" />
+    <file src="..\bin\Release\net6.0-windows\Ixxat.Vci4.Contract.dll" target="lib\net6.0-windows10.0" />
+    <file src="..\bin\Release\net6.0-windows\Ixxat.Vci4.Contract.xml" target="lib\net6.0-windows10.0" />
+    <file src="..\bin\Release\net6.0-windows\Ixxat.Vci4.Contract.pdb" target="lib\net6.0-windows10.0" />
+    <file src="..\bin\Release\net6.0-windows\vcinet\x86\vcinet.x86.dll" target="build\net6.0-windows10.0\x86" />
+    <file src="..\bin\Release\net6.0-windows\vcinet\x86\Ijwhost.dll" target="build\net6.0-windows10.0\x86" />
+    <file src="..\bin\Release\net6.0-windows\vcinet\x64\vcinet.x64.dll" target="build\net6.0-windows10.0\x64" />
+    <file src="..\bin\Release\net6.0-windows\vcinet\x64\Ijwhost.dll" target="build\net6.0-windows10.0\x64" />
+    <file src="..\bin\Release\netcoreapp3.1\Ixxat.Vci4.dll" target="lib\netcoreapp3.1" />
+    <file src="..\bin\Release\netcoreapp3.1\Ixxat.Vci4.xml" target="lib\netcoreapp3.1" />
+    <file src="..\bin\Release\netcoreapp3.1\Ixxat.Vci4.pdb" target="lib\netcoreapp3.1" />
+    <file src="..\bin\Release\netcoreapp3.1\Ixxat.Vci4.Contract.dll" target="lib\netcoreapp3.1" />
+    <file src="..\bin\Release\netcoreapp3.1\Ixxat.Vci4.Contract.xml" target="lib\netcoreapp3.1" />
+    <file src="..\bin\Release\netcoreapp3.1\Ixxat.Vci4.Contract.pdb" target="lib\netcoreapp3.1" />
+    <file src="..\bin\Release\netcoreapp3.1\vcinet\x86\vcinet.x86.dll" target="build\netcoreapp3.1\x86" />
+    <file src="..\bin\Release\netcoreapp3.1\vcinet\x86\Ijwhost.dll" target="build\netcoreapp3.1\x86" />
+    <file src="..\bin\Release\netcoreapp3.1\vcinet\x64\vcinet.x64.dll" target="build\netcoreapp3.1\x64" />
+    <file src="..\bin\Release\netcoreapp3.1\vcinet\x64\Ijwhost.dll" target="build\netcoreapp3.1\x64" />
+  </files>
+</package>

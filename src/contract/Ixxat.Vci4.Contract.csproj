@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>7bcffb2b-75c1-4325-bed2-443d15908221</ProjectGuid>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <TargetFrameworks>net6.0-windows;net5.0-windows;netcoreapp3.1;net40</TargetFrameworks>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <DocumentationFile>Ixxat.Vci4.Contract.xml</DocumentationFile>
+    <LangVersion>8.0</LangVersion>
+    <Nullable>enable</Nullable>
+    <BaseOutputPath>..\..\bin\</BaseOutputPath>
+  </PropertyGroup>
+
+</Project>

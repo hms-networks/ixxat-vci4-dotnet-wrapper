@@ -192,7 +192,9 @@ int CanControl::DetectBaud( UInt16             timeout
     else
       sBtrTab.bCount = CAN_BTR_TABEL_SIZE;
 
-    sBtrTab.bIndex = 0xFF;
+    // according to the docs possible values to init
+    // bIndex are 0 or CAN_OPMODE_LOWSPEED
+    sBtrTab.bIndex = 0x0;
 
     for (UINT8 i = 0; i < sBtrTab.bCount; i++)
     {

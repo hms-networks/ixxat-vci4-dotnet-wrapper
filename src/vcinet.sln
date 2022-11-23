@@ -13,6 +13,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "vcinet", "impl\vcinet.vcxpr
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LinConNet", "samples\LinConNet\LinConNet.csproj", "{7F33D969-FB5B-48F7-B216-2655377A7669}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.Ixxat.Vci4", "test\Test.Ixxat.Vci4\Test.Ixxat.Vci4.csproj", "{FF023EDE-2700-4938-81BC-2A97B2FD1E25}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -83,6 +85,18 @@ Global
 		{7F33D969-FB5B-48F7-B216-2655377A7669}.Release|x64.Build.0 = Release|Any CPU
 		{7F33D969-FB5B-48F7-B216-2655377A7669}.Release|x86.ActiveCfg = Release|Any CPU
 		{7F33D969-FB5B-48F7-B216-2655377A7669}.Release|x86.Build.0 = Release|Any CPU
+		{FF023EDE-2700-4938-81BC-2A97B2FD1E25}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FF023EDE-2700-4938-81BC-2A97B2FD1E25}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FF023EDE-2700-4938-81BC-2A97B2FD1E25}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{FF023EDE-2700-4938-81BC-2A97B2FD1E25}.Debug|x64.Build.0 = Debug|Any CPU
+		{FF023EDE-2700-4938-81BC-2A97B2FD1E25}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{FF023EDE-2700-4938-81BC-2A97B2FD1E25}.Debug|x86.Build.0 = Debug|Any CPU
+		{FF023EDE-2700-4938-81BC-2A97B2FD1E25}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FF023EDE-2700-4938-81BC-2A97B2FD1E25}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FF023EDE-2700-4938-81BC-2A97B2FD1E25}.Release|x64.ActiveCfg = Release|Any CPU
+		{FF023EDE-2700-4938-81BC-2A97B2FD1E25}.Release|x64.Build.0 = Release|Any CPU
+		{FF023EDE-2700-4938-81BC-2A97B2FD1E25}.Release|x86.ActiveCfg = Release|Any CPU
+		{FF023EDE-2700-4938-81BC-2A97B2FD1E25}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

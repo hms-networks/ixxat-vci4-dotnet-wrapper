@@ -1,4 +1,5 @@
 using Ixxat.Vci4;
+using Ixxat.Vci4.Bal.Can;
 
 namespace Vci4Tests
 {
@@ -28,5 +29,26 @@ namespace Vci4Tests
       mgr.Dispose();
     }
 
+    [TestMethod]
+    /// <summary>
+    ///   Test getting the message factory and create a message
+    /// </summary>
+    public void TestGetMsgFactory()
+    {
+      IVciServer? srv = VciServer.Instance();
+      Assert.IsNotNull(srv);
+
+      IMessageFactory factory = srv!.MsgFactory;
+      Assert.IsNotNull(factory);
+
+      ICanMessage? txMessage;
+      txMessage = (ICanMessage)factory.CreateMsg(typeof(ICanMessage));
+      txMessage.Identifier = 100;
+      txMessage.ExtendedFrameFormat = true;
+      txMessage.DataLength = 3;
+      txMessage[0] = 0x01;
+      txMessage[1] = 0x05;
+      txMessage[2] = 0xFF;
+    }
   }
 }

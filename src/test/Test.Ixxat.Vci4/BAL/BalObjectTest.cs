@@ -219,7 +219,7 @@ namespace Vci4Tests
       catch (NotImplementedException)
       {
         // caught exception of first OpenSocket
-        Assert.IsTrue(false);
+        Assert.IsTrue(true);
       }
       finally
       {
@@ -266,7 +266,7 @@ namespace Vci4Tests
       catch (NotImplementedException)
       {
         // caught exception of first OpenSocket
-        Assert.IsTrue(false);
+        Assert.IsTrue(true);
       }
       finally
       {

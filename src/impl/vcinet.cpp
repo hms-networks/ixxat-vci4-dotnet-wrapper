@@ -26,6 +26,9 @@ Vci3FormatErrorDyn Vci3FormatErrorFunc = NULL;
 //*****************************************************************************
 VciServerImpl::VciServerImpl()
 {
+  // create the message factory
+  m_msgFactory = gcnew Ixxat::Vci4::MsgFactory();
+
   Initialize();
 }
 
@@ -133,8 +136,8 @@ void VciServerImpl::Initialize()
   BYTE* versionInfo;
   LPCWSTR szDllName = L"vciapi.dll";
   VS_FIXEDFILEINFO* vsfi = NULL;
-  
-  /* try to access the shared library */
+
+  // try to access the shared library
   if (NULL == hVciLib)
   {
     hVciLib = LoadLibrary(szDllName);
@@ -143,7 +146,7 @@ void VciServerImpl::Initialize()
       throw gcnew FileLoadException(e->Message, "vciapi.dll");
     }
 
-    /* read version information from shared library */
+    // read version information from shared library
     size = GetFileVersionInfoSize(szDllName, &handle);
     if(size > 0)
     {
@@ -191,9 +194,6 @@ void VciServerImpl::Initialize()
     Vci3FormatErrorFunc   = (Vci3FormatErrorDyn)GetProcAddress((HMODULE)hVciLib, "VciFormatError");
 
     hResult = VciInitializeFunc();
-
-    // create message factory singleton
-    m_msgFactory = gcnew Ixxat::Vci4::MsgFactory();
 
     if (hResult != VCI_OK)
     {

@@ -25,25 +25,33 @@ namespace Vci4Tests
     public void TestSetup()
     {
       Ixxat.Vci4.IVciDevice? device = GetDevice();
-      Ixxat.Vci4.Bal.IBalObject bal;
+      Ixxat.Vci4.Bal.IBalObject bal = device!.OpenBusAccessLayer();
 
-      bal = device!.OpenBusAccessLayer();
-
-      mControl = bal!.OpenSocket(0, typeof(Ixxat.Vci4.Bal.Can.ICanControl)) as Ixxat.Vci4.Bal.Can.ICanControl;
-      mControl!.InitLine(CanOperatingModes.Standard | CanOperatingModes.Extended, CanBitrate.Cia500KBit);
-      mControl!.StartLine();
-
-      mScheduler = bal!.OpenSocket(0, typeof(Ixxat.Vci4.Bal.Can.ICanScheduler2)) as Ixxat.Vci4.Bal.Can.ICanScheduler2;
-      if (null == mScheduler)
+      try
       {
+        mControl = bal!.OpenSocket(0, typeof(Ixxat.Vci4.Bal.Can.ICanControl)) as Ixxat.Vci4.Bal.Can.ICanControl;
+        mControl!.InitLine(CanOperatingModes.Standard | CanOperatingModes.Extended, CanBitrate.Cia500KBit);
+        mControl!.StartLine();
+
+        mScheduler = bal!.OpenSocket(0, typeof(Ixxat.Vci4.Bal.Can.ICanScheduler2)) as Ixxat.Vci4.Bal.Can.ICanScheduler2;
+        if (null == mScheduler)
+        {
+          Assert.Inconclusive();
+        }
+      }
+      catch (Exception)
+      {
+        // ICanScheduler is not supported !
         Assert.Inconclusive();
       }
-
-      bal!.Dispose();
-      device!.Dispose();
+      finally
+      {
+        bal!.Dispose();
+        device!.Dispose();
+      }
     }
 
-    [TestCleanup]
+      [TestCleanup]
     public void TestCleanup()
     {
       if (null != mScheduler)
@@ -306,7 +314,7 @@ namespace Vci4Tests
 
       message.CycleTicks = 1;
 
-      message.DataLength = 9;
+      message.DataLength = 100;
     }
 
     #endregion
@@ -515,7 +523,7 @@ namespace Vci4Tests
 
     [TestMethod]
     /// <summary>
-    ///   Test property Indexer invalid read access >7
+    ///   Test property Indexer invalid read access >63
     /// </summary>
     [ExpectedException(typeof(ArgumentOutOfRangeException))]
     public void IndexerInvalidReadAccess()
@@ -523,7 +531,7 @@ namespace Vci4Tests
       ICanCyclicTXMsg2 message;
       message = mScheduler!.AddMessage();
 
-      byte refValue = message[8];
+      byte refValue = message[100];
     }
 
     [TestMethod]
@@ -567,7 +575,7 @@ namespace Vci4Tests
 
     [TestMethod]
     /// <summary>
-    ///   Test property Indexer invalid write access >7
+    ///   Test property Indexer invalid write access >63
     /// </summary>
     [ExpectedException(typeof(ArgumentOutOfRangeException))]
     public void IndexerInvalidWriteAccess()
@@ -575,7 +583,7 @@ namespace Vci4Tests
       ICanCyclicTXMsg2 message;
       message = mScheduler!.AddMessage();
 
-      message[8] = 5; 
+      message[100] = 5; 
     }
 
     [TestMethod]

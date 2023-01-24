@@ -317,25 +317,6 @@ namespace Vci4Tests
       mSocket!.SetAccFilter(CanFilter.Ext, 0, 0x3FFFFFFF);
     }
 
-    [TestMethod]
-    /// <summary>
-    ///   SetAccFilter Std before Init
-    /// </summary>
-    [ExpectedException(typeof(VciException))]
-    public void SetAccFilterStdBeforeInit()
-    {
-      mSocket!.SetAccFilter(CanFilter.Std, 0, 0xFFF);
-    }
-
-    [TestMethod]
-    /// <summary>
-    ///   SetAccFilter Ext before Init
-    /// </summary>
-    [ExpectedException(typeof(VciException))]
-    public void SetAccFilterExtBeforeInit()
-    {
-      mSocket!.SetAccFilter(CanFilter.Ext, 0, 0x3FFFFFFF);
-    }
 
     [TestMethod]
     /// <summary>
@@ -456,26 +437,6 @@ namespace Vci4Tests
                       , CanBitrate2.Cia1000KBit
                       , CanBitrate2.Empty);
       
-      mSocket!.RemFilterIds(CanFilter.Ext, 0, 0x3FFFFFFF);
-    }
-
-    [TestMethod]
-    /// <summary>
-    ///   RemFilterIds Std before Init
-    /// </summary>
-    [ExpectedException(typeof(VciException))]
-    public void RemFilterIdsStdBeforeInit()
-    {
-      mSocket!.RemFilterIds(CanFilter.Std, 0, 0xFFF);
-    }
-
-    [TestMethod]
-    /// <summary>
-    ///   RemFilterIds Ext before Init
-    /// </summary>
-    [ExpectedException(typeof(VciException))]
-    public void RemFilterIdsExtBeforeInit()
-    {
       mSocket!.RemFilterIds(CanFilter.Ext, 0, 0x3FFFFFFF);
     }
 

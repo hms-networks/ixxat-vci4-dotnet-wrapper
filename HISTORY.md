@@ -1,5 +1,11 @@
 # Open source releases
 
+## 4.1.1	24/01/2023
+
+- Use correct value to initialize CANBTRTABLE.bIndex attribute before calling ICanControl::DetectBaud()
+- Add mstest based unittests
+- Move msgfactory creation to the VciServerImpl ctor as it should not depend on the load state of the vciapi.dll
+
 ## 4.1.0	11/11/2022
 
 First open source version (MIT license)

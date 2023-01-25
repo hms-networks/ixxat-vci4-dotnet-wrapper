@@ -11,15 +11,13 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Use Ixxat.Vci4 package to access CAN interfaces from Ixxat/HMS Networks via .NET and VCI4-API. This package provides strongly named assemblies and supports net40/net5.0-windows/net6.0-windows and netcoreapp3.1. Mixed assemblies depend on universal runtime (VCRUNTIME140.dll).</description>
     <releaseNotes>Resolved issues:
-- Loader: use Assembly.Location instead of deprecated Assembly.EscapedCodeBase
-- support TargetFrameworks net40, net5.0-windows, net6.0-windows and netcoreapp3.1
-- lookup platform specific assembly first in exe path (Assembly.GetEntryAssembly()), then in the path where the loader is located (Assembly.GetCallingAssembly()) (#8111)
-- native components: use PlatformToolset v143 and WindowsTargetPlatformVersion 10.0.22000.0
-- update to VCI4 core revision 246
+- Use correct value to initialize CANBTRTABLE.bIndex attribute before calling ICanControl::DetectBaud()
+- Add mstest based unittests
+- Move msgfactory creation to the VciServerImpl ctor as it should not depend on the load state of the vciapi.dll
     </releaseNotes>
     <readme>docs\README.md</readme>
     <repository type="git" url="https://github.com/hms-networks/ixxat-vci4-dotnet-wrapper" branch="main" commit="$SourceRevisionId$" />
-    <copyright>Copyright (C) 2018-2022</copyright>
+    <copyright>Copyright (C) 2018-2023</copyright>
     <tags>VCI4 CAN Lin Ixxat HMS strongname</tags>
     <dependencies>
       <group targetFramework="net40">

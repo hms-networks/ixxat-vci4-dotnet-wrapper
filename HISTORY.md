@@ -1,5 +1,9 @@
 # Open source releases
 
+## 4.1.2	26/07/2023
+
+- fix heuristic in VciDevice::UniqueHardwareId::get() which tries to identify the hardware id format (GUID or string) because the implementation did not treat HMS serial numbers as strings
+
 ## 4.1.1	24/01/2023
 
 - Use correct value to initialize CANBTRTABLE.bIndex attribute before calling ICanControl::DetectBaud()

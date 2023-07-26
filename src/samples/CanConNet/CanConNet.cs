@@ -257,8 +257,7 @@ namespace CanConNet
           Console.Write(" CtrlType   : {0}\n", info.ControllerType);
 
           // show the device name and serial number
-          object serialNumberGuid = mDevice.UniqueHardwareId;
-          string serialNumberText = GetSerialNumberText(ref serialNumberGuid);
+          string serialNumberText = mDevice.UniqueHardwareId.ToString() ?? "<device id not available>";
           Console.Write(" Interface    : " + mDevice.Description + "\n");
           Console.Write(" Serial number: " + serialNumberText + "\n");
 
@@ -611,60 +610,6 @@ namespace CanConNet
     #endregion
 
     #region Utility methods
-
-    /// <summary>
-    /// Returns the UniqueHardwareID GUID number as string which
-    /// shows the serial number.
-    /// Note: This function will be obsolete in later version of the VCI.
-    /// Until VCI Version 3.1.4.1784 there is a bug in the .NET API which
-    /// returns always the GUID of the interface. In later versions there
-    /// the serial number itself will be returned by the UniqueHardwareID property.
-    /// </summary>
-    /// <param name="serialNumberGuid">Data read from the VCI.</param>
-    /// <returns>The GUID as string or if possible the  serial number as string.</returns>
-    static string GetSerialNumberText(ref object serialNumberGuid)
-    {
-      string resultText = "";
-
-      // check if the object is really a GUID type
-      if (serialNumberGuid.GetType() == typeof(System.Guid))
-      {
-        // convert the object type to a GUID
-        System.Guid tempGuid = (System.Guid)serialNumberGuid;
-
-        // copy the data into a byte array
-        byte[] byteArray = tempGuid.ToByteArray();
-
-        for (int idx = 0; idx < byteArray.Length; idx++)
-        {
-          System.Char ch = (Char)byteArray[idx];
-          if (0 == ch)
-            break;
-
-          if (!Char.IsControl(ch))
-            resultText.Append(ch);
-        }
-      }
-      else
-      {
-        // if the data is not a GUID convert it to a string
-        string? tempString = serialNumberGuid.ToString();
-        if (null != tempString)
-        {
-          resultText = "";
-          for (int i = 0; i < tempString.Length; i++)
-          {
-            if (tempString[i] != 0)
-              resultText += tempString[i];
-            else
-              break;
-          }
-        }
-      }
-
-      return resultText;
-    }
-
 
     //************************************************************************
     /// <summary>

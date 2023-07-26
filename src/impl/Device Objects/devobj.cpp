@@ -206,11 +206,21 @@ Version^ VciDevice::HardwareVersion::get()
 
 //*****************************************************************************
 /// <summary>
-///   Gets the unique ID of the adapter. Each adapter has a unique ID that can 
-///   be used to distinguish between two PC-I04/PCI cards, for example. 
-///   Because this value can be either a GUID or a string with the serial 
-///   number the retrieved value is either a string reference or a boxed Guid 
-///   instance. 
+///   Gets the unique ID of the adapter. Each adapter has a unique ID that can
+///   be used to distinguish two VCI devices.
+///   Because this value can be either a GUID or a string with the serial
+///   number the retrieved value is either a string reference or a boxed Guid
+///   instance.
+///   Ixxat hardware IDs had a "HW" prefix followed by a decimal number,
+///   but current devices use a 8 digit hexadecimal number.
+///   The function uses the following heuristic to determine if the hardware ID is
+///   a GUID or maybe could expressed as a string:
+///     - cut off trailing zeros
+///     - check the rest for non printable character
+///     - if ther are non printable character contained use Guid,
+///       otherwise interpret the hardware ID string
+///   Note that there is a chance that a hardware ID that is originally meant to be
+///   GUID is interpreted as a string.
 /// </summary>
 /// <returns>
 ///   Unique hardware id of the device.
@@ -228,14 +238,28 @@ Object^ VciDevice::UniqueHardwareId::get()
     throw gcnew ObjectDisposedException(this->GetType()->FullName);
   }
 
-  if ( ('H' == m_psDevInf->UniqueHardwareId.AsChar[0]) &&
-       ('W' == m_psDevInf->UniqueHardwareId.AsChar[1]) )
+  // find last non 0 character
+  int lastidx;
+  for (lastidx = ARRAYSIZE(m_psDevInf->UniqueHardwareId.AsChar) - 1; lastidx >= 0; --lastidx)
   {
-    rHardwareId = gcnew String( m_psDevInf->UniqueHardwareId.AsChar
-                              , 0
-                              , sizeof(m_psDevInf->UniqueHardwareId.AsChar));
+     if (m_psDevInf->UniqueHardwareId.AsChar[lastidx] != '\0')
+      break;
   }
-  else
+
+  // check for non printable characters
+  bool foundnpchar = false;
+  for (int npcharindex = lastidx; npcharindex >= 0; --npcharindex)
+  {
+    if (!isprint(m_psDevInf->UniqueHardwareId.AsChar[npcharindex]))
+    {
+      foundnpchar = true;
+      break;
+    }
+  }
+
+  // lastidx == 0, means we have a GUID_NULL -> GUID
+  // found a non printable character -> GUID
+  if ((0 == lastidx) || foundnpchar)
   {
     rHardwareId = System::Guid( m_psDevInf->UniqueHardwareId.AsGuid.Data1,
                                 m_psDevInf->UniqueHardwareId.AsGuid.Data2,
@@ -248,7 +272,13 @@ Object^ VciDevice::UniqueHardwareId::get()
                                 m_psDevInf->UniqueHardwareId.AsGuid.Data4[5],
                                 m_psDevInf->UniqueHardwareId.AsGuid.Data4[6],
                                 m_psDevInf->UniqueHardwareId.AsGuid.Data4[7] );
-  } 
+  }
+  else
+  {
+    rHardwareId = gcnew String( m_psDevInf->UniqueHardwareId.AsChar
+                              , 0
+                              , lastidx + 1);
+  }
 
   return rHardwareId;
 }

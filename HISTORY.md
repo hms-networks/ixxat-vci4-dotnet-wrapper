@@ -1,5 +1,9 @@
 # Open source releases
 
+## 4.1.3	05/10/2023
+
+- support dotnet publish command: fix deploy to PublishDir with additional targets in .target files
+
 ## 4.1.2	26/07/2023
 
 - fix heuristic in VciDevice::UniqueHardwareId::get() which tries to identify the hardware id format (GUID or string) because the implementation did not treat HMS serial numbers as strings

@@ -1,5 +1,9 @@
 # Open source releases
 
+## 4.1.4	16/10/2023
+
+- use unique target names for Publish and Build targets to avoid first target to be skipped
+
 ## 4.1.3	05/10/2023
 
 - support dotnet publish command: fix deploy to PublishDir with additional targets in .target files

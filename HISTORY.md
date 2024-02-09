@@ -1,5 +1,11 @@
 # Open source releases
 
+## 4.1.5	09/02/2024
+
+- fix CanCyclicTXMsg2::AutoIncrementIndex maximum check (CANFD data len, 0..63)
+- update sample to set cyclicMsg.AutoIncrementMode
+- fix internal dirty flag handling in cyclic message objects: setting the same AutoIncrementMode cleared the internal dirty flag and led to msg start to fail
+
 ## 4.1.4	16/10/2023
 
 - use unique target names for Publish and Build targets to avoid first target to be skipped

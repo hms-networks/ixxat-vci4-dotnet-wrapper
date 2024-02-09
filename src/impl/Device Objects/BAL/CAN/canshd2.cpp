@@ -293,7 +293,7 @@ Byte CanCyclicTXMsg2::AutoIncrementIndex::get()
 //*****************************************************************************
 void CanCyclicTXMsg2::AutoIncrementIndex::set(Byte index)
 {
-  if (index < 8)
+  if (index < 64)
   {
     m_isDirty |= (m_CanMsg.bByteIndex != index);
     m_CanMsg.bByteIndex = index;

@@ -150,19 +150,54 @@ namespace Vci4Tests
 
     [TestMethod]
     /// <summary>
-    ///   Test property AutoIncrementIndex invalid write access
+    ///   Test property DataLength invalid data length
     /// </summary>
-    [ExpectedException(typeof(ArgumentOutOfRangeException))]
-    public void AutoIncrementIndexInvalidWriteAccess()
+    public void DataLengthValidDataLength()
     {
       ICanCyclicTXMsg2 message;
       message = mScheduler!.AddMessage();
 
-      message.CycleTicks = 1;
-
-      message.AutoIncrementIndex = 9;
+      message.DataLength = 64;
     }
 
+    [TestMethod]
+    /// <summary>
+    ///   Test property DataLength invalid data length
+    /// </summary>
+    [ExpectedException(typeof(ArgumentOutOfRangeException))]
+    public void DataLengthInvalidDataLength()
+    {
+      ICanCyclicTXMsg2 message;
+      message = mScheduler!.AddMessage();
+
+      message.DataLength = 65;
+    }
+
+    [TestMethod]
+    /// <summary>
+    ///   Test property AutoIncrementIndex invalid index
+    /// </summary>
+    [ExpectedException(typeof(ArgumentOutOfRangeException))]
+    public void AutoIncrementIndexInvalidIndex()
+    {
+      ICanCyclicTXMsg2 message;
+      message = mScheduler!.AddMessage();
+
+      message.AutoIncrementIndex = 64;
+    }
+
+    [TestMethod]
+    /// <summary>
+    ///   Test property AutoIncrementIndex valid indices
+    /// </summary>
+    public void AutoIncrementIndexValidIndex()
+    {
+      ICanCyclicTXMsg2 message;
+      message = mScheduler!.AddMessage();
+
+      message.AutoIncrementIndex = 0;
+      message.AutoIncrementIndex = 63;
+    }
 
     #endregion
 

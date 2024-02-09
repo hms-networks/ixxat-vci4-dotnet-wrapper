@@ -126,6 +126,7 @@ namespace CanConNet
             //
             cyclicMsg = mCanSched.AddMessage();
 
+            cyclicMsg.AutoIncrementMode = CanCyclicTXIncMode.NoInc;
             cyclicMsg.Identifier = 200;
             cyclicMsg.CycleTicks = 100;
             cyclicMsg.DataLength = 8;

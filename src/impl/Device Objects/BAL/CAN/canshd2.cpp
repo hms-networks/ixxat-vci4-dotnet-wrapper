@@ -190,7 +190,7 @@ UInt16 CanCyclicTXMsg2::CycleTicks::get()
 //*****************************************************************************
 void CanCyclicTXMsg2::CycleTicks::set(UInt16 ticks)
 {
-  m_isDirty = (m_CanMsg.wCycleTime != ticks);
+  m_isDirty |= (m_CanMsg.wCycleTime != ticks);
   m_CanMsg.wCycleTime = ticks;
 }
 
@@ -232,7 +232,7 @@ CanCyclicTXIncMode CanCyclicTXMsg2::AutoIncrementMode::get()
 //*****************************************************************************
 void CanCyclicTXMsg2::AutoIncrementMode::set(CanCyclicTXIncMode mode)
 {
-  m_isDirty = (m_CanMsg.bIncrMode != (UINT8) mode);
+  m_isDirty |= (m_CanMsg.bIncrMode != (UINT8) mode);
   m_CanMsg.bIncrMode = (UINT8) mode;
 }
 
@@ -295,7 +295,7 @@ void CanCyclicTXMsg2::AutoIncrementIndex::set(Byte index)
 {
   if (index < 8)
   {
-    m_isDirty = (m_CanMsg.bByteIndex != index);
+    m_isDirty |= (m_CanMsg.bByteIndex != index);
     m_CanMsg.bByteIndex = index;
   }
   else

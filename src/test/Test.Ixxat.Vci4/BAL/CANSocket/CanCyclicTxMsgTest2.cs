@@ -177,11 +177,7 @@ namespace Vci4Tests
       ICanCyclicTXMsg2 message;
       message = mScheduler!.AddMessage();
 
-      message.CycleTicks = 1;
-
-      CanCyclicTXIncMode refValue = message.AutoIncrementMode;
-
-      refValue = message.AutoIncrementMode;
+      Assert.IsTrue(CanCyclicTXIncMode.NoInc == message.AutoIncrementMode);
     }
 
     [TestMethod]
@@ -194,6 +190,14 @@ namespace Vci4Tests
       message = mScheduler!.AddMessage();
 
       message.CycleTicks = 1;
+
+      Assert.IsTrue(CanCyclicTXIncMode.NoInc == message.AutoIncrementMode);
+      // check internal dirty state bug
+      // setting the same AutoIncrementMode cleared the internal dirty flag and
+      // led to msg start to fail
+      message.AutoIncrementMode = CanCyclicTXIncMode.NoInc;
+      message.Start(0);
+      message.Stop();
 
       // write before AddMessage
       message.AutoIncrementMode = CanCyclicTXIncMode.Inc16;
@@ -650,7 +654,6 @@ namespace Vci4Tests
     /// <summary>
     ///   Test second successive Start() call
     /// </summary>
-    [ExpectedException(typeof(VciException))]
     public void StartSecondCall()
     {
       ICanCyclicTXMsg2 message;

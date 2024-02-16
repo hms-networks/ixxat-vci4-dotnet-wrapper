@@ -10,7 +10,7 @@ using Ixxat.Vci4.Bal.Can;
 namespace Vci4Tests
 {
   [TestClass]
-  class CanChannelTest2
+  public class CanChannelTest2
     : VciDeviceTestBase
   {
     #region Member variables

@@ -10,7 +10,6 @@ using Ixxat.Vci4.Bal.Lin;
 namespace Vci4Tests
 {
   [TestClass]
-  //[Ignore]
   public class LinControlTest
     : VciDeviceTestBase
   {

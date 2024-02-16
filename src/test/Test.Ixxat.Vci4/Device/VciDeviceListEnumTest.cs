@@ -8,7 +8,7 @@ using Ixxat.Vci4;
 namespace Vci4Tests
 {
   [TestClass]
-  class VciDeviceListEnumTest
+  public class VciDeviceListEnumTest
   {
     #region Member variables
 

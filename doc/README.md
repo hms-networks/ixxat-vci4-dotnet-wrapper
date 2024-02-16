@@ -43,7 +43,7 @@ NetCore targets need a special .NET Core app host DLL (ijwhost.dll)
 which is target specific. For more information see
 https://learn.microsoft.com/en-us/dotnet/core/porting/cpp-cli
 
-To keep this DLL and the native components they are copied into a 
+To keep this DLL and the native components together they are located in a 
 separate vcinet subdirectory and loaded from there dynamically.
 
 So the layout of the target bin directory is as follows:
@@ -52,11 +52,17 @@ So the layout of the target bin directory is as follows:
         Ixxat.Vci4.dll
         Ixxat.Vci4.Contract.dll
         /vcinet
-            Ijwhost.dll       (not for net40)
-            vcinet.x64.dll
-            vcinet.x86.dll
+            /x64
+              Ijwhost.dll       (not for net40)
+              vcinet.x64.dll
+            /x86
+              Ijwhost.dll       (not for net40)
+              vcinet.x86.dll
 
 The app will reference Ixxat.Vci4.dll and Ixxat.Vci4.Contract.dll,
 vcinet.x64.dll or vcinet.x86.dll are loaded on demand depending on the platform
 the app is running on.
+By default this path is below a directory (/vcinet/<platform>) where the Ixxat.Vci4.dll is placed,
+but VciServer.Instance() takes a parameter for the basepath you want to load the 
+native components from.
 

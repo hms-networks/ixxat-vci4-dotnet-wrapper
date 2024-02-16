@@ -10,7 +10,6 @@ using Ixxat.Vci4.Bal.Can;
 namespace Vci4Tests
 {
   [TestClass]
-  //[Ignore]
   public class CanSocketTest2
     : VciDeviceTestBase
   {

@@ -5,7 +5,7 @@
 //            all rights reserved
 //----------------------------------------------------------------------------
 
-namespace Ixxat.Vci4 
+namespace Ixxat.Vci4
 {
   using System;
   using System.IO;
@@ -27,7 +27,7 @@ namespace Ixxat.Vci4
     //--------------------------------------------------------------------
 
     // The singleton VciServer instance
-    private static IVciServer?           ms_instance = null;
+    private static IVciServer? ms_instance = null;
 
     //*****************************************************************************
     /// <summary>

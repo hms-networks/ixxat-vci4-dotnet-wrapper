@@ -47,7 +47,7 @@ If you want to create a strong named version add the AssemblyKeyFile parameter
 
     PS> .\build.ps1 -Version=4.1.0 -AssemblyKeyFile=mykeyfile.snk
 
-For more information have a look at the build script .\build.ps1 and the msbuild project .\vci4net.prj.
+For more information have a look at the build script .\build.ps1
 
 ### Prerequisites
 

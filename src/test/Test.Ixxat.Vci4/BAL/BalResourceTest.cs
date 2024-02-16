@@ -9,7 +9,7 @@ using Ixxat.Vci4.Bal;
 namespace Vci4Tests
 {
   [TestClass]
-  class BalResourceTest
+  public class BalResourceTest
     : VciDeviceTestBase
   {
     #region Member variables

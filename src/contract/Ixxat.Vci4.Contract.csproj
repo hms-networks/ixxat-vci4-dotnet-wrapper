@@ -13,6 +13,8 @@
     <LangVersion>8.0</LangVersion>
     <Nullable>enable</Nullable>
     <BaseOutputPath>..\..\bin\</BaseOutputPath>
+    <SignAssembly>$(BuildSignAssembly)</SignAssembly>
+    <AssemblyOriginatorKeyFile>$(BuildAssemblyKeyFile)</AssemblyOriginatorKeyFile>
   </PropertyGroup>
 
 </Project>

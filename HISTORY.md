@@ -1,5 +1,10 @@
 # Open source releases
 
+## 4.1.6	16/02/2024
+
+- fix signing of StrongName variant
+- move build logic trom  msbuild .prj file to build.ps1
+
 ## 4.1.5	09/02/2024
 
 - fix CanCyclicTXMsg2::AutoIncrementIndex maximum check (CANFD data len, 0..63)

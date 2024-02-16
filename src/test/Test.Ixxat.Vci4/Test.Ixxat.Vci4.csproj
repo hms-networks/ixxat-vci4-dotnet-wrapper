@@ -6,6 +6,8 @@
     <Nullable>enable</Nullable>
     <IsPackable>false</IsPackable>
     <BaseOutputPath>..\..\..\bin\</BaseOutputPath>
+    <SignAssembly>$(BuildSignAssembly)</SignAssembly>
+    <AssemblyOriginatorKeyFile>$(BuildAssemblyKeyFile)</AssemblyOriginatorKeyFile>
   </PropertyGroup>
 
   <ItemGroup>

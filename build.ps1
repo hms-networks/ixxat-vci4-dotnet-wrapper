@@ -141,10 +141,16 @@ function RebuildVSProject {
         $Env:BuildAssemblyKeyFile = ""
     }
 
-    # rebuild managed components
-    & "$MSBuild" "src\contract\Ixxat.Vci4.Contract.csproj" -t:Rebuild -p:Configuration="Release"
-    & "$MSBuild" "src\loader\Ixxat.Vci4.csproj" -t:Rebuild -p:Configuration="Release"
+    $ContractProject = "src\contract\Ixxat.Vci4.Contract.csproj"
+    $LoaderProject = "src\loader\Ixxat.Vci4.csproj"
 
+    # restore nuget packages
+    & "dotnet.exe" restore $ContractProject
+    & "dotnet.exe" restore $LoaderProject
+
+    # rebuild managed components
+    & "$MSBuild" $ContractProject -t:Rebuild -p:Configuration="Release"
+    & "$MSBuild" $LoaderProject -t:Rebuild -p:Configuration="Release"
 
     # rebuild mixed assemblies
     $frameworks = @( "net40", "netcoreapp3.1", "net5.0-windows", "net6.0-windows" )

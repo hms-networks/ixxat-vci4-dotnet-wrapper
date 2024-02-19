@@ -5,11 +5,12 @@ using System.Threading;
 using Ixxat.Vci4;
 using Ixxat.Vci4.Bal;
 using Ixxat.Vci4.Bal.Can;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Vci4Tests
 {
   [TestClass]
-  class CanChannelStatusTest2
+  public class CanChannelStatusTest2
     : VciDeviceTestBase
   {
     #region Member variables
@@ -29,7 +30,7 @@ namespace Vci4Tests
       // clear the receive message queue
       ICanMessage rxMessage;
 
-      while (mReader!.ReadMessage(out rxMessage))
+      while (mReader.ReadMessage(out rxMessage))
       {
         // if (MustTerminate)
         // { return; }
@@ -39,25 +40,25 @@ namespace Vci4Tests
     [TestInitialize]
     public void TestSetup()
     {
-      Ixxat.Vci4.IVciDevice? device = GetDevice();
-      Ixxat.Vci4.Bal.IBalObject? bal;
-      Ixxat.Vci4.Bal.Can.ICanChannel? socket;
-      Ixxat.Vci4.Bal.Can.ICanMessageReader? reader;
+      Ixxat.Vci4.IVciDevice device = GetDevice();
+      Ixxat.Vci4.Bal.IBalObject bal;
+      Ixxat.Vci4.Bal.Can.ICanChannel socket;
+      Ixxat.Vci4.Bal.Can.ICanMessageReader reader;
 
-      bal = device!.OpenBusAccessLayer();
-      socket = bal!.OpenSocket(0, typeof(Ixxat.Vci4.Bal.Can.ICanChannel)) as Ixxat.Vci4.Bal.Can.ICanChannel;
-      socket!.Initialize(10, 10, false);
-      socket!.Activate();
+      bal = device.OpenBusAccessLayer();
+      socket = bal.OpenSocket(0, typeof(Ixxat.Vci4.Bal.Can.ICanChannel)) as Ixxat.Vci4.Bal.Can.ICanChannel;
+      socket.Initialize(10, 10, false);
+      socket.Activate();
 
-      reader = socket!.GetMessageReader();
+      reader = socket.GetMessageReader();
       ClearRxFifo(reader);
 
-      mStatus = socket!.ChannelStatus;
+      mStatus = socket.ChannelStatus;
 
-      reader!.Dispose();
-      socket!.Dispose();
-      bal!.Dispose();
-      device!.Dispose();
+      reader.Dispose();
+      socket.Dispose();
+      bal.Dispose();
+      device.Dispose();
     }
         
     #endregion

@@ -1,23 +1,94 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
-
+﻿<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <TargetFramework>net6.0-windows</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-    <IsPackable>false</IsPackable>
-    <BaseOutputPath>..\..\..\bin\</BaseOutputPath>
+    <Framework Condition=" '$(Framework)' == '' ">net35</Framework>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{D56306E3-1EDB-4A6F-8C7B-695FDA9F0214}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Test.Ixxat.Vci4</RootNamespace>
+    <AssemblyName>Test.Ixxat.Vci4</AssemblyName>
+    <TargetFrameworkVersion Condition=" '$(Framework)' == 'net20' ">v2.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion Condition=" '$(Framework)' == 'net35' ">v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
   </PropertyGroup>
-
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\..\bin\$(Configuration)\$(Framework)\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\..\..\bin\$(Configuration)\$(Framework)\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.1.0" />
-    <PackageReference Include="MSTest.TestAdapter" Version="2.2.8" />
-    <PackageReference Include="MSTest.TestFramework" Version="2.2.8" />
-    <PackageReference Include="coverlet.collector" Version="3.1.2" />
+    <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework Condition=" '$(Framework)' == 'net20' ">2.0</RequiredTargetFramework>
+      <RequiredTargetFramework Condition=" '$(Framework)' == 'net35' ">3.5</RequiredTargetFramework>
+    </Reference>
   </ItemGroup>
-
   <ItemGroup>
-    <ProjectReference Include="..\..\contract\Ixxat.Vci4.Contract.csproj" />
-    <ProjectReference Include="..\..\loader\Ixxat.Vci4.csproj" />
+    <Compile Include="BAL\BalObjectTest.cs" />
+    <Compile Include="BAL\BalResourceColTest.cs" />
+    <Compile Include="BAL\BalResourceTest.cs" />
+    <Compile Include="BAL\CANSocket\CanChannelStatusTest.cs" />
+    <Compile Include="BAL\CANSocket\CanChannelStatusTest2.cs" />
+    <Compile Include="BAL\CANSocket\CanChannelTest.cs" />
+    <Compile Include="BAL\CANSocket\CanChannelTest2.cs" />
+    <Compile Include="BAL\CANSocket\CanControlTest.cs" />
+    <Compile Include="BAL\CANSocket\CanControlTest2.cs" />
+    <Compile Include="BAL\CANSocket\CanCyclicTxMsgTest.cs" />
+    <Compile Include="BAL\CANSocket\CanCyclicTxMsgTest2.cs" />
+    <Compile Include="BAL\CANSocket\CanLineStatusTest.cs" />
+    <Compile Include="BAL\CANSocket\CanLineStatusTest2.cs" />
+    <Compile Include="BAL\CANSocket\CanMessageReaderTest.cs" />
+    <Compile Include="BAL\CANSocket\CanMessageTest.cs" />
+    <Compile Include="BAL\CANSocket\CanMessageWriterTest.cs" />
+    <Compile Include="BAL\CANSocket\CanSchedulerTest.cs" />
+    <Compile Include="BAL\CANSocket\CanSchedulerTest2.cs" />
+    <Compile Include="BAL\CANSocket\CanSocketTest.cs" />
+    <Compile Include="BAL\CANSocket\CanSocketTest2.cs" />
+    <Compile Include="BAL\LINSocket\LinControlTest.cs" />
+    <Compile Include="BAL\LINSocket\LinMessageReaderTest.cs" />
+    <Compile Include="BAL\LINSocket\LinMonitorTest.cs" />
+    <Compile Include="BAL\LINSocket\LinSocketTest.cs" />
+    <Compile Include="Device\VciDeviceListEnumTest.cs" />
+    <Compile Include="Device\VciDeviceListTest.cs" />
+    <Compile Include="Device\VciDeviceMgrTest.cs" />
+    <Compile Include="Device\VciDeviceTest.cs" />
+    <Compile Include="Device\VciDeviceTestBase.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="VciServerTests.cs" />
   </ItemGroup>
-
+  <ItemGroup>
+    <ProjectReference Include="..\..\contract\Ixxat.Vci4.Contract.csproj">
+      <Project>{7BCFFB2B-75C1-4325-BED2-443D15908221}</Project>
+      <Name>Ixxat.Vci4.Contract</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\loader\Ixxat.Vci4.csproj">
+      <Project>{9D72BA0C-20BF-41FE-AB1F-FBCA3A212E76}</Project>
+      <Name>Ixxat.Vci4</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
 </Project>

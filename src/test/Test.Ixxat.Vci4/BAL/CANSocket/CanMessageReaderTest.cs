@@ -5,18 +5,19 @@ using System.Threading;
 using Ixxat.Vci4;
 using Ixxat.Vci4.Bal;
 using Ixxat.Vci4.Bal.Can;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 
 namespace Vci4Tests
 {
   [TestClass]
-  class CanMessageReaderTest
+  public class CanMessageReaderTest
     : VciDeviceTestBase
   {
     #region Member variables
 
-    private Ixxat.Vci4.Bal.Can.ICanChannel? mSocket;
-    private Ixxat.Vci4.Bal.Can.ICanMessageReader? mReader;
+    private Ixxat.Vci4.Bal.Can.ICanChannel mSocket;
+    private Ixxat.Vci4.Bal.Can.ICanMessageReader mReader;
 
     #endregion
     
@@ -33,7 +34,7 @@ namespace Vci4Tests
       // clear the receive message queue
       ICanMessage rxMessage;
 
-      while (mReader!.ReadMessage(out rxMessage))
+      while (mReader.ReadMessage(out rxMessage))
       {
         // if (MustTerminate)
         // { return; }
@@ -43,20 +44,20 @@ namespace Vci4Tests
     [TestInitialize]
     public void TestSetup()
     {
-      Ixxat.Vci4.IVciDevice? device = GetDevice();
-      Ixxat.Vci4.Bal.IBalObject? bal = device!.OpenBusAccessLayer();
+      Ixxat.Vci4.IVciDevice device = GetDevice();
+      Ixxat.Vci4.Bal.IBalObject bal = device.OpenBusAccessLayer();
 
-      mSocket = bal!.OpenSocket(0, typeof(Ixxat.Vci4.Bal.Can.ICanChannel)) as Ixxat.Vci4.Bal.Can.ICanChannel;
-      mSocket!.Initialize(10, 10, false);
-      mSocket!.Activate();
+      mSocket = bal.OpenSocket(0, typeof(Ixxat.Vci4.Bal.Can.ICanChannel)) as Ixxat.Vci4.Bal.Can.ICanChannel;
+      mSocket.Initialize(10, 10, false);
+      mSocket.Activate();
 
       // clear the receive message queue
-      mReader = mSocket!.GetMessageReader();
+      mReader = mSocket.GetMessageReader();
       ClearRxFifo(mReader);
-      mReader!.Dispose();
+      mReader.Dispose();
 
-      bal!.Dispose();
-      device!.Dispose();
+      bal.Dispose();
+      device.Dispose();
     }
 
     [TestCleanup]
@@ -64,12 +65,12 @@ namespace Vci4Tests
     {
       if (null != mReader)
       {
-        mReader!.Dispose();
+        mReader.Dispose();
         mReader = null;
       }
       if (null != mSocket)
       {
-        mSocket!.Dispose();
+        mSocket.Dispose();
         mSocket = null;
       }
     }
@@ -84,9 +85,9 @@ namespace Vci4Tests
     /// </summary>
     public void CapacityIsConstant()
     {
-      ushort refValue = mReader!.Capacity;
+      ushort refValue = mReader.Capacity;
       
-      ushort testValue = mReader!.Capacity;
+      ushort testValue = mReader.Capacity;
       Assert.IsTrue(refValue == testValue);
     }
 
@@ -96,8 +97,8 @@ namespace Vci4Tests
     /// </summary>
     public void CapacityMustNotThrowObjectDisposedException()
     {
-      mReader!.Dispose();
-      ushort refValue = mReader!.Capacity;
+      mReader.Dispose();
+      ushort refValue = mReader.Capacity;
       Assert.IsTrue(0 == refValue);
     }
 
@@ -111,9 +112,9 @@ namespace Vci4Tests
     /// </summary>
     public void FillCountIsConstant()
     {
-      ushort refValue = mReader!.FillCount;
+      ushort refValue = mReader.FillCount;
       
-      ushort testValue = mReader!.FillCount;
+      ushort testValue = mReader.FillCount;
       Assert.IsTrue(refValue == testValue);
     }
 
@@ -123,8 +124,8 @@ namespace Vci4Tests
     /// </summary>
     public void FillCountMustNotThrowObjectDisposedException()
     {
-      mReader!.Dispose();
-      ushort refValue = mReader!.FillCount;
+      mReader.Dispose();
+      ushort refValue = mReader.FillCount;
       Assert.IsTrue(0 == refValue);
     }
 
@@ -138,12 +139,12 @@ namespace Vci4Tests
     /// </summary>
     public void ThresholdIsConstant()
     {
-      ushort refValue = mReader!.Threshold;
+      ushort refValue = mReader.Threshold;
       
-      ushort testValue = mReader!.Threshold;
+      ushort testValue = mReader.Threshold;
       Assert.IsTrue(refValue == testValue);
       refValue++;
-      mReader!.Threshold = refValue;
+      mReader.Threshold = refValue;
     }
 
     [TestMethod]
@@ -152,8 +153,8 @@ namespace Vci4Tests
     /// </summary>
     public void ThresholdReadMustNotThrowObjectDisposedException()
     {
-      mReader!.Dispose();
-      ushort refValue = mReader!.Threshold;
+      mReader.Dispose();
+      ushort refValue = mReader.Threshold;
       Assert.IsTrue(0 == refValue);
     }
 
@@ -164,8 +165,8 @@ namespace Vci4Tests
     [ExpectedException(typeof(ObjectDisposedException))]
     public void ThresholdWriteMustThrowObjectDisposedException()
     {
-      mReader!.Dispose();
-      mReader!.Threshold = 5;
+      mReader.Dispose();
+      mReader.Threshold = 5;
     }
 
     #endregion
@@ -181,8 +182,8 @@ namespace Vci4Tests
       ManualResetEvent manualEvent = new ManualResetEvent(false);
       AutoResetEvent autoEvent = new AutoResetEvent(false);
 
-      mReader!.AssignEvent(autoEvent);
-      mReader!.AssignEvent(manualEvent);
+      mReader.AssignEvent(autoEvent);
+      mReader.AssignEvent(manualEvent);
     }
 
     [TestMethod]
@@ -192,10 +193,10 @@ namespace Vci4Tests
     [ExpectedException(typeof(ObjectDisposedException))]
     public void AssignEventAutoMustThrowObjectDisposedException()
     {
-      mReader!.Dispose();
+      mReader.Dispose();
 
       AutoResetEvent changeEvent = new AutoResetEvent(false);
-      mReader!.AssignEvent(changeEvent);
+      mReader.AssignEvent(changeEvent);
     }
 
     [TestMethod]
@@ -205,10 +206,10 @@ namespace Vci4Tests
     [ExpectedException(typeof(ObjectDisposedException))]
     public void AssignEventManualMustThrowObjectDisposedException()
     {
-      mReader!.Dispose();
+      mReader.Dispose();
 
       ManualResetEvent changeEvent = new ManualResetEvent(false);
-      mReader!.AssignEvent(changeEvent);
+      mReader.AssignEvent(changeEvent);
     }
 
     #endregion
@@ -222,7 +223,7 @@ namespace Vci4Tests
     public void ReadMessageReturnsFalse()
     {
       ICanMessage message;
-      bool result = mReader!.ReadMessage(out message);
+      bool result = mReader.ReadMessage(out message);
       if (result)
       {
         // if ReadMessage returns a message it should NOT be a data message
@@ -250,9 +251,9 @@ namespace Vci4Tests
     [ExpectedException(typeof(ObjectDisposedException))]
     public void ReadMessageMustThrowObjectDisposedException()
     {
-      mReader!.Dispose();
+      mReader.Dispose();
       ICanMessage message;
-      mReader!.ReadMessage(out message);
+      mReader.ReadMessage(out message);
     }
 
     #endregion
@@ -267,7 +268,7 @@ namespace Vci4Tests
     {
       ICanMessage[] messages = new ICanMessage[5];
       
-      Assert.IsTrue(0 == mReader!.ReadMessages(out messages));
+      Assert.IsTrue(0 == mReader.ReadMessages(out messages));
     }
 
     [TestMethod]
@@ -277,10 +278,10 @@ namespace Vci4Tests
     [ExpectedException(typeof(ObjectDisposedException))]
     public void ReadMessagesMustThrowObjectDisposedException()
     {
-      mReader!.Dispose();
+      mReader.Dispose();
 
       ICanMessage[] messages = new ICanMessage[5];
-      mReader!.ReadMessages(out messages);
+      mReader.ReadMessages(out messages);
     }
 
     #endregion
@@ -294,11 +295,11 @@ namespace Vci4Tests
     [ExpectedException(typeof(ObjectDisposedException))]
     public void TestUsingStatement()
     {
-      mReader!.Dispose();
+      mReader.Dispose();
       mReader = null;
 
       ICanMessageReader reader;
-      using (reader = mSocket!.GetMessageReader())
+      using (reader = mSocket.GetMessageReader())
       {
         reader.AssignEvent(new AutoResetEvent(false));
       }

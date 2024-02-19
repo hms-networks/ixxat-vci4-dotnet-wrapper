@@ -5,6 +5,7 @@ using System.Threading;
 using Ixxat.Vci4;
 using Ixxat.Vci4.Bal;
 using Ixxat.Vci4.Bal.Lin;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 
 namespace Vci4Tests
@@ -17,8 +18,8 @@ namespace Vci4Tests
 
     private const Byte mcInvalidPort = 0xFF;
     private Byte mLinPort;
-    private Ixxat.Vci4.Bal.Lin.ILinSocket? mSocket;
-    private Ixxat.Vci4.Bal.IBalObject? mBal;
+    private Ixxat.Vci4.Bal.Lin.ILinSocket mSocket;
+    private Ixxat.Vci4.Bal.IBalObject mBal;
 
     #endregion
 
@@ -27,21 +28,21 @@ namespace Vci4Tests
     [TestInitialize]
     public void TestSetup()
     {
-      Ixxat.Vci4.IVciDevice? device = GetDevice();
-      mBal = device!.OpenBusAccessLayer();
+      Ixxat.Vci4.IVciDevice device = GetDevice();
+      mBal = device.OpenBusAccessLayer();
 
       mLinPort = mcInvalidPort;
-      foreach(IBalResource resource in mBal!.Resources)
+      foreach(IBalResource resource in mBal.Resources)
       {
         if (VciBusType.Lin == resource.BusType)
         {
           mLinPort = resource.BusPort;
           break;
         }
-        resource!.Dispose();
+        resource.Dispose();
       }
 
-      device!.Dispose();
+      device.Dispose();
 
       if (mcInvalidPort == mLinPort)
       {
@@ -49,7 +50,7 @@ namespace Vci4Tests
         Assert.Inconclusive();
       }
 
-      mSocket = mBal!.OpenSocket(mLinPort, typeof(Ixxat.Vci4.Bal.Lin.ILinSocket)) as Ixxat.Vci4.Bal.Lin.ILinSocket;
+      mSocket = mBal.OpenSocket(mLinPort, typeof(Ixxat.Vci4.Bal.Lin.ILinSocket)) as Ixxat.Vci4.Bal.Lin.ILinSocket;
     }
 
     [TestCleanup]
@@ -57,13 +58,13 @@ namespace Vci4Tests
     {
       if (null != mSocket)
       {
-        mSocket!.Dispose();
+        mSocket.Dispose();
         mSocket = null;
       }
 
       if (null != mBal)
       {
-        mBal!.Dispose();
+        mBal.Dispose();
         mBal = null;
       }
     }
@@ -78,9 +79,9 @@ namespace Vci4Tests
     /// </summary>
     public void ClockFrequencyIsConstant()
     {
-      uint refValue = mSocket!.ClockFrequency;
+      uint refValue = mSocket.ClockFrequency;
       
-      uint testValue = mSocket!.ClockFrequency;
+      uint testValue = mSocket.ClockFrequency;
       Assert.IsTrue(refValue == testValue);
     }
 
@@ -91,8 +92,8 @@ namespace Vci4Tests
     [ExpectedException(typeof(ObjectDisposedException))]
     public void ClockFrequencyMustThrowObjectDisposedException()
     {
-      mSocket!.Dispose();
-      uint refValue = mSocket!.ClockFrequency;
+      mSocket.Dispose();
+      uint refValue = mSocket.ClockFrequency;
     }
 
     #endregion
@@ -105,9 +106,9 @@ namespace Vci4Tests
     /// </summary>
     public void TimeStampCounterDivisorIsConstant()
     {
-      uint refValue = mSocket!.TimeStampCounterDivisor;
+      uint refValue = mSocket.TimeStampCounterDivisor;
       
-      uint testValue = mSocket!.TimeStampCounterDivisor;
+      uint testValue = mSocket.TimeStampCounterDivisor;
       Assert.IsTrue(refValue == testValue);
     }
 
@@ -118,8 +119,8 @@ namespace Vci4Tests
     [ExpectedException(typeof(ObjectDisposedException))]
     public void TimeStampCounterDivisorMustThrowObjectDisposedException()
     {
-      mSocket!.Dispose();
-      uint refValue = mSocket!.TimeStampCounterDivisor;
+      mSocket.Dispose();
+      uint refValue = mSocket.TimeStampCounterDivisor;
     }
 
     #endregion
@@ -132,9 +133,9 @@ namespace Vci4Tests
     /// </summary>
     public void FeaturesIsConstant()
     {
-      LinFeatures refValue = mSocket!.Features;
+      LinFeatures refValue = mSocket.Features;
       
-      LinFeatures testValue = mSocket!.Features;
+      LinFeatures testValue = mSocket.Features;
       Assert.IsTrue(refValue == testValue);
     }
 
@@ -145,8 +146,8 @@ namespace Vci4Tests
     [ExpectedException(typeof(ObjectDisposedException))]
     public void FeaturesMustThrowObjectDisposedException()
     {
-      mSocket!.Dispose();
-      LinFeatures refValue = mSocket!.Features;
+      mSocket.Dispose();
+      LinFeatures refValue = mSocket.Features;
     }
 
     #endregion
@@ -159,9 +160,9 @@ namespace Vci4Tests
     /// </summary>
     public void LineStatusIsConstant()
     {
-      LinLineStatus refValue = mSocket!.LineStatus;
+      LinLineStatus refValue = mSocket.LineStatus;
 
-      LinLineStatus testValue = mSocket!.LineStatus;
+      LinLineStatus testValue = mSocket.LineStatus;
       Assert.IsTrue(refValue.OperatingMode == testValue.OperatingMode);
       Assert.IsTrue(refValue.Bitrate == testValue.Bitrate);
     }
@@ -173,8 +174,8 @@ namespace Vci4Tests
     [ExpectedException(typeof(ObjectDisposedException))]
     public void LineStatusMustThrowObjectDisposedException()
     {
-      mSocket!.Dispose();
-      LinLineStatus refValue = mSocket!.LineStatus;
+      mSocket.Dispose();
+      LinLineStatus refValue = mSocket.LineStatus;
     }
 
     #endregion
@@ -187,9 +188,9 @@ namespace Vci4Tests
     /// </summary>
     public void SupportsAutorateIsConstant()
     {
-      bool refValue = mSocket!.SupportsAutorate;
+      bool refValue = mSocket.SupportsAutorate;
       
-      bool testValue = mSocket!.SupportsAutorate;
+      bool testValue = mSocket.SupportsAutorate;
       Assert.IsTrue(refValue == testValue);
     }
 
@@ -200,8 +201,8 @@ namespace Vci4Tests
     [ExpectedException(typeof(ObjectDisposedException))]
     public void SupportsAutorateMustThrowObjectDisposedException()
     {
-      mSocket!.Dispose();
-      bool refValue = mSocket!.SupportsAutorate;
+      mSocket.Dispose();
+      bool refValue = mSocket.SupportsAutorate;
     }
 
     #endregion
@@ -214,9 +215,9 @@ namespace Vci4Tests
     /// </summary>
     public void SupportsBusLoadComputationIsConstant()
     {
-      bool refValue = mSocket!.SupportsBusLoadComputation;
+      bool refValue = mSocket.SupportsBusLoadComputation;
       
-      bool testValue = mSocket!.SupportsBusLoadComputation;
+      bool testValue = mSocket.SupportsBusLoadComputation;
       Assert.IsTrue(refValue == testValue);
     }
 
@@ -227,8 +228,8 @@ namespace Vci4Tests
     [ExpectedException(typeof(ObjectDisposedException))]
     public void SupportsBusLoadComputationMustThrowObjectDisposedException()
     {
-      mSocket!.Dispose();
-      bool refValue = mSocket!.SupportsBusLoadComputation;
+      mSocket.Dispose();
+      bool refValue = mSocket.SupportsBusLoadComputation;
     }
 
     #endregion
@@ -241,9 +242,9 @@ namespace Vci4Tests
     /// </summary>
     public void SupportsErrorFramesIsConstant()
     {
-      bool refValue = mSocket!.SupportsErrorFrames;
+      bool refValue = mSocket.SupportsErrorFrames;
       
-      bool testValue = mSocket!.SupportsErrorFrames;
+      bool testValue = mSocket.SupportsErrorFrames;
       Assert.IsTrue(refValue == testValue);
     }
 
@@ -254,8 +255,8 @@ namespace Vci4Tests
     [ExpectedException(typeof(ObjectDisposedException))]
     public void SupportsErrorFramesMustThrowObjectDisposedException()
     {
-      mSocket!.Dispose();
-      bool refValue = mSocket!.SupportsErrorFrames;
+      mSocket.Dispose();
+      bool refValue = mSocket.SupportsErrorFrames;
     }
 
     #endregion
@@ -268,9 +269,9 @@ namespace Vci4Tests
     /// </summary>
     public void SupportsMasterModeIsConstant()
     {
-      bool refValue = mSocket!.SupportsMasterMode;
+      bool refValue = mSocket.SupportsMasterMode;
       
-      bool testValue = mSocket!.SupportsMasterMode;
+      bool testValue = mSocket.SupportsMasterMode;
       Assert.IsTrue(refValue == testValue);
     }
 
@@ -281,8 +282,8 @@ namespace Vci4Tests
     [ExpectedException(typeof(ObjectDisposedException))]
     public void SupportsMasterModeMustThrowObjectDisposedException()
     {
-      mSocket!.Dispose();
-      bool refValue = mSocket!.SupportsMasterMode;
+      mSocket.Dispose();
+      bool refValue = mSocket.SupportsMasterMode;
     }
 
     #endregion
@@ -297,14 +298,14 @@ namespace Vci4Tests
     public void TestUsingStatement()
     {
       LinFeatures features;
-      ILinSocket? socket;
-      using (socket = mBal!.OpenSocket(mLinPort, typeof(Ixxat.Vci4.Bal.Lin.ILinSocket)) as Ixxat.Vci4.Bal.Lin.ILinSocket)
+      ILinSocket socket;
+      using (socket = mBal.OpenSocket(mLinPort, typeof(Ixxat.Vci4.Bal.Lin.ILinSocket)) as Ixxat.Vci4.Bal.Lin.ILinSocket)
       {
-        features = socket!.Features;
+        features = socket.Features;
       }
 
       // This call must throw an ObjectDisposedException
-      features = socket!.Features;
+      features = socket.Features;
     }
 
     #endregion

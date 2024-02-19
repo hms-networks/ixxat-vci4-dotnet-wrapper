@@ -17,20 +17,20 @@ namespace Vci4Tests
     /// <summary>
     ///   Called to get the configured device
     /// </summary>
-    protected IVciDevice? GetDevice()
+    protected IVciDevice GetDevice()
     {
       // Actually we do not consider the test configuration and retrieve
       // the first available device.
-      Ixxat.Vci4.IVciDevice? device = null;
+      Ixxat.Vci4.IVciDevice device = null;
 
-      IVciDeviceManager manager = VciServer.Instance()!.DeviceManager;
+      IVciDeviceManager manager = VciServer.Instance().DeviceManager;
       IVciDeviceList list = manager.GetDeviceList();
       IEnumerator enu = list.GetEnumerator();
 
       enu.MoveNext();
       device = enu.Current as IVciDevice;
 
-      (enu as IDisposable)!.Dispose();
+      (enu as IDisposable).Dispose();
       list.Dispose();
       manager.Dispose();
 

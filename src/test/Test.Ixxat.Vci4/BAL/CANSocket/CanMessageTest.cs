@@ -5,22 +5,23 @@ using System.Threading;
 using Ixxat.Vci4;
 using Ixxat.Vci4.Bal;
 using Ixxat.Vci4.Bal.Can;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 
 namespace Vci4Tests
 {
   [TestClass]
-  class CanMessageTest
+  public class CanMessageTest
     : VciDeviceTestBase
   {
     #region Member variables
 
-    private Ixxat.Vci4.Bal.Can.ICanChannel? mChannel;
-    private Ixxat.Vci4.Bal.Can.ICanControl? mControl;
-    private ICanMessageReader? mReader;
-    private ICanMessageWriter? mWriter;
+    private Ixxat.Vci4.Bal.Can.ICanChannel mChannel;
+    private Ixxat.Vci4.Bal.Can.ICanControl mControl;
+    private ICanMessageReader mReader;
+    private ICanMessageWriter mWriter;
 
-    private AutoResetEvent? mRxEvent;
+    private AutoResetEvent mRxEvent;
 
     private ulong mTimestamp64;
 
@@ -37,7 +38,7 @@ namespace Vci4Tests
       // clear the receive message queue
       ICanMessage rxMessage;
 
-      while (mReader!.ReadMessage(out rxMessage))
+      while (mReader.ReadMessage(out rxMessage))
       {
         // if (MustTerminate)
         // { return; }
@@ -47,32 +48,32 @@ namespace Vci4Tests
     [TestInitialize]
     public void TestSetup()
     {
-      Ixxat.Vci4.IVciDevice? device = GetDevice();
+      Ixxat.Vci4.IVciDevice device = GetDevice();
       Ixxat.Vci4.Bal.IBalObject bal;
 
-      bal = device!.OpenBusAccessLayer();
+      bal = device.OpenBusAccessLayer();
 
-      mControl = bal!.OpenSocket(0, typeof(Ixxat.Vci4.Bal.Can.ICanControl)) as Ixxat.Vci4.Bal.Can.ICanControl;
-      mControl!.InitLine(CanOperatingModes.Standard | CanOperatingModes.Extended, CanBitrate.Cia500KBit);
+      mControl = bal.OpenSocket(0, typeof(Ixxat.Vci4.Bal.Can.ICanControl)) as Ixxat.Vci4.Bal.Can.ICanControl;
+      mControl.InitLine(CanOperatingModes.Standard | CanOperatingModes.Extended, CanBitrate.Cia500KBit);
 
-      mChannel = bal!.OpenSocket(0, typeof(Ixxat.Vci4.Bal.Can.ICanChannel)) as Ixxat.Vci4.Bal.Can.ICanChannel;
-      mChannel!.Initialize(10, 10, true);
+      mChannel = bal.OpenSocket(0, typeof(Ixxat.Vci4.Bal.Can.ICanChannel)) as Ixxat.Vci4.Bal.Can.ICanChannel;
+      mChannel.Initialize(10, 10, true);
 
-      mReader = mChannel!.GetMessageReader();
+      mReader = mChannel.GetMessageReader();
       mRxEvent = new AutoResetEvent(false);
-      mReader!.AssignEvent(mRxEvent);
-      mReader!.Threshold = 1;
+      mReader.AssignEvent(mRxEvent);
+      mReader.Threshold = 1;
 
       ClearRxFifo(mReader);
 
-      mWriter = mChannel!.GetMessageWriter();
+      mWriter = mChannel.GetMessageWriter();
 
-      bal!.Dispose();
-      device!.Dispose();
+      bal.Dispose();
+      device.Dispose();
 
-      mChannel!.Activate();
+      mChannel.Activate();
       ClearRxFifo(mReader);
-      mControl!.StartLine();
+      mControl.StartLine();
 
       mTimestamp64 = 0;
     }
@@ -82,27 +83,27 @@ namespace Vci4Tests
     {
       if (null != mWriter)
       {
-        mWriter!.Dispose();
+        mWriter.Dispose();
         mWriter = null;
       }
 
       if (null != mReader)
       {
-        mReader!.Dispose();
+        mReader.Dispose();
         mReader = null;
       }
 
       if (null != mChannel)
       {
-        mChannel!.Deactivate();
-        mChannel!.Dispose();
+        mChannel.Deactivate();
+        mChannel.Dispose();
         mChannel = null;
       }
 
       if (null != mControl)
       {
-        mControl!.ResetLine();
-        mControl!.Dispose();
+        mControl.ResetLine();
+        mControl.Dispose();
         mControl = null;
       }
     }
@@ -137,8 +138,8 @@ namespace Vci4Tests
       bool fDataMessage = false;
       int iLoopCount = 10;
 
-      ICanMessage? txMessage;
-      IMessageFactory factory = VciServer.Instance()!.MsgFactory;
+      ICanMessage txMessage;
+      IMessageFactory factory = VciServer.Instance().MsgFactory;
       txMessage = (ICanMessage)factory.CreateMsg(typeof(ICanMessage));
 
       txMessage.Identifier = id;
@@ -149,9 +150,9 @@ namespace Vci4Tests
       txMessage[2] = 0xFF;
 
       // Send message
-      mWriter!.SendMessage(txMessage);
+      mWriter.SendMessage(txMessage);
 
-      ICanMessage? rxMessage;
+      ICanMessage rxMessage;
 
       //
       // Check controller start message
@@ -168,7 +169,7 @@ namespace Vci4Tests
           // { return; }
         };
 
-        if ( CanMsgFrameType.Info == rxMessage!.FrameType )
+        if ( CanMsgFrameType.Info == rxMessage.FrameType )
         {
           //
           // Check start message
@@ -216,7 +217,7 @@ namespace Vci4Tests
       Assert.IsTrue(true == fDataMessage);
 
       // Stop CAN line
-      mControl!.StopLine();
+      mControl.StopLine();
 
       // Wait for stop message
       while (!ReadMessage(out rxMessage))
@@ -225,8 +226,8 @@ namespace Vci4Tests
         // if (MustTerminate)
         // { return; }
       };
-      Assert.IsTrue(CanMsgFrameType.Info == rxMessage!.FrameType);
-      Assert.IsTrue((byte)CanMsgInfoValue.Stop == rxMessage![0]);
+      Assert.IsTrue(CanMsgFrameType.Info == rxMessage.FrameType);
+      Assert.IsTrue((byte)CanMsgInfoValue.Stop == rxMessage[0]);
     }
 
     #endregion
@@ -259,9 +260,9 @@ namespace Vci4Tests
       bool fDataMessage = false;
       int iLoopCount = 10;
       
-      ICanMessage? txMessage;
-      IMessageFactory? factory = VciServer.Instance()!.MsgFactory;
-      txMessage = (ICanMessage)factory!.CreateMsg(typeof(ICanMessage));
+      ICanMessage txMessage;
+      IMessageFactory factory = VciServer.Instance().MsgFactory;
+      txMessage = (ICanMessage)factory.CreateMsg(typeof(ICanMessage));
 
       txMessage.Identifier = id;
       txMessage.ExtendedFrameFormat = (CANFrameFormat.Extended == frameFormat);
@@ -269,9 +270,9 @@ namespace Vci4Tests
       txMessage.RemoteTransmissionRequest = true;
 
       // Send message
-      mWriter!.SendMessage(txMessage);
+      mWriter.SendMessage(txMessage);
 
-      ICanMessage? rxMessage;
+      ICanMessage rxMessage;
 
       //
       // Check controller start message
@@ -287,7 +288,7 @@ namespace Vci4Tests
           // { return; }
         };
 
-        if (CanMsgFrameType.Info == rxMessage!.FrameType)
+        if (CanMsgFrameType.Info == rxMessage.FrameType)
         {
           //
           // Check start message
@@ -323,7 +324,7 @@ namespace Vci4Tests
       Assert.IsTrue(true == fDataMessage);
 
       // Stop CAN line
-      mControl!.StopLine();
+      mControl.StopLine();
 
       // Wait for stop message
       while (!ReadMessage(out rxMessage))
@@ -332,8 +333,8 @@ namespace Vci4Tests
         // if (MustTerminate)
         // { return; }
       };
-      Assert.IsTrue(CanMsgFrameType.Info == rxMessage!.FrameType);
-      Assert.IsTrue((byte)CanMsgInfoValue.Stop == rxMessage![0]);
+      Assert.IsTrue(CanMsgFrameType.Info == rxMessage.FrameType);
+      Assert.IsTrue((byte)CanMsgInfoValue.Stop == rxMessage[0]);
     }
 
     #endregion
@@ -344,11 +345,11 @@ namespace Vci4Tests
     ///   Reads a message from the message channel under consideration of 
     ///   timestamp overruns.
     /// </summary>
-    bool ReadMessage(out ICanMessage? message)
+    bool ReadMessage(out ICanMessage message)
     {
       bool result = false;
 
-      if (!mReader!.ReadMessage(out message))
+      if (!mReader.ReadMessage(out message))
       {
         message = null;
       }

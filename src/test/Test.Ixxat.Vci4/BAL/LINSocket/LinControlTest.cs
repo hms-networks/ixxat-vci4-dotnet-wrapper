@@ -5,12 +5,12 @@ using System.Threading;
 using Ixxat.Vci4;
 using Ixxat.Vci4.Bal;
 using Ixxat.Vci4.Bal.Lin;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 
 namespace Vci4Tests
 {
   [TestClass]
-  //[Ignore]
   public class LinControlTest
     : VciDeviceTestBase
   {
@@ -18,8 +18,8 @@ namespace Vci4Tests
 
     private const Byte mcInvalidPort = 0xFF;
     private Byte mLinPort;
-    private Ixxat.Vci4.Bal.Lin.ILinControl? mControl;
-    private Ixxat.Vci4.Bal.IBalObject? mBal;
+    private Ixxat.Vci4.Bal.Lin.ILinControl mControl;
+    private Ixxat.Vci4.Bal.IBalObject mBal;
 
     #endregion
 
@@ -28,21 +28,21 @@ namespace Vci4Tests
     [TestInitialize]
     public void TestSetup()
     {
-      Ixxat.Vci4.IVciDevice? device = GetDevice();
-      mBal = device!.OpenBusAccessLayer();
+      Ixxat.Vci4.IVciDevice device = GetDevice();
+      mBal = device.OpenBusAccessLayer();
 
       mLinPort = mcInvalidPort;
-      foreach (IBalResource resource in mBal!.Resources)
+      foreach (IBalResource resource in mBal.Resources)
       {
-        if (VciBusType.Lin == resource!.BusType)
+        if (VciBusType.Lin == resource.BusType)
         {
-          mLinPort = resource!.BusPort;
+          mLinPort = resource.BusPort;
           break;
         }
-        resource!.Dispose();
+        resource.Dispose();
       }
 
-      device!.Dispose();
+      device.Dispose();
 
       if (mcInvalidPort == mLinPort)
       {
@@ -50,7 +50,7 @@ namespace Vci4Tests
         Assert.Inconclusive();
       }
 
-      mControl = mBal!.OpenSocket(mLinPort, typeof(Ixxat.Vci4.Bal.Lin.ILinControl)) as Ixxat.Vci4.Bal.Lin.ILinControl;
+      mControl = mBal.OpenSocket(mLinPort, typeof(Ixxat.Vci4.Bal.Lin.ILinControl)) as Ixxat.Vci4.Bal.Lin.ILinControl;
     }
 
     [TestCleanup]
@@ -60,19 +60,19 @@ namespace Vci4Tests
       {
         try
         {
-          mControl!.ResetLine();
+          mControl.ResetLine();
         }
         catch (Exception)
         {
         }
 
-        mControl!.Dispose();
+        mControl.Dispose();
         mControl = null;
       }
 
       if (null != mBal)
       {
-        mBal!.Dispose();
+        mBal.Dispose();
         mBal = null;
       }
     }
@@ -91,28 +91,28 @@ namespace Vci4Tests
       initData.OperatingMode = LinOperatingModes.Slave;
 
       initData.Bitrate = LinBitrate.Lin1000Bit;
-      mControl!.InitLine(initData);
+      mControl.InitLine(initData);
 
       initData.Bitrate = LinBitrate.Lin1200Bit;
-      mControl!.InitLine(initData);
+      mControl.InitLine(initData);
 
       initData.Bitrate = LinBitrate.Lin2400Bit;
-      mControl!.InitLine(initData);
+      mControl.InitLine(initData);
 
       initData.Bitrate = LinBitrate.Lin4800Bit;
-      mControl!.InitLine(initData);
+      mControl.InitLine(initData);
 
       initData.Bitrate = LinBitrate.Lin9600Bit;
-      mControl!.InitLine(initData);
+      mControl.InitLine(initData);
 
       initData.Bitrate = LinBitrate.Lin10400Bit;
-      mControl!.InitLine(initData);
+      mControl.InitLine(initData);
 
       initData.Bitrate = LinBitrate.Lin19200Bit;
-      mControl!.InitLine(initData);
+      mControl.InitLine(initData);
 
       initData.Bitrate = LinBitrate.Lin20000Bit;
-      mControl!.InitLine(initData);
+      mControl.InitLine(initData);
     }
 
     [TestMethod]
@@ -125,28 +125,28 @@ namespace Vci4Tests
       initData.OperatingMode = LinOperatingModes.Master;
 
       initData.Bitrate = LinBitrate.Lin1000Bit;
-      mControl!.InitLine(initData);
+      mControl.InitLine(initData);
 
       initData.Bitrate = LinBitrate.Lin1200Bit;
-      mControl!.InitLine(initData);
+      mControl.InitLine(initData);
 
       initData.Bitrate = LinBitrate.Lin2400Bit;
-      mControl!.InitLine(initData);
+      mControl.InitLine(initData);
 
       initData.Bitrate = LinBitrate.Lin4800Bit;
-      mControl!.InitLine(initData);
+      mControl.InitLine(initData);
 
       initData.Bitrate = LinBitrate.Lin9600Bit;
-      mControl!.InitLine(initData);
+      mControl.InitLine(initData);
 
       initData.Bitrate = LinBitrate.Lin10400Bit;
-      mControl!.InitLine(initData);
+      mControl.InitLine(initData);
 
       initData.Bitrate = LinBitrate.Lin19200Bit;
-      mControl!.InitLine(initData);
+      mControl.InitLine(initData);
 
       initData.Bitrate = LinBitrate.Lin20000Bit;
-      mControl!.InitLine(initData);
+      mControl.InitLine(initData);
     }
 
     [TestMethod]
@@ -159,7 +159,7 @@ namespace Vci4Tests
       LinInitLine initData;
       initData.OperatingMode = LinOperatingModes.Slave;
       initData.Bitrate = LinBitrate.Undefined;
-      mControl!.InitLine(initData);
+      mControl.InitLine(initData);
     }
 
     [TestMethod]
@@ -169,11 +169,11 @@ namespace Vci4Tests
     public void InitLineAutorateSlaveMode()
     {
       LinInitLine initData;
-      if (mControl!.SupportsAutorate)
+      if (mControl.SupportsAutorate)
       {
         initData.OperatingMode = LinOperatingModes.Slave;
         initData.Bitrate = LinBitrate.AutoRate;
-        mControl!.InitLine(initData);
+        mControl.InitLine(initData);
       }
     }
 
@@ -184,11 +184,11 @@ namespace Vci4Tests
     public void InitLineAutorateMasterMode()
     {
       LinInitLine initData;
-      if ( mControl!.SupportsAutorate )
+      if ( mControl.SupportsAutorate )
       {
         initData.OperatingMode = LinOperatingModes.Master;
         initData.Bitrate = LinBitrate.AutoRate;
-        mControl!.InitLine(initData);
+        mControl.InitLine(initData);
       }
     }
 
@@ -199,12 +199,12 @@ namespace Vci4Tests
     [ExpectedException(typeof(ObjectDisposedException))]
     public void InitLineMustThrowObjectDisposedException()
     {
-      mControl!.Dispose();
+      mControl.Dispose();
 
       LinInitLine initData;
       initData.OperatingMode = LinOperatingModes.Master;
       initData.Bitrate = LinBitrate.AutoRate;
-      mControl!.InitLine(initData);
+      mControl.InitLine(initData);
     }
 
     #endregion
@@ -220,8 +220,8 @@ namespace Vci4Tests
       LinInitLine initData;
       initData.OperatingMode = LinOperatingModes.Master;
       initData.Bitrate = LinBitrate.Lin1000Bit;
-      mControl!.InitLine(initData);
-      mControl!.StartLine();
+      mControl.InitLine(initData);
+      mControl.StartLine();
     }
 
     [TestMethod]
@@ -231,7 +231,7 @@ namespace Vci4Tests
     [ExpectedException(typeof(VciException))]
     public void StartLineBeforeInit()
     {
-      mControl!.StartLine();
+      mControl.StartLine();
     }
 
     [TestMethod]
@@ -241,8 +241,8 @@ namespace Vci4Tests
     [ExpectedException(typeof(ObjectDisposedException))]
     public void StartLineMustThrowObjectDisposedException()
     {
-      mControl!.Dispose();
-      mControl!.StartLine();
+      mControl.Dispose();
+      mControl.StartLine();
     }
 
     #endregion
@@ -258,8 +258,8 @@ namespace Vci4Tests
       LinInitLine initData;
       initData.OperatingMode = LinOperatingModes.Master;
       initData.Bitrate = LinBitrate.Lin1000Bit;
-      mControl!.InitLine(initData);
-      mControl!.StopLine();
+      mControl.InitLine(initData);
+      mControl.StopLine();
     }
 
     [TestMethod]
@@ -268,7 +268,7 @@ namespace Vci4Tests
     /// </summary>
     public void StopLineBeforeInit()
     {
-      mControl!.StopLine();
+      mControl.StopLine();
     }
 
     [TestMethod]
@@ -278,8 +278,8 @@ namespace Vci4Tests
     [ExpectedException(typeof(ObjectDisposedException))]
     public void StopLineMustThrowObjectDisposedException()
     {
-      mControl!.Dispose();
-      mControl!.StopLine();
+      mControl.Dispose();
+      mControl.StopLine();
     }
 
     #endregion
@@ -295,8 +295,8 @@ namespace Vci4Tests
       LinInitLine initData;
       initData.OperatingMode = LinOperatingModes.Master;
       initData.Bitrate = LinBitrate.Lin1000Bit;
-      mControl!.InitLine(initData);
-      mControl!.ResetLine();
+      mControl.InitLine(initData);
+      mControl.ResetLine();
     }
 
     [TestMethod]
@@ -305,7 +305,7 @@ namespace Vci4Tests
     /// </summary>
     public void ResetLineBeforeInit()
     {
-      mControl!.ResetLine();
+      mControl.ResetLine();
     }
 
     [TestMethod]
@@ -315,8 +315,8 @@ namespace Vci4Tests
     [ExpectedException(typeof(ObjectDisposedException))]
     public void ResetLineMustThrowObjectDisposedException()
     {
-      mControl!.Dispose();
-      mControl!.ResetLine();
+      mControl.Dispose();
+      mControl.ResetLine();
     }
 
     #endregion
@@ -330,8 +330,8 @@ namespace Vci4Tests
     [ExpectedException(typeof(VciException))]
     public void WriteMessageBeforeInit()
     {
-      ILinMessage? msg;
-      IMessageFactory? factory = VciServer.Instance()!.MsgFactory;
+      ILinMessage msg;
+      IMessageFactory factory = VciServer.Instance().MsgFactory;
       msg = (ILinMessage)factory.CreateMsg(typeof(ILinMessage));
 
       msg.MessageType = LinMessageType.Data;
@@ -339,7 +339,7 @@ namespace Vci4Tests
       msg.DataLength = 2;
       msg[0] = 1;
       msg[1] = 2;
-      mControl!.WriteMessage(true, msg);
+      mControl.WriteMessage(true, msg);
     }
 
     [TestMethod]
@@ -351,10 +351,10 @@ namespace Vci4Tests
       LinInitLine initData;
       initData.OperatingMode = LinOperatingModes.Master;
       initData.Bitrate = LinBitrate.Lin1000Bit;
-      mControl!.InitLine(initData);
+      mControl.InitLine(initData);
 
-      ILinMessage? msg;
-      IMessageFactory? factory = VciServer.Instance()!.MsgFactory;
+      ILinMessage msg;
+      IMessageFactory factory = VciServer.Instance().MsgFactory;
       msg = (ILinMessage)factory.CreateMsg(typeof(ILinMessage));
 
       msg.MessageType = LinMessageType.Data;
@@ -370,7 +370,7 @@ namespace Vci4Tests
         try
         {
           msg[0] = (Byte)attempt;
-          mControl!.WriteMessage(true, msg);
+          mControl.WriteMessage(true, msg);
           break;
         }
         catch (System.Exception e)
@@ -394,10 +394,10 @@ namespace Vci4Tests
       LinInitLine initData;
       initData.OperatingMode = LinOperatingModes.Master;
       initData.Bitrate = LinBitrate.Lin1000Bit;
-      mControl!.InitLine(initData);
+      mControl.InitLine(initData);
 
-      ILinMessage? msg;
-      IMessageFactory factory = VciServer.Instance()!.MsgFactory;
+      ILinMessage msg;
+      IMessageFactory factory = VciServer.Instance().MsgFactory;
       msg = (ILinMessage)factory.CreateMsg(typeof(ILinMessage));
 
       msg.MessageType = LinMessageType.Data;
@@ -406,7 +406,7 @@ namespace Vci4Tests
       msg[0] = 1;
       msg[1] = 2;
 
-      mControl!.WriteMessage(false, msg);
+      mControl.WriteMessage(false, msg);
     }
 
     [TestMethod]
@@ -416,10 +416,10 @@ namespace Vci4Tests
     [ExpectedException(typeof(ObjectDisposedException))]
     public void WriteMessageMustThrowObjectDisposedException()
     {
-      mControl!.Dispose();
+      mControl.Dispose();
 
-      ILinMessage? msg;
-      IMessageFactory factory = VciServer.Instance()!.MsgFactory;
+      ILinMessage msg;
+      IMessageFactory factory = VciServer.Instance().MsgFactory;
       msg = (ILinMessage)factory.CreateMsg(typeof(ILinMessage));
 
       msg.MessageType = LinMessageType.Data;
@@ -427,7 +427,7 @@ namespace Vci4Tests
       msg.DataLength = 2;
       msg[0] = 1;
       msg[1] = 2;
-      mControl!.WriteMessage(true, msg);
+      mControl.WriteMessage(true, msg);
     }
 
     #endregion
@@ -441,18 +441,18 @@ namespace Vci4Tests
     [ExpectedException(typeof(ObjectDisposedException))]
     public void TestUsingStatement()
     {
-      mControl!.Dispose();
+      mControl.Dispose();
       mControl = null;
 
       LinFeatures features;
-      ILinControl? control;
-      using (control = mBal!.OpenSocket(mLinPort, typeof(Ixxat.Vci4.Bal.Lin.ILinControl)) as Ixxat.Vci4.Bal.Lin.ILinControl)
+      ILinControl control;
+      using (control = mBal.OpenSocket(mLinPort, typeof(Ixxat.Vci4.Bal.Lin.ILinControl)) as Ixxat.Vci4.Bal.Lin.ILinControl)
       {
-        features = control!.Features;
+        features = control.Features;
       }
 
       // This call must throw an ObjectDisposedException
-      features = control!.Features;
+      features = control.Features;
     }
 
     #endregion

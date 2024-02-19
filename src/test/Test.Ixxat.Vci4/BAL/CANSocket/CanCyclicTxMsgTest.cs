@@ -5,6 +5,7 @@ using System.Threading;
 using Ixxat.Vci4;
 using Ixxat.Vci4.Bal;
 using Ixxat.Vci4.Bal.Can;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Vci4Tests
 {
@@ -14,8 +15,8 @@ namespace Vci4Tests
   {
     #region Member variables
 
-    private Ixxat.Vci4.Bal.Can.ICanScheduler? mScheduler;
-    private Ixxat.Vci4.Bal.Can.ICanControl? mControl;
+    private Ixxat.Vci4.Bal.Can.ICanScheduler mScheduler;
+    private Ixxat.Vci4.Bal.Can.ICanControl mControl;
 
     #endregion
 
@@ -24,18 +25,18 @@ namespace Vci4Tests
     [TestInitialize]
     public void TestSetup()
     {
-      Ixxat.Vci4.IVciDevice? device = GetDevice();
-      Ixxat.Vci4.Bal.IBalObject? bal;
+      Ixxat.Vci4.IVciDevice device = GetDevice();
+      Ixxat.Vci4.Bal.IBalObject bal;
 
-      bal = device!.OpenBusAccessLayer();
+      bal = device.OpenBusAccessLayer();
 
-      mControl = bal!.OpenSocket(0, typeof(Ixxat.Vci4.Bal.Can.ICanControl)) as Ixxat.Vci4.Bal.Can.ICanControl;
-      mControl!.InitLine(CanOperatingModes.Standard | CanOperatingModes.Extended, CanBitrate.Cia500KBit);
-      mControl!.StartLine();
+      mControl = bal.OpenSocket(0, typeof(Ixxat.Vci4.Bal.Can.ICanControl)) as Ixxat.Vci4.Bal.Can.ICanControl;
+      mControl.InitLine(CanOperatingModes.Standard | CanOperatingModes.Extended, CanBitrate.Cia500KBit);
+      mControl.StartLine();
 
       try
       {
-        mScheduler = bal!.OpenSocket(0, typeof(Ixxat.Vci4.Bal.Can.ICanScheduler)) as Ixxat.Vci4.Bal.Can.ICanScheduler;
+        mScheduler = bal.OpenSocket(0, typeof(Ixxat.Vci4.Bal.Can.ICanScheduler)) as Ixxat.Vci4.Bal.Can.ICanScheduler;
       }
       catch (Exception)
       {
@@ -45,8 +46,8 @@ namespace Vci4Tests
       }
       finally
       {
-        bal!.Dispose();
-        device!.Dispose();
+        bal.Dispose();
+        device.Dispose();
       }
     }
 
@@ -55,15 +56,15 @@ namespace Vci4Tests
     {
       if (null != mScheduler)
       {
-        mScheduler!.Reset();
-        mScheduler!.Dispose();
+        mScheduler.Reset();
+        mScheduler.Dispose();
         mScheduler = null;
       }
 
       if (null != mControl)
       {
-        mControl!.ResetLine();
-        mControl!.Dispose();
+        mControl.ResetLine();
+        mControl.Dispose();
         mControl = null;
       }
     }
@@ -79,24 +80,24 @@ namespace Vci4Tests
     public void StatusPropertyTests()
     {
       ICanCyclicTXMsg message;
-      message = mScheduler!.AddMessage();
+      message = mScheduler.AddMessage();
 
       message.CycleTicks = 1;
       Assert.IsTrue(CanCyclicTXStatus.Empty == message.Status);
 
       message.Start(1);
       Thread.Sleep(500);
-      mScheduler!.UpdateStatus();
+      mScheduler.UpdateStatus();
       Assert.IsTrue(CanCyclicTXStatus.Done == message.Status);
 
       message.Start(0);
       Thread.Sleep(500);
-      mScheduler!.UpdateStatus();
+      mScheduler.UpdateStatus();
       Assert.IsTrue(CanCyclicTXStatus.Busy == message.Status);
 
       message.Stop();
       Thread.Sleep(500);
-      mScheduler!.UpdateStatus();
+      mScheduler.UpdateStatus();
       Assert.IsTrue(CanCyclicTXStatus.Done == message.Status);
     }
 
@@ -112,7 +113,7 @@ namespace Vci4Tests
     public void AutoIncrementIndexReadAccess()
     {
       ICanCyclicTXMsg message;
-      message = mScheduler!.AddMessage();
+      message = mScheduler.AddMessage();
 
       message.CycleTicks = 1;
 
@@ -128,7 +129,7 @@ namespace Vci4Tests
     public void AutoIncrementIndexWriteAccess()
     {
       ICanCyclicTXMsg message;
-      message = mScheduler!.AddMessage();
+      message = mScheduler.AddMessage();
 
       message.CycleTicks = 1;
 
@@ -155,7 +156,7 @@ namespace Vci4Tests
     public void AutoIncrementIndexInvalidWriteAccess()
     {
       ICanCyclicTXMsg message;
-      message = mScheduler!.AddMessage();
+      message = mScheduler.AddMessage();
 
       message.CycleTicks = 1;
 
@@ -174,7 +175,7 @@ namespace Vci4Tests
     public void AutoIncrementModeReadAccess()
     {
       ICanCyclicTXMsg message;
-      message = mScheduler!.AddMessage();
+      message = mScheduler.AddMessage();
 
       Assert.IsTrue(CanCyclicTXIncMode.NoInc == message.AutoIncrementMode);
     }
@@ -186,7 +187,7 @@ namespace Vci4Tests
     public void AutoIncrementModeWriteAccess()
     {
       ICanCyclicTXMsg message;
-      message = mScheduler!.AddMessage();
+      message = mScheduler.AddMessage();
 
       message.CycleTicks = 1;
 
@@ -224,7 +225,7 @@ namespace Vci4Tests
     public void CycleTicksReadAccess()
     {
       ICanCyclicTXMsg message;
-      message = mScheduler!.AddMessage();
+      message = mScheduler.AddMessage();
 
       message.CycleTicks = 1;
 
@@ -240,7 +241,7 @@ namespace Vci4Tests
     public void CycleTicksWriteAccess()
     {
       ICanCyclicTXMsg message;
-      message = mScheduler!.AddMessage();
+      message = mScheduler.AddMessage();
 
       message.CycleTicks = 1;
 
@@ -270,7 +271,7 @@ namespace Vci4Tests
     public void DataLengthReadAccess()
     {
       ICanCyclicTXMsg message;
-      message = mScheduler!.AddMessage();
+      message = mScheduler.AddMessage();
 
       message.CycleTicks = 1;
 
@@ -286,7 +287,7 @@ namespace Vci4Tests
     public void DataLengthWriteAccess()
     {
       ICanCyclicTXMsg message;
-      message = mScheduler!.AddMessage();
+      message = mScheduler.AddMessage();
 
       message.CycleTicks = 1;
 
@@ -312,7 +313,7 @@ namespace Vci4Tests
     public void DataLengthValidDataLength()
     {
       ICanCyclicTXMsg message;
-      message = mScheduler!.AddMessage();
+      message = mScheduler.AddMessage();
 
       message.DataLength = 8;
     }
@@ -325,7 +326,7 @@ namespace Vci4Tests
     public void DataLengthInvalidDataLength()
     {
       ICanCyclicTXMsg message;
-      message = mScheduler!.AddMessage();
+      message = mScheduler.AddMessage();
 
       message.DataLength = 9;
     }
@@ -338,7 +339,7 @@ namespace Vci4Tests
     public void AutoIncrementIndexInvalidIndex()
     {
       ICanCyclicTXMsg message;
-      message = mScheduler!.AddMessage();
+      message = mScheduler.AddMessage();
 
       message.AutoIncrementIndex = 8;
     }
@@ -350,7 +351,7 @@ namespace Vci4Tests
     public void AutoIncrementIndexValidIndex()
     {
       ICanCyclicTXMsg message;
-      message = mScheduler!.AddMessage();
+      message = mScheduler.AddMessage();
 
       message.AutoIncrementIndex = 0;
       message.AutoIncrementIndex = 7;
@@ -367,7 +368,7 @@ namespace Vci4Tests
     public void ExtendedFrameFormatReadAccess()
     {
       ICanCyclicTXMsg message;
-      message = mScheduler!.AddMessage();
+      message = mScheduler.AddMessage();
 
       message.CycleTicks = 1;
 
@@ -383,7 +384,7 @@ namespace Vci4Tests
     public void ExtendedFrameFormatWriteAccess()
     {
       ICanCyclicTXMsg message;
-      message = mScheduler!.AddMessage();
+      message = mScheduler.AddMessage();
 
       message.CycleTicks = 1;
 
@@ -413,7 +414,7 @@ namespace Vci4Tests
     public void IdentifierReadAccess()
     {
       ICanCyclicTXMsg message;
-      message = mScheduler!.AddMessage();
+      message = mScheduler.AddMessage();
 
       message.CycleTicks = 1;
 
@@ -429,7 +430,7 @@ namespace Vci4Tests
     public void IdentifierWriteAccess()
     {
       ICanCyclicTXMsg message;
-      message = mScheduler!.AddMessage();
+      message = mScheduler.AddMessage();
 
       message.CycleTicks = 1;
 
@@ -459,7 +460,7 @@ namespace Vci4Tests
     public void RemoteTransmissionRequestReadAccess()
     {
       ICanCyclicTXMsg message;
-      message = mScheduler!.AddMessage();
+      message = mScheduler.AddMessage();
 
       message.CycleTicks = 1;
 
@@ -475,7 +476,7 @@ namespace Vci4Tests
     public void RemoteTransmissionRequestWriteAccess()
     {
       ICanCyclicTXMsg message;
-      message = mScheduler!.AddMessage();
+      message = mScheduler.AddMessage();
 
       message.CycleTicks = 1;
 
@@ -505,7 +506,7 @@ namespace Vci4Tests
     public void SelfReceptionRequestReadAccess()
     {
       ICanCyclicTXMsg message;
-      message = mScheduler!.AddMessage();
+      message = mScheduler.AddMessage();
 
       message.CycleTicks = 1;
 
@@ -521,7 +522,7 @@ namespace Vci4Tests
     public void SelfReceptionRequestWriteAccess()
     {
       ICanCyclicTXMsg message;
-      message = mScheduler!.AddMessage();
+      message = mScheduler.AddMessage();
 
       message.CycleTicks = 1;
 
@@ -551,7 +552,7 @@ namespace Vci4Tests
     public void IndexerReadAccess()
     {
       ICanCyclicTXMsg message;
-      message = mScheduler!.AddMessage();
+      message = mScheduler.AddMessage();
 
       message.CycleTicks = 1;
 
@@ -568,7 +569,7 @@ namespace Vci4Tests
     public void IndexerInvalidReadAccess()
     {
       ICanCyclicTXMsg message;
-      message = mScheduler!.AddMessage();
+      message = mScheduler.AddMessage();
 
       byte refValue = message[8];
     }
@@ -581,7 +582,7 @@ namespace Vci4Tests
     public void IndexerInvalidReadAccess2()
     {
       ICanCyclicTXMsg message;
-      message = mScheduler!.AddMessage();
+      message = mScheduler.AddMessage();
 
       byte refValue = message[-1];
     }
@@ -593,7 +594,7 @@ namespace Vci4Tests
     public void IndexerWriteAccess()
     {
       ICanCyclicTXMsg message;
-      message = mScheduler!.AddMessage();
+      message = mScheduler.AddMessage();
 
       message.CycleTicks = 1;
 
@@ -620,7 +621,7 @@ namespace Vci4Tests
     public void IndexerInvalidWriteAccess()
     {
       ICanCyclicTXMsg message;
-      message = mScheduler!.AddMessage();
+      message = mScheduler.AddMessage();
 
       message[8] = 5; 
     }
@@ -633,7 +634,7 @@ namespace Vci4Tests
     public void IndexerInvalidWriteAccess2()
     {
       ICanCyclicTXMsg message;
-      message = mScheduler!.AddMessage();
+      message = mScheduler.AddMessage();
 
       message[-1] = 5;
     }
@@ -649,7 +650,7 @@ namespace Vci4Tests
     public void ResetTest()
     {
       ICanCyclicTXMsg message;
-      message = mScheduler!.AddMessage();
+      message = mScheduler.AddMessage();
 
       // Call before AddMessage()
       message.Reset();
@@ -677,7 +678,7 @@ namespace Vci4Tests
     public void StartTest()
     {
       ICanCyclicTXMsg message;
-      message = mScheduler!.AddMessage();
+      message = mScheduler.AddMessage();
 
       message.CycleTicks = 1;
 
@@ -692,7 +693,7 @@ namespace Vci4Tests
     public void StartSecondCall()
     {
       ICanCyclicTXMsg message;
-      message = mScheduler!.AddMessage();
+      message = mScheduler.AddMessage();
 
       message.CycleTicks = 1;
 
@@ -711,7 +712,7 @@ namespace Vci4Tests
     public void StopTest()
     {
       ICanCyclicTXMsg message;
-      message = mScheduler!.AddMessage();
+      message = mScheduler.AddMessage();
 
       message.CycleTicks = 1;
 

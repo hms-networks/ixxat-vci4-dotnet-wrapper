@@ -33,37 +33,37 @@ namespace CanConNet
     /// <summary>
     ///   Reference to the used VCI device.
     /// </summary>
-    static IVciDevice? mDevice;
+    static IVciDevice mDevice;
 
     /// <summary>
     ///   Reference to the CAN controller.
     /// </summary>
-    static ICanControl? mCanCtl;
+    static ICanControl mCanCtl;
 
     /// <summary>
     ///   Reference to the CAN message communication channel.
     /// </summary>
-    static ICanChannel? mCanChn;
+    static ICanChannel mCanChn;
 
     /// <summary>
     ///   Reference to the CAN message scheduler.
     /// </summary>
-    static ICanScheduler? mCanSched;
+    static ICanScheduler mCanSched;
 
     /// <summary>
     ///   Reference to the message writer of the CAN message channel.
     /// </summary>
-    static ICanMessageWriter? mWriter;
+    static ICanMessageWriter mWriter;
 
     /// <summary>
     ///   Reference to the message reader of the CAN message channel.
     /// </summary>
-    static ICanMessageReader? mReader;
+    static ICanMessageReader mReader;
 
     /// <summary>
     ///   Thread that handles the message reception.
     /// </summary>
-    static Thread? rxThread;
+    static Thread rxThread;
 
     /// <summary>
     ///   Quit flag for the receive thread.
@@ -73,7 +73,7 @@ namespace CanConNet
     /// <summary>
     ///   Event that's set if at least one message was received.
     /// </summary>
-    static AutoResetEvent? mRxEvent;
+    static AutoResetEvent mRxEvent;
 
     #endregion
 
@@ -118,7 +118,7 @@ namespace CanConNet
           //
           // add a cyclic message when schduler is available
           //
-          ICanCyclicTXMsg? cyclicMsg = null;
+          ICanCyclicTXMsg cyclicMsg = null;
           if (null != mCanSched)
           {
             //
@@ -221,16 +221,16 @@ namespace CanConNet
     static bool SelectDevice()
     {
       bool               succeeded     = false;
-      IVciDeviceManager? deviceManager = null;
-      IVciDeviceList?    deviceList    = null;
-      IEnumerator?       deviceEnum    = null;
+      IVciDeviceManager  deviceManager = null;
+      IVciDeviceList     deviceList    = null;
+      IEnumerator        deviceEnum    = null;
 
       try
       {
         //
         // Get device manager from VCI server
         //
-        deviceManager = VciServer.Instance()!.DeviceManager;
+        deviceManager = VciServer.Instance().DeviceManager;
 
         //
         // Get the list of installed VCI devices
@@ -253,7 +253,7 @@ namespace CanConNet
           //
           // print bus type and controller type of first controller
           //
-          IVciCtrlInfo? info = mDevice.Equipment[0];
+          IVciCtrlInfo  info = mDevice.Equipment[0];
           Console.Write(" BusType    : {0}\n", info.BusType);
           Console.Write(" CtrlType   : {0}\n", info.ControllerType);
 
@@ -308,7 +308,7 @@ namespace CanConNet
     //************************************************************************
     static bool InitSocket(Byte canNo)
     {
-      IBalObject? bal = null;
+      IBalObject bal = null;
       bool succeeded = false;
 
       if (null == mDevice)
@@ -331,7 +331,7 @@ namespace CanConNet
           //
           // check if device supports the cyclic message scheduler
           //
-          if (mCanChn.Features.HasFlag(CanFeatures.Scheduler))
+          if ((mCanChn.Features & CanFeatures.Scheduler) == CanFeatures.Scheduler)
           {
             //
             // Open the scheduler of the CAN controller
@@ -423,7 +423,7 @@ namespace CanConNet
       if (null == mWriter)
         return;
 
-      IMessageFactory factory = VciServer.Instance()!.MsgFactory;
+      IMessageFactory factory = VciServer.Instance().MsgFactory;
       ICanMessage canMsg = (ICanMessage)factory.CreateMsg(typeof(ICanMessage));
 
       canMsg.TimeStamp  = 0;
@@ -657,11 +657,11 @@ namespace CanConNet
     ///   Otherwise native memory and resource leaks may occure.
     /// </remarks>
     //************************************************************************
-    static void DisposeVciObject(object? obj)
+    static void DisposeVciObject(object obj)
     {
       if (null != obj)
       {
-        IDisposable? dispose = obj as IDisposable;
+        IDisposable dispose = obj as IDisposable;
         if (null != dispose)
         {
           dispose.Dispose();

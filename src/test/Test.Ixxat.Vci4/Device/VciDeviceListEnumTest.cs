@@ -3,17 +3,18 @@ using System.Collections;
 using System.Text;
 using System.Threading;
 using Ixxat.Vci4;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 
 namespace Vci4Tests
 {
   [TestClass]
-  class VciDeviceListEnumTest
+  public class VciDeviceListEnumTest
   {
     #region Member variables
 
-    private IVciDeviceList? mList;
-    private IEnumerator? mEnumerator;
+    private IVciDeviceList mList;
+    private IEnumerator mEnumerator;
 
     #endregion
 
@@ -22,10 +23,10 @@ namespace Vci4Tests
     [TestInitialize]
     public void TestSetup()
     {
-      IVciDeviceManager manager = VciServer.Instance()!.DeviceManager;
-      mList = manager!.GetDeviceList();
+      IVciDeviceManager manager = VciServer.Instance().DeviceManager;
+      mList = manager.GetDeviceList();
       mEnumerator = mList.GetEnumerator();
-      manager!.Dispose();
+      manager.Dispose();
     }
 
     [TestCleanup]
@@ -33,7 +34,7 @@ namespace Vci4Tests
     {
       if (null != mEnumerator)
       {
-        (mEnumerator as IDisposable)!.Dispose();
+        (mEnumerator as IDisposable).Dispose();
         mEnumerator = null;
       }
       if (null != mList)
@@ -54,7 +55,7 @@ namespace Vci4Tests
     [ExpectedException(typeof(InvalidOperationException))]
     public void CurrentThrowsInvalidOperationExceptionBeforeMoveNext()
     {
-      object obj = mEnumerator!.Current;
+      object obj = mEnumerator.Current;
     }
 
     [TestMethod]
@@ -63,8 +64,8 @@ namespace Vci4Tests
     /// </summary>
     public void CurrentSameResultForMultiCall()
     {
-      mEnumerator!.MoveNext();
-      object firstResult = mEnumerator!.Current;
+      mEnumerator.MoveNext();
+      object firstResult = mEnumerator.Current;
 
       Assert.IsTrue(firstResult.Equals(mEnumerator.Current));
     }
@@ -76,10 +77,10 @@ namespace Vci4Tests
     [ExpectedException(typeof(ObjectDisposedException))]
     public void CurrentMustThrowObjectDisposedException()
     {
-      mEnumerator!.MoveNext();
-      (mEnumerator as IDisposable)!.Dispose();
+      mEnumerator.MoveNext();
+      (mEnumerator as IDisposable).Dispose();
 
-      object obj = mEnumerator!.Current;
+      object obj = mEnumerator.Current;
     }
 
     [TestMethod]
@@ -90,8 +91,8 @@ namespace Vci4Tests
     [ExpectedException(typeof(InvalidOperationException))]
     public void CurrentThrowsInvalidOperationExceptionAtEnumEnd()
     {
-      while (mEnumerator!.MoveNext()) ;
-      object obj = mEnumerator!.Current;
+      while (mEnumerator.MoveNext()) ;
+      object obj = mEnumerator.Current;
     }
 
     #endregion
@@ -104,16 +105,16 @@ namespace Vci4Tests
     /// </summary>
     public void MoveNextReturnsTrueUntilEnd()
     {
-      object? current = null;
+      object current = null;
       bool moveNextResult = false;
 
       do
       {
-        moveNextResult = mEnumerator!.MoveNext();
+        moveNextResult = mEnumerator.MoveNext();
 
         try 
         { 
-          current = mEnumerator!.Current; 
+          current = mEnumerator.Current; 
         }
         catch (Exception) 
         {
@@ -139,10 +140,10 @@ namespace Vci4Tests
     /// </summary>
     public void MoveNextReturnsTrueAfterReset()
     {
-      while (mEnumerator!.MoveNext()) ;
-      mEnumerator!.Reset();
-      Assert.IsTrue(mEnumerator!.MoveNext());
-      while (mEnumerator!.MoveNext()) ;
+      while (mEnumerator.MoveNext()) ;
+      mEnumerator.Reset();
+      Assert.IsTrue(mEnumerator.MoveNext());
+      while (mEnumerator.MoveNext()) ;
     }
 
     [TestMethod]
@@ -151,9 +152,9 @@ namespace Vci4Tests
     /// </summary>
     public void MoveNextIsTrueAndCurrentIsValid()
     {
-      while (mEnumerator!.MoveNext())
+      while (mEnumerator.MoveNext())
       {
-        Assert.IsNotNull(mEnumerator!.Current);
+        Assert.IsNotNull(mEnumerator.Current);
       }
     }
 
@@ -164,8 +165,8 @@ namespace Vci4Tests
     [ExpectedException(typeof(ObjectDisposedException))]
     public void MoveNextMustThrowObjectDisposedException()
     {
-      (mEnumerator as IDisposable)!.Dispose();
-      mEnumerator!.MoveNext();
+      (mEnumerator as IDisposable).Dispose();
+      mEnumerator.MoveNext();
     }
 
     #endregion
@@ -179,8 +180,8 @@ namespace Vci4Tests
     [ExpectedException(typeof(InvalidOperationException))]
     public void ResetCausesInvalidOperationExceptionForCurrent1()
     {
-      mEnumerator!.Reset();
-      object obj = mEnumerator!.Current;
+      mEnumerator.Reset();
+      object obj = mEnumerator.Current;
     }
 
     [TestMethod]
@@ -190,9 +191,9 @@ namespace Vci4Tests
     [ExpectedException(typeof(InvalidOperationException))]
     public void ResetCausesInvalidOperationExceptionForCurrent2()
     {
-      mEnumerator!.MoveNext();
-      mEnumerator!.Reset();
-      object obj = mEnumerator!.Current;
+      mEnumerator.MoveNext();
+      mEnumerator.Reset();
+      object obj = mEnumerator.Current;
     }
 
     [TestMethod]
@@ -201,10 +202,10 @@ namespace Vci4Tests
     /// </summary>
     public void ResetCausesMoveNextToBeTrue()
     {
-      while (mEnumerator!.MoveNext()) ;
-      mEnumerator!.Reset();
-      Assert.IsTrue(mEnumerator!.MoveNext());
-      while (mEnumerator!.MoveNext()) ;
+      while (mEnumerator.MoveNext()) ;
+      mEnumerator.Reset();
+      Assert.IsTrue(mEnumerator.MoveNext());
+      while (mEnumerator.MoveNext()) ;
     }
 
     [TestMethod]
@@ -214,8 +215,8 @@ namespace Vci4Tests
     [ExpectedException(typeof(ObjectDisposedException))]
     public void ResetMustThrowObjectDisposedException()
     {
-      (mEnumerator as IDisposable)!.Dispose();
-      mEnumerator!.Reset();
+      (mEnumerator as IDisposable).Dispose();
+      mEnumerator.Reset();
     }
 
     #endregion

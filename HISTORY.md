@@ -1,5 +1,9 @@
 # Open source releases
 
+## 4.1.6	net35	19/02/2024
+
+- release backport to .NET 3.5/VS2008
+
 ## 4.1.5	09/02/2024
 
 - fix CanCyclicTXMsg2::AutoIncrementIndex maximum check (CANFD data len, 0..63)

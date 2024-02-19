@@ -37,7 +37,7 @@ namespace Ixxat.Vci4.Bal.Lin
     // member variables
     //--------------------------------------------------------------------
       private ushort  m_wBitrate;   // contains the bitrate of a LinBitrate instance
-      private string? m_sName;      // human readable name of the bit rate
+      private string  m_sName;      // human readable name of the bit rate
 
   #endregion
 
@@ -349,7 +349,7 @@ namespace Ixxat.Vci4.Bal.Lin
       ///   otherwise, false.
       /// </returns>
       //*****************************************************************************
-      public override bool Equals(Object? obj)
+      public override bool Equals(Object obj)
       {
         // Check for null values and compare run-time types.
         if (!(obj is LinBitrate))

@@ -4,17 +4,18 @@ using System.Text;
 using System.Threading;
 using Ixxat.Vci4;
 using Ixxat.Vci4.Bal;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 
 namespace Vci4Tests
 {
   [TestClass]
-  class BalResourceTest
+  public class BalResourceTest
     : VciDeviceTestBase
   {
     #region Member variables
 
-    private IBalResource? mResource;
+    private IBalResource mResource;
 
     #endregion
 
@@ -23,13 +24,13 @@ namespace Vci4Tests
     [TestInitialize]
     public void TestSetup()
     {
-      Ixxat.Vci4.IVciDevice? device = GetDevice();
-      Ixxat.Vci4.Bal.IBalObject? bal = device!.OpenBusAccessLayer();
+      Ixxat.Vci4.IVciDevice device = GetDevice();
+      Ixxat.Vci4.Bal.IBalObject bal = device.OpenBusAccessLayer();
 
-      mResource = bal!.Resources[0];
+      mResource = bal.Resources[0];
 
-      bal!.Dispose();
-      device!.Dispose();
+      bal.Dispose();
+      device.Dispose();
     }
 
     #endregion
@@ -42,11 +43,11 @@ namespace Vci4Tests
     /// </summary>
     public void BusNameHasConstantValue()
     {
-      String refValue = mResource!.BusName;
+      String refValue = mResource.BusName;
       Assert.IsNotNull(refValue);
       Assert.IsTrue(0 < refValue.Length);
 
-      String testValue = mResource!.BusName;
+      String testValue = mResource.BusName;
       Assert.IsNotNull(testValue);
       Assert.IsTrue(testValue == refValue);
     }
@@ -57,7 +58,7 @@ namespace Vci4Tests
     /// </summary>
     public void BusNameMustNotThrowObjectDisposedException()
     {
-      String refValue = mResource!.BusName;
+      String refValue = mResource.BusName;
     }
 
     #endregion
@@ -70,9 +71,9 @@ namespace Vci4Tests
     /// </summary>
     public void BusPortIsConstant()
     {
-      Byte refValue = mResource!.BusPort;
+      Byte refValue = mResource.BusPort;
 
-      Byte testValue = mResource!.BusPort;
+      Byte testValue = mResource.BusPort;
       Assert.IsTrue(refValue == testValue);
     }
 
@@ -82,8 +83,8 @@ namespace Vci4Tests
     /// </summary>
     public void BusPortMustThrowObjectDisposedException()
     {
-      mResource!.Dispose();
-      Byte refValue = mResource!.BusPort;
+      mResource.Dispose();
+      Byte refValue = mResource.BusPort;
     }
 
     #endregion
@@ -96,9 +97,9 @@ namespace Vci4Tests
     /// </summary>
     public void VciBusTypeIsConstant()
     {
-      VciBusType refValue = mResource!.BusType;
+      VciBusType refValue = mResource.BusType;
 
-      VciBusType testValue = mResource!.BusType;
+      VciBusType testValue = mResource.BusType;
       Assert.IsTrue(refValue == testValue);
     }
 
@@ -108,8 +109,8 @@ namespace Vci4Tests
     /// </summary>
     public void VciBusTypeMustThrowObjectDisposedException()
     {
-      mResource!.Dispose();
-      VciBusType refValue = mResource!.BusType;
+      mResource.Dispose();
+      VciBusType refValue = mResource.BusType;
     }
 
     #endregion
@@ -124,13 +125,13 @@ namespace Vci4Tests
     {
       string name;
 
-      using (IVciDevice? device = GetDevice())
+      using (IVciDevice device = GetDevice())
       {
-        using(IBalObject? bal = device!.OpenBusAccessLayer())
+        using(IBalObject bal = device.OpenBusAccessLayer())
         {
-          using(IBalResource? resource = bal!.Resources[0])
+          using(IBalResource resource = bal.Resources[0])
           {
-            name = resource!.BusName;
+            name = resource.BusName;
           }
         }
       }

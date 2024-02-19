@@ -84,11 +84,11 @@ namespace Ixxat.Vci4.Bal
     ///   The specified index is not a valid index in the list.
     /// </exception>
     //*****************************************************************************
-    public IBalResource? this[int index]
+    public IBalResource this[int index]
     {
       get
       {
-        return (IBalResource?)InnerList[index];
+        return (IBalResource)InnerList[index];
       }
     }
 

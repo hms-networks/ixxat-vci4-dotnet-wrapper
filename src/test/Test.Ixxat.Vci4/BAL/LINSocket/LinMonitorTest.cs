@@ -5,6 +5,7 @@ using System.Threading;
 using Ixxat.Vci4;
 using Ixxat.Vci4.Bal;
 using Ixxat.Vci4.Bal.Lin;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 
 namespace Vci4Tests
@@ -17,8 +18,8 @@ namespace Vci4Tests
 
     private const Byte mcInvalidPort = 0xFF;
     private Byte mLinPort;
-    private Ixxat.Vci4.Bal.Lin.ILinMonitor? mMonitor;
-    private Ixxat.Vci4.Bal.IBalObject? mBal;
+    private Ixxat.Vci4.Bal.Lin.ILinMonitor mMonitor;
+    private Ixxat.Vci4.Bal.IBalObject mBal;
 
     #endregion
 
@@ -27,21 +28,21 @@ namespace Vci4Tests
     [TestInitialize]
     public void TestSetup()
     {
-      Ixxat.Vci4.IVciDevice? device = GetDevice();
-      mBal = device!.OpenBusAccessLayer();
+      Ixxat.Vci4.IVciDevice device = GetDevice();
+      mBal = device.OpenBusAccessLayer();
 
       mLinPort = mcInvalidPort;
-      foreach (IBalResource? resource in mBal!.Resources)
+      foreach (IBalResource resource in mBal.Resources)
       {
-        if (VciBusType.Lin == resource!.BusType)
+        if (VciBusType.Lin == resource.BusType)
         {
-          mLinPort = resource!.BusPort;
+          mLinPort = resource.BusPort;
           break;
         }
-        resource!.Dispose();
+        resource.Dispose();
       }
 
-      device!.Dispose();
+      device.Dispose();
 
       if (mcInvalidPort == mLinPort)
       {
@@ -49,7 +50,7 @@ namespace Vci4Tests
         Assert.Inconclusive();
       }
 
-      mMonitor = mBal!.OpenSocket(mLinPort, typeof(Ixxat.Vci4.Bal.Lin.ILinMonitor)) as Ixxat.Vci4.Bal.Lin.ILinMonitor;
+      mMonitor = mBal.OpenSocket(mLinPort, typeof(Ixxat.Vci4.Bal.Lin.ILinMonitor)) as Ixxat.Vci4.Bal.Lin.ILinMonitor;
     }
 
     [TestCleanup]
@@ -57,13 +58,13 @@ namespace Vci4Tests
     {
       if (null != mMonitor)
       {
-        mMonitor!.Dispose();
+        mMonitor.Dispose();
         mMonitor = null;
       }
 
       if (null != mBal)
       {
-        mBal!.Dispose();
+        mBal.Dispose();
         mBal = null;
       }
     }
@@ -79,7 +80,7 @@ namespace Vci4Tests
     [ExpectedException(typeof(ObjectDisposedException))]
     public void MonitorStatusBeforeInit()
     {
-      LinMonitorStatus refValue = mMonitor!.MonitorStatus;
+      LinMonitorStatus refValue = mMonitor.MonitorStatus;
     }
 
     [TestMethod]
@@ -88,10 +89,10 @@ namespace Vci4Tests
     /// </summary>
     public void MonitorStatusAfterInit()
     {
-      mMonitor!.Initialize(100, false);
-      LinMonitorStatus refValue = mMonitor!.MonitorStatus;
+      mMonitor.Initialize(100, false);
+      LinMonitorStatus refValue = mMonitor.MonitorStatus;
       
-      LinMonitorStatus testValue = mMonitor!.MonitorStatus;
+      LinMonitorStatus testValue = mMonitor.MonitorStatus;
       Assert.IsTrue(refValue.IsActivated == testValue.IsActivated);
     }
 
@@ -102,8 +103,8 @@ namespace Vci4Tests
     [ExpectedException(typeof(ObjectDisposedException))]
     public void MonitorStatusMustThrowObjectDisposedException()
     {
-      mMonitor!.Dispose();
-      LinMonitorStatus refValue = mMonitor!.MonitorStatus;
+      mMonitor.Dispose();
+      LinMonitorStatus refValue = mMonitor.MonitorStatus;
     }
 
     #endregion
@@ -116,8 +117,8 @@ namespace Vci4Tests
     /// </summary>
     public void InitializeValidCalls()
     {
-      mMonitor!.Initialize(100, false);
-      mMonitor!.Initialize(100, true);
+      mMonitor.Initialize(100, false);
+      mMonitor.Initialize(100, true);
     }
 
     [TestMethod]
@@ -127,7 +128,7 @@ namespace Vci4Tests
     [ExpectedException(typeof(VciException))]
     public void InitializeWithRxFifoSize0()
     {
-      mMonitor!.Initialize(0, false);
+      mMonitor.Initialize(0, false);
     }
 
     [TestMethod]
@@ -137,8 +138,8 @@ namespace Vci4Tests
     [ExpectedException(typeof(ObjectDisposedException))]
     public void InitializeMustThrowObjectDisposedException()
     {
-      mMonitor!.Dispose();
-      mMonitor!.Initialize(100, false);
+      mMonitor.Dispose();
+      mMonitor.Initialize(100, false);
     }
 
     #endregion
@@ -152,7 +153,7 @@ namespace Vci4Tests
     [ExpectedException(typeof(ObjectDisposedException))]
     public void ActivateBeforeInit()
     {
-      mMonitor!.Activate();
+      mMonitor.Activate();
     }
 
     [TestMethod]
@@ -161,9 +162,9 @@ namespace Vci4Tests
     /// </summary>
     public void ActivateValidCalls()
     {
-      mMonitor!.Initialize(100, false);
+      mMonitor.Initialize(100, false);
 
-      mMonitor!.Activate();
+      mMonitor.Activate();
     }
 
     [TestMethod]
@@ -172,22 +173,22 @@ namespace Vci4Tests
     /// </summary>
     public void ActivateSecondExclusive()
     {
-      mMonitor!.Initialize(100, true);
-      mMonitor!.Activate();
+      mMonitor.Initialize(100, true);
+      mMonitor.Activate();
 
-      Ixxat.Vci4.Bal.Lin.ILinMonitor? socket2;
-      socket2 = mBal!.OpenSocket(mLinPort, typeof(Ixxat.Vci4.Bal.Lin.ILinMonitor)) as Ixxat.Vci4.Bal.Lin.ILinMonitor;
+      Ixxat.Vci4.Bal.Lin.ILinMonitor socket2;
+      socket2 = mBal.OpenSocket(mLinPort, typeof(Ixxat.Vci4.Bal.Lin.ILinMonitor)) as Ixxat.Vci4.Bal.Lin.ILinMonitor;
       try
       {
-        socket2!.Initialize(100, true);
-        socket2!.Activate();
+        socket2.Initialize(100, true);
+        socket2.Activate();
         Assert.IsTrue(false);
       }
       catch (VciException)
       {
       }
 
-      socket2!.Dispose();
+      socket2.Dispose();
     }
 
     [TestMethod]
@@ -197,8 +198,8 @@ namespace Vci4Tests
     [ExpectedException(typeof(ObjectDisposedException))]
     public void ActivateMustThrowObjectDisposedException()
     {
-      mMonitor!.Dispose();
-      mMonitor!.Activate();
+      mMonitor.Dispose();
+      mMonitor.Activate();
     }
 
     #endregion
@@ -212,7 +213,7 @@ namespace Vci4Tests
     [ExpectedException(typeof(ObjectDisposedException))]
     public void DeactivateBeforeInit()
     {
-      mMonitor!.Deactivate();
+      mMonitor.Deactivate();
     }
 
     [TestMethod]
@@ -221,9 +222,9 @@ namespace Vci4Tests
     /// </summary>
     public void DeactivateValidCalls()
     {
-      mMonitor!.Initialize(100, false);
+      mMonitor.Initialize(100, false);
       
-      mMonitor!.Deactivate();
+      mMonitor.Deactivate();
     }
 
     [TestMethod]
@@ -233,8 +234,8 @@ namespace Vci4Tests
     [ExpectedException(typeof(ObjectDisposedException))]
     public void DeactivateMustThrowObjectDisposedException()
     {
-      mMonitor!.Dispose();
-      mMonitor!.Deactivate();
+      mMonitor.Dispose();
+      mMonitor.Deactivate();
     }
 
     #endregion
@@ -248,7 +249,7 @@ namespace Vci4Tests
     [ExpectedException(typeof(ObjectDisposedException))]
     public void GetMessageReaderBeforeInit()
     {
-      ILinMessageReader reader = mMonitor!.GetMessageReader();
+      ILinMessageReader reader = mMonitor.GetMessageReader();
     }
 
     [TestMethod]
@@ -257,9 +258,9 @@ namespace Vci4Tests
     /// </summary>
     public void GetMessageReaderValidCalls()
     {
-      mMonitor!.Initialize(100, false);
+      mMonitor.Initialize(100, false);
 
-      ILinMessageReader reader = mMonitor!.GetMessageReader();
+      ILinMessageReader reader = mMonitor.GetMessageReader();
       Assert.IsNotNull(reader);
       reader.Dispose();
     }
@@ -271,8 +272,8 @@ namespace Vci4Tests
     [ExpectedException(typeof(ObjectDisposedException))]
     public void GetMessageReaderMustThrowObjectDisposedException()
     {
-      mMonitor!.Dispose();
-      ILinMessageReader reader = mMonitor!.GetMessageReader();
+      mMonitor.Dispose();
+      ILinMessageReader reader = mMonitor.GetMessageReader();
     }
 
     #endregion
@@ -286,17 +287,17 @@ namespace Vci4Tests
     [ExpectedException(typeof(ObjectDisposedException))]
     public void TestUsingStatement()
     {
-      mMonitor!.Dispose();
+      mMonitor.Dispose();
       mMonitor = null;
 
-      ILinMonitor? channel;
-      using (channel = mBal!.OpenSocket(mLinPort, typeof(Ixxat.Vci4.Bal.Lin.ILinMonitor)) as Ixxat.Vci4.Bal.Lin.ILinMonitor)
+      ILinMonitor channel;
+      using (channel = mBal.OpenSocket(mLinPort, typeof(Ixxat.Vci4.Bal.Lin.ILinMonitor)) as Ixxat.Vci4.Bal.Lin.ILinMonitor)
       {
-        channel!.Deactivate();
+        channel.Deactivate();
       }
 
       // This call must throw an ObjectDisposedException
-      channel!.Deactivate();
+      channel.Deactivate();
     }
 
     #endregion

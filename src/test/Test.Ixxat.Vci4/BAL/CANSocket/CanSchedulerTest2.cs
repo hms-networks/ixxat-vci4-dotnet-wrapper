@@ -5,6 +5,7 @@ using System.Threading;
 using Ixxat.Vci4;
 using Ixxat.Vci4.Bal;
 using Ixxat.Vci4.Bal.Can;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Vci4Tests
 {
@@ -14,9 +15,9 @@ namespace Vci4Tests
   {
     #region Member variables
 
-    private Ixxat.Vci4.Bal.Can.ICanControl2?   mControl;
-    private Ixxat.Vci4.Bal.Can.ICanScheduler2? mScheduler;
-    private Ixxat.Vci4.Bal.IBalObject? mBal;
+    private Ixxat.Vci4.Bal.Can.ICanControl2   mControl;
+    private Ixxat.Vci4.Bal.Can.ICanScheduler2 mScheduler;
+    private Ixxat.Vci4.Bal.IBalObject mBal;
 
     #endregion
 
@@ -25,14 +26,14 @@ namespace Vci4Tests
     [TestInitialize]
     public void TestSetup()
     {
-      Ixxat.Vci4.IVciDevice? device = GetDevice();
+      Ixxat.Vci4.IVciDevice device = GetDevice();
 
       try
       {
-        mBal = device!.OpenBusAccessLayer();
+        mBal = device.OpenBusAccessLayer();
 
         // Test Support of ICanScheduler2
-        mScheduler = mBal!.OpenSocket(0, typeof(Ixxat.Vci4.Bal.Can.ICanScheduler2)) as Ixxat.Vci4.Bal.Can.ICanScheduler2;
+        mScheduler = mBal.OpenSocket(0, typeof(Ixxat.Vci4.Bal.Can.ICanScheduler2)) as Ixxat.Vci4.Bal.Can.ICanScheduler2;
         if (null == mScheduler)
         {
           Assert.Inconclusive();
@@ -40,8 +41,8 @@ namespace Vci4Tests
 
         // inserted code to initialize the CAN controller
         // This is neccessary because the CAN@net only supports the Scheduler funtionality in the Init mode 
-        mControl = mBal!.OpenSocket(0, typeof(Ixxat.Vci4.Bal.Can.ICanControl2)) as Ixxat.Vci4.Bal.Can.ICanControl2;
-        mControl!.InitLine(CanOperatingModes.Standard
+        mControl = mBal.OpenSocket(0, typeof(Ixxat.Vci4.Bal.Can.ICanControl2)) as Ixxat.Vci4.Bal.Can.ICanControl2;
+        mControl.InitLine(CanOperatingModes.Standard
                          , CanExtendedOperatingModes.Undefined
                          , CanFilterModes.Pass
                          , 2048
@@ -57,7 +58,7 @@ namespace Vci4Tests
       }
       finally
       {
-        device!.Dispose();
+        device.Dispose();
       }
     }
 
@@ -66,7 +67,7 @@ namespace Vci4Tests
     {
       if (null != mScheduler)
       {
-        mScheduler!.Dispose();
+        mScheduler.Dispose();
         mScheduler = null;
       }
 
@@ -78,7 +79,7 @@ namespace Vci4Tests
 
       if (null != mBal)
       {
-        mBal!.Dispose();
+        mBal.Dispose();
         mBal = null;
       }
     }
@@ -94,7 +95,7 @@ namespace Vci4Tests
     public void AddMessageValidCall()
     {
       ICanCyclicTXMsg2 message;
-      message = mScheduler!.AddMessage();
+      message = mScheduler.AddMessage();
 
       message.CycleTicks = 1;
     }
@@ -111,7 +112,7 @@ namespace Vci4Tests
     public void StartMessageNoExcForRepZero()
     {
       ICanCyclicTXMsg2 message;
-      message = mScheduler!.AddMessage();
+      message = mScheduler.AddMessage();
 
       message.CycleTicks = 1;
 
@@ -131,7 +132,7 @@ namespace Vci4Tests
     public void StopMessageNoExcForRegMsg()
     {
       ICanCyclicTXMsg2 message;
-      message = mScheduler!.AddMessage();
+      message = mScheduler.AddMessage();
 
       message.CycleTicks = 1;
 
@@ -148,7 +149,7 @@ namespace Vci4Tests
     /// </summary>
     public void ResetBeforeDisposeMustNotThrowException()
     {
-      mScheduler!.Reset();
+      mScheduler.Reset();
     }
 
     [TestMethod]
@@ -158,9 +159,9 @@ namespace Vci4Tests
     [ExpectedException(typeof(ObjectDisposedException))]
     public void ResetMustThrowObjectDisposedException()
     {
-      mScheduler!.Dispose();
+      mScheduler.Dispose();
 
-      mScheduler!.Reset();
+      mScheduler.Reset();
     }
 
     #endregion
@@ -173,7 +174,7 @@ namespace Vci4Tests
     /// </summary>
     public void SuspendBeforeDisposeMustNotThrowException()
     {
-      mScheduler!.Suspend();
+      mScheduler.Suspend();
     }
 
     [TestMethod]
@@ -183,9 +184,9 @@ namespace Vci4Tests
     [ExpectedException(typeof(ObjectDisposedException))]
     public void SuspendMustThrowObjectDisposedException()
     {
-      mScheduler!.Dispose();
+      mScheduler.Dispose();
 
-      mScheduler!.Suspend();
+      mScheduler.Suspend();
     }
 
     #endregion
@@ -198,7 +199,7 @@ namespace Vci4Tests
     /// </summary>
     public void ResumeBeforeDisposeMustNotThrowException()
     {
-      mScheduler!.Resume();
+      mScheduler.Resume();
     }
 
     [TestMethod]
@@ -208,9 +209,9 @@ namespace Vci4Tests
     [ExpectedException(typeof(ObjectDisposedException))]
     public void ResumeMustThrowObjectDisposedException()
     {
-      mScheduler!.Dispose();
+      mScheduler.Dispose();
 
-      mScheduler!.Resume();
+      mScheduler.Resume();
     }
 
     #endregion
@@ -223,7 +224,7 @@ namespace Vci4Tests
     /// </summary>
     public void UpdateStatusBeforeDisposeMustNotThrowException()
     {
-      mScheduler!.UpdateStatus();
+      mScheduler.UpdateStatus();
     }
 
     [TestMethod]
@@ -232,9 +233,9 @@ namespace Vci4Tests
     /// </summary>
     public void UpdateStatusMustNotThrowObjectDisposedException()
     {
-      mScheduler!.Dispose();
+      mScheduler.Dispose();
 
-      mScheduler!.UpdateStatus();
+      mScheduler.UpdateStatus();
     }
 
     #endregion
@@ -248,18 +249,18 @@ namespace Vci4Tests
     [ExpectedException(typeof(ObjectDisposedException))]
     public void TestUsingStatement()
     {
-      mScheduler!.Dispose();
+      mScheduler.Dispose();
       mScheduler = null;
 
       uint divisor;
-      ICanScheduler2? scheduler;
-      using (scheduler = mBal!.OpenSocket(0, typeof(Ixxat.Vci4.Bal.Can.ICanScheduler2)) as Ixxat.Vci4.Bal.Can.ICanScheduler2)
+      ICanScheduler2 scheduler;
+      using (scheduler = mBal.OpenSocket(0, typeof(Ixxat.Vci4.Bal.Can.ICanScheduler2)) as Ixxat.Vci4.Bal.Can.ICanScheduler2)
       {
-        divisor = scheduler!.DelayedTXTimerDivisor;
+        divisor = scheduler.DelayedTXTimerDivisor;
       }
 
       // This call must throw an ObjectDisposedException
-      divisor = scheduler!.DelayedTXTimerDivisor;
+      divisor = scheduler.DelayedTXTimerDivisor;
     }
 
     #endregion

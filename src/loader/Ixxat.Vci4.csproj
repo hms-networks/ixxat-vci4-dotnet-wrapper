@@ -1,21 +1,76 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
-
-  <PropertyGroup Label="Globals">
-    <ProjectGuid>9d72ba0c-20bf-41fe-ab1f-fbca3a212e76</ProjectGuid>
-  </PropertyGroup>
-
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <TargetFrameworks>net6.0-windows;net5.0-windows;netcoreapp3.1;net40</TargetFrameworks>
+    <Framework Condition=" '$(Framework)' == '' ">net35</Framework>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{9D72BA0C-20BF-41FE-AB1F-FBCA3A212E76}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Ixxat.Vci4</RootNamespace>
+    <AssemblyName>Ixxat.Vci4</AssemblyName>
+    <TargetFrameworkVersion Condition=" '$(Framework)' == 'net20' ">v2.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion Condition=" '$(Framework)' == 'net35' ">v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>$(BuildAssemblyKeyFile)</AssemblyOriginatorKeyFile>
   </PropertyGroup>
-
-  <PropertyGroup>
-    <DocumentationFile>Ixxat.Vci4.xml</DocumentationFile>
-    <LangVersion>8.0</LangVersion>
-    <Nullable>enable</Nullable>
-    <BaseOutputPath>..\..\bin\</BaseOutputPath>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\bin\Debug\$(Framework)\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>..\..\bin\$(Configuration)\$(Framework)\Ixxat.Vci4.XML</DocumentationFile>
   </PropertyGroup>
-
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\..\bin\Release\$(Framework)\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>..\..\bin\$(Configuration)\$(Framework)\Ixxat.Vci4.XML</DocumentationFile>
+  </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="..\contract\Ixxat.Vci4.Contract.csproj" />
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework Condition=" '$(Framework)' == 'net20' ">2.0</RequiredTargetFramework>
+      <RequiredTargetFramework Condition=" '$(Framework)' == 'net35' ">3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework Condition=" '$(Framework)' == 'net20' ">2.0</RequiredTargetFramework>
+      <RequiredTargetFramework Condition=" '$(Framework)' == 'net35' ">3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions">
+      <RequiredTargetFramework Condition=" '$(Framework)' == 'net20' ">2.0</RequiredTargetFramework>
+      <RequiredTargetFramework Condition=" '$(Framework)' == 'net35' ">3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
+  <ItemGroup>
+    <Compile Include="vcisrv.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\contract\Ixxat.Vci4.Contract.csproj">
+      <Project>{7BCFFB2B-75C1-4325-BED2-443D15908221}</Project>
+      <Name>Ixxat.Vci4.Contract</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="$(BuildAssemblyKeyFile)" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
 </Project>

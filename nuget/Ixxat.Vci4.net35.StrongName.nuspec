@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>Ixxat.Vci4.net35.StrongName</id>
+    <version>1.0.0</version>
+    <authors>HMS Networks</authors>
+    <owners>HMS Networks</owners>
+    <license type="expression">MIT</license>
+    <projectUrl>https://github.com/hms-networks/ixxat-vci4-dotnet-wrapper</projectUrl>
+    <icon>images\HMSLogo.png</icon>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Use Ixxat.Vci4 package to access CAN interfaces from Ixxat/HMS Networks via .NET and VCI4-API. This package supports net35. Mixed assemblies depend on VS2008 runtime.</description>
+    <releaseNotes>Resolved issues:
+- based on tag 4.1.5
+- backport to VS2008 and .NET 3.5 target
+    </releaseNotes>
+    <readme>docs\README.md</readme>
+    <repository type="git" url="https://github.com/hms-networks/ixxat-vci4-dotnet-wrapper" branch="main" commit="$SourceRevisionId$" />
+    <copyright>Copyright (C) 2018-2024</copyright>
+    <tags>VCI4 CAN Lin Ixxat HMS strongname .NET35</tags>
+    <dependencies>
+      <group targetFramework="net35">
+      </group>
+    </dependencies>
+    <references>
+    </references>
+  </metadata>
+  <files>
+    <file src="..\images\HMSLogo.png" target="images\" />
+    <file src="..\README.md" target="docs\" />
+    <file src="build\Ixxat.Vci4.targets" target="build\net35\Ixxat.Vci4.net35.StrongName.targets" />
+    <file src="..\bin\Release\net35\Ixxat.Vci4.dll" target="lib\net35" />
+    <file src="..\bin\Release\net35\Ixxat.Vci4.xml" target="lib\net35" />
+    <file src="..\bin\Release\net35\Ixxat.Vci4.pdb" target="lib\net35" />
+    <file src="..\bin\Release\net35\Ixxat.Vci4.Contract.dll" target="lib\net35" />
+    <file src="..\bin\Release\net35\Ixxat.Vci4.Contract.xml" target="lib\net35" />
+    <file src="..\bin\Release\net35\Ixxat.Vci4.Contract.pdb" target="lib\net35" />
+    <file src="..\bin\Release\net35\vcinet\x86\vcinet.x86.dll" target="build\net35\x86" />
+    <file src="..\bin\Release\net35\vcinet\x64\vcinet.x64.dll" target="build\net35\x64" />
+  </files>
+</package>

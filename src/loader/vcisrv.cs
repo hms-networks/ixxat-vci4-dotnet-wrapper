@@ -5,7 +5,7 @@
 //            all rights reserved
 //----------------------------------------------------------------------------
 
-namespace Ixxat.Vci4 
+namespace Ixxat.Vci4
 {
   using System;
   using System.IO;
@@ -27,7 +27,7 @@ namespace Ixxat.Vci4
     //--------------------------------------------------------------------
 
     // The singleton VciServer instance
-    private static IVciServer?           ms_instance = null;
+    private static IVciServer  ms_instance = null;
 
     //*****************************************************************************
     /// <summary>
@@ -45,7 +45,7 @@ namespace Ixxat.Vci4
     ///   Loading server component failed.
     /// </exception>
     //*****************************************************************************
-    static private void LoadServer(string assemblyloadpath) 
+    static private void LoadServer(string assemblyloadpath)
     {
       bool isRunningAs64Bit = (IntPtr.Size == 8);
 
@@ -64,19 +64,23 @@ namespace Ixxat.Vci4
       //   - try to load from there
       if (string.IsNullOrEmpty(assemblyloadpath) || !Path.IsPathRooted(assemblyloadpath))
       {
-        Assembly? entryassembly = Assembly.GetEntryAssembly();
+        Assembly  entryassembly = Assembly.GetEntryAssembly();
         if (entryassembly == null)
           throw new InvalidOperationException("GetEntryAssembly did not return a valid assembly reference");
 
-        string? localToLoaderPath = Path.GetDirectoryName(new System.Uri(Assembly.GetCallingAssembly().Location).LocalPath);
-        string? localToExePath = Path.GetDirectoryName(new System.Uri(entryassembly.Location).LocalPath);
+        string  localToLoaderPath = Path.GetDirectoryName(new System.Uri(Assembly.GetCallingAssembly().Location).LocalPath);
+        string  localToExePath = Path.GetDirectoryName(new System.Uri(entryassembly.Location).LocalPath);
 
         // check if file exists local to exe
-        string archSpecificPath_1 = archSpecificPath = Path.Combine(localToExePath ?? "", assemblyloadpath, assemblyName);
+        archSpecificPath = Path.Combine(localToExePath ?? "", assemblyloadpath);
+        archSpecificPath = Path.Combine(archSpecificPath, assemblyName);
+        string archSpecificPath_1 = archSpecificPath;
         if (!File.Exists(archSpecificPath_1))
         {
           // second try local to loader
-          string archSpecificPath_2 = archSpecificPath = Path.Combine(localToLoaderPath ?? "", assemblyloadpath, assemblyName);
+          archSpecificPath = Path.Combine(localToLoaderPath ?? "", assemblyloadpath);
+          archSpecificPath = Path.Combine(archSpecificPath, assemblyName);
+          string archSpecificPath_2 = archSpecificPath;
           if (!File.Exists(archSpecificPath_2))
           {
             throw new InvalidOperationException(
@@ -102,15 +106,15 @@ namespace Ixxat.Vci4
       }
 
       Assembly assembly = System.Reflection.Assembly.LoadFile(archSpecificPath);
-      Type? servimpl = assembly.GetType("Ixxat.Vci4.VciServerImpl");
+      Type  servimpl = assembly.GetType("Ixxat.Vci4.VciServerImpl");
       if (servimpl == null)
         throw new InvalidOperationException("Native component error: type 'Ixxat.Vci4.VciServerImpl' not found");
 
-      MethodInfo? instance = servimpl.GetMethod("Instance", BindingFlags.Public | BindingFlags.Static);
+      MethodInfo  instance = servimpl.GetMethod("Instance", BindingFlags.Public | BindingFlags.Static);
       if (instance == null)
         throw new InvalidOperationException("Native component error: function 'Ixxat.Vci4.VciServerImpl:Instance' not found.");
 
-      ms_instance = (IVciServer?)instance.Invoke(null, null);
+      ms_instance = (IVciServer)instance.Invoke(null, null);
       if (ms_instance == null)
         throw new InvalidOperationException("Native component error: function 'Ixxat.Vci4.VciServerImpl:Instance' did not return a valid instance.");
     }
@@ -127,7 +131,7 @@ namespace Ixxat.Vci4
     ///   Loading server component failed.
     /// </exception>
     //*****************************************************************************
-    public static IVciServer? Instance()
+    public static IVciServer  Instance()
     {
       return Instance("");
     }
@@ -144,7 +148,7 @@ namespace Ixxat.Vci4
     ///   Loading server component failed.
     /// </exception>
     //*****************************************************************************
-    public static IVciServer? Instance(string assemblyloadpath)
+    public static IVciServer  Instance(string assemblyloadpath)
     {
       if (ms_instance == null)
       {

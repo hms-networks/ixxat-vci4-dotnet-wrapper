@@ -5,17 +5,18 @@ using System.Threading;
 using Ixxat.Vci4;
 using Ixxat.Vci4.Bal;
 using Ixxat.Vci4.Bal.Can;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Vci4Tests
 {
   [TestClass]
-  class CanControlTest
+  public class CanControlTest
     : VciDeviceTestBase
   {
     #region Member variables
 
-    private Ixxat.Vci4.Bal.Can.ICanControl? mSocket;
-    private Ixxat.Vci4.Bal.IBalObject? mBal;
+    private Ixxat.Vci4.Bal.Can.ICanControl mSocket;
+    private Ixxat.Vci4.Bal.IBalObject mBal;
 
     #endregion
 
@@ -24,12 +25,12 @@ namespace Vci4Tests
     [TestInitialize]
     public void TestSetup()
     {
-      Ixxat.Vci4.IVciDevice? device = GetDevice();
-      mBal = device!.OpenBusAccessLayer();
+      Ixxat.Vci4.IVciDevice device = GetDevice();
+      mBal = device.OpenBusAccessLayer();
 
-      device!.Dispose();
+      device.Dispose();
 
-      mSocket = mBal!.OpenSocket(0, typeof(Ixxat.Vci4.Bal.Can.ICanControl)) as Ixxat.Vci4.Bal.Can.ICanControl;
+      mSocket = mBal.OpenSocket(0, typeof(Ixxat.Vci4.Bal.Can.ICanControl)) as Ixxat.Vci4.Bal.Can.ICanControl;
     }
 
     [TestCleanup]
@@ -39,18 +40,18 @@ namespace Vci4Tests
       {
         try
         {
-          mSocket!.ResetLine();
+          mSocket.ResetLine();
         }
         catch (Exception)
         {
         }
 
-        mSocket!.Dispose();
+        mSocket.Dispose();
         mSocket = null;
       }
       if (null != mBal)
       {
-        mBal!.Dispose();
+        mBal.Dispose();
         mBal = null;
       }
     }
@@ -66,7 +67,7 @@ namespace Vci4Tests
     [ExpectedException(typeof(VciException))]
     public void DetectBaudMustThrowTimeoutExc()
     {
-      int result = mSocket!.DetectBaud(0, CanBitrate.CiaBitRates);
+      int result = mSocket.DetectBaud(0, CanBitrate.CiaBitRates);
     }
 
     [TestMethod]
@@ -77,7 +78,7 @@ namespace Vci4Tests
     public void DetectBaudWithEmptyBitrateArray()
     {
       CanBitrate[] bitrates = new CanBitrate[] { };
-      int result = mSocket!.DetectBaud(1, bitrates);
+      int result = mSocket.DetectBaud(1, bitrates);
     }
 
     [TestMethod]
@@ -87,8 +88,8 @@ namespace Vci4Tests
     [ExpectedException(typeof(ObjectDisposedException))]
     public void DetectBaudMustThrowObjectDisposedException()
     {
-      mSocket!.Dispose();
-      int result = mSocket!.DetectBaud(0, CanBitrate.CiaBitRates);
+      mSocket.Dispose();
+      int result = mSocket.DetectBaud(0, CanBitrate.CiaBitRates);
     }
 
     #endregion
@@ -101,7 +102,7 @@ namespace Vci4Tests
     /// </summary>
     public void InitLineWithStandardFormat()
     {
-      mSocket!.InitLine(CanOperatingModes.Standard, CanBitrate.Cia1000KBit);
+      mSocket.InitLine(CanOperatingModes.Standard, CanBitrate.Cia1000KBit);
     }
 
     [TestMethod]
@@ -110,16 +111,16 @@ namespace Vci4Tests
     /// </summary>
     public void InitLineWithStdExtFormat()
     {
-      if (mSocket!.SupportsStdAndExtFrames)
+      if (mSocket.SupportsStdAndExtFrames)
       {
-        mSocket!.InitLine(CanOperatingModes.Standard | CanOperatingModes.Extended
+        mSocket.InitLine(CanOperatingModes.Standard | CanOperatingModes.Extended
                         , CanBitrate.Cia1000KBit);
       }
       else
       {
         try
         {
-          mSocket!.InitLine(CanOperatingModes.Standard | CanOperatingModes.Extended
+          mSocket.InitLine(CanOperatingModes.Standard | CanOperatingModes.Extended
                           , CanBitrate.Cia1000KBit);
           Assert.IsTrue(false);
         }
@@ -136,8 +137,8 @@ namespace Vci4Tests
     [ExpectedException(typeof(ObjectDisposedException))]
     public void InitLineMustThrowObjectDisposedException()
     {
-      mSocket!.Dispose();
-      mSocket!.InitLine(CanOperatingModes.Standard, CanBitrate.Cia1000KBit);
+      mSocket.Dispose();
+      mSocket.InitLine(CanOperatingModes.Standard, CanBitrate.Cia1000KBit);
     }
 
     #endregion
@@ -150,9 +151,9 @@ namespace Vci4Tests
     /// </summary>
     public void StartLineAfterInit()
     {
-      mSocket!.InitLine(CanOperatingModes.Standard, CanBitrate.Cia1000KBit);
+      mSocket.InitLine(CanOperatingModes.Standard, CanBitrate.Cia1000KBit);
 
-      mSocket!.StartLine();
+      mSocket.StartLine();
     }
 
     [TestMethod]
@@ -162,7 +163,7 @@ namespace Vci4Tests
     [ExpectedException(typeof(VciException))]
     public void StartLineBeforeInit()
     {
-      mSocket!.StartLine();
+      mSocket.StartLine();
     }
 
     [TestMethod]
@@ -172,8 +173,8 @@ namespace Vci4Tests
     [ExpectedException(typeof(ObjectDisposedException))]
     public void StartLineMustThrowObjectDisposedException()
     {
-      mSocket!.Dispose();
-      mSocket!.StartLine();
+      mSocket.Dispose();
+      mSocket.StartLine();
     }
 
     #endregion
@@ -186,9 +187,9 @@ namespace Vci4Tests
     /// </summary>
     public void StopLineAfterInit()
     {
-      mSocket!.InitLine(CanOperatingModes.Standard, CanBitrate.Cia1000KBit);
+      mSocket.InitLine(CanOperatingModes.Standard, CanBitrate.Cia1000KBit);
 
-      mSocket!.StopLine();
+      mSocket.StopLine();
     }
 
     [TestMethod]
@@ -197,7 +198,7 @@ namespace Vci4Tests
     /// </summary>
     public void StopLineBeforeInit()
     {
-      mSocket!.StopLine();
+      mSocket.StopLine();
     }
 
     [TestMethod]
@@ -207,8 +208,8 @@ namespace Vci4Tests
     [ExpectedException(typeof(ObjectDisposedException))]
     public void StopLineMustThrowObjectDisposedException()
     {
-      mSocket!.Dispose();
-      mSocket!.StopLine();
+      mSocket.Dispose();
+      mSocket.StopLine();
     }
 
     #endregion
@@ -221,9 +222,9 @@ namespace Vci4Tests
     /// </summary>
     public void ResetLineAfterInit()
     {
-      mSocket!.InitLine(CanOperatingModes.Standard, CanBitrate.Cia1000KBit);
+      mSocket.InitLine(CanOperatingModes.Standard, CanBitrate.Cia1000KBit);
 
-      mSocket!.ResetLine();
+      mSocket.ResetLine();
     }
 
     [TestMethod]
@@ -232,7 +233,7 @@ namespace Vci4Tests
     /// </summary>
     public void ResetLineBeforeInit()
     {
-      mSocket!.ResetLine();
+      mSocket.ResetLine();
     }
 
     [TestMethod]
@@ -242,8 +243,8 @@ namespace Vci4Tests
     [ExpectedException(typeof(ObjectDisposedException))]
     public void ResetLineMustThrowObjectDisposedException()
     {
-      mSocket!.Dispose();
-      mSocket!.ResetLine();
+      mSocket.Dispose();
+      mSocket.ResetLine();
     }
 
     #endregion
@@ -256,10 +257,10 @@ namespace Vci4Tests
     /// </summary>
     public void SetAccFilterAfterInit()
     {
-      mSocket!.InitLine(CanOperatingModes.Standard, CanBitrate.Cia1000KBit);
+      mSocket.InitLine(CanOperatingModes.Standard, CanBitrate.Cia1000KBit);
 
-      mSocket!.SetAccFilter(CanFilter.Std, 0, 0xFFF);
-      mSocket!.SetAccFilter(CanFilter.Ext, 0, 0x3FFFFFFF);
+      mSocket.SetAccFilter(CanFilter.Std, 0, 0xFFF);
+      mSocket.SetAccFilter(CanFilter.Ext, 0, 0x3FFFFFFF);
     }
 
     [TestMethod]
@@ -269,7 +270,7 @@ namespace Vci4Tests
     [ExpectedException(typeof(VciException))]
     public void SetAccFilterStdBeforeInit()
     {
-      mSocket!.SetAccFilter(CanFilter.Std, 0, 0xFFF);
+      mSocket.SetAccFilter(CanFilter.Std, 0, 0xFFF);
     }
 
     [TestMethod]
@@ -279,7 +280,7 @@ namespace Vci4Tests
     [ExpectedException(typeof(VciException))]
     public void SetAccFilterExtBeforeInit()
     {
-      mSocket!.SetAccFilter(CanFilter.Ext, 0, 0x3FFFFFFF);
+      mSocket.SetAccFilter(CanFilter.Ext, 0, 0x3FFFFFFF);
     }
 
     [TestMethod]
@@ -289,8 +290,8 @@ namespace Vci4Tests
     [ExpectedException(typeof(ObjectDisposedException))]
     public void SetAccFilterMustThrowObjectDisposedException()
     {
-      mSocket!.Dispose();
-      mSocket!.SetAccFilter(CanFilter.Ext, 0, 0x3FFFFFFF);
+      mSocket.Dispose();
+      mSocket.SetAccFilter(CanFilter.Ext, 0, 0x3FFFFFFF);
     }
 
     #endregion
@@ -303,9 +304,9 @@ namespace Vci4Tests
     /// </summary>
     public void AddFilterStdIdsAfterInit()
     {
-      mSocket!.InitLine(CanOperatingModes.Standard, CanBitrate.Cia1000KBit);
+      mSocket.InitLine(CanOperatingModes.Standard, CanBitrate.Cia1000KBit);
 
-      mSocket!.AddFilterIds(CanFilter.Std, 0, 0xFFF);
+      mSocket.AddFilterIds(CanFilter.Std, 0, 0xFFF);
     }
 
     [TestMethod]
@@ -314,9 +315,9 @@ namespace Vci4Tests
     /// </summary>
     public void AddFilterExtIdsAfterInit()
     {
-      mSocket!.InitLine(CanOperatingModes.Extended, CanBitrate.Cia1000KBit);
+      mSocket.InitLine(CanOperatingModes.Extended, CanBitrate.Cia1000KBit);
 
-      mSocket!.AddFilterIds(CanFilter.Ext, 0, 0x3FFFFFFF);
+      mSocket.AddFilterIds(CanFilter.Ext, 0, 0x3FFFFFFF);
     }
 
     [TestMethod]
@@ -326,7 +327,7 @@ namespace Vci4Tests
     [ExpectedException(typeof(VciException))]
     public void AddFilterIdsStdBeforeInit()
     {
-      mSocket!.AddFilterIds(CanFilter.Std, 0, 0xFFF);
+      mSocket.AddFilterIds(CanFilter.Std, 0, 0xFFF);
     }
 
     [TestMethod]
@@ -336,7 +337,7 @@ namespace Vci4Tests
     [ExpectedException(typeof(VciException))]
     public void AddFilterIdsExtBeforeInit()
     {
-      mSocket!.AddFilterIds(CanFilter.Ext, 0, 0x3FFFFFFF);
+      mSocket.AddFilterIds(CanFilter.Ext, 0, 0x3FFFFFFF);
     }
 
     [TestMethod]
@@ -346,8 +347,8 @@ namespace Vci4Tests
     [ExpectedException(typeof(ObjectDisposedException))]
     public void AddFilterIdsMustThrowObjectDisposedException()
     {
-      mSocket!.Dispose();
-      mSocket!.AddFilterIds(CanFilter.Ext, 0, 0x3FFFFFFF);
+      mSocket.Dispose();
+      mSocket.AddFilterIds(CanFilter.Ext, 0, 0x3FFFFFFF);
     }
 
     #endregion
@@ -360,9 +361,9 @@ namespace Vci4Tests
     /// </summary>
     public void RemFilterStdIdsAfterInit()
     {
-      mSocket!.InitLine(CanOperatingModes.Standard, CanBitrate.Cia1000KBit);
+      mSocket.InitLine(CanOperatingModes.Standard, CanBitrate.Cia1000KBit);
       
-      mSocket!.RemFilterIds(CanFilter.Std, 0, 0xFFF);
+      mSocket.RemFilterIds(CanFilter.Std, 0, 0xFFF);
     }
 
     [TestMethod]
@@ -371,9 +372,9 @@ namespace Vci4Tests
     /// </summary>
     public void RemFilterIdsExtAfterInit()
     {
-      mSocket!.InitLine(CanOperatingModes.Extended, CanBitrate.Cia1000KBit);
+      mSocket.InitLine(CanOperatingModes.Extended, CanBitrate.Cia1000KBit);
 
-      mSocket!.RemFilterIds(CanFilter.Ext, 0, 0x3FFFFFFF);
+      mSocket.RemFilterIds(CanFilter.Ext, 0, 0x3FFFFFFF);
     }
 
     [TestMethod]
@@ -383,7 +384,7 @@ namespace Vci4Tests
     [ExpectedException(typeof(VciException))]
     public void RemFilterIdsStdBeforeInit()
     {
-      mSocket!.RemFilterIds(CanFilter.Std, 0, 0xFFF);
+      mSocket.RemFilterIds(CanFilter.Std, 0, 0xFFF);
     }
 
     [TestMethod]
@@ -393,7 +394,7 @@ namespace Vci4Tests
     [ExpectedException(typeof(VciException))]
     public void RemFilterIdsExtBeforeInit()
     {
-      mSocket!.RemFilterIds(CanFilter.Ext, 0, 0x3FFFFFFF);
+      mSocket.RemFilterIds(CanFilter.Ext, 0, 0x3FFFFFFF);
     }
 
     [TestMethod]
@@ -403,8 +404,8 @@ namespace Vci4Tests
     [ExpectedException(typeof(ObjectDisposedException))]
     public void RemFilterIdsMustThrowObjectDisposedException()
     {
-      mSocket!.Dispose();
-      mSocket!.RemFilterIds(CanFilter.Ext, 0, 0x3FFFFFFF);
+      mSocket.Dispose();
+      mSocket.RemFilterIds(CanFilter.Ext, 0, 0x3FFFFFFF);
     }
 
     #endregion
@@ -418,18 +419,18 @@ namespace Vci4Tests
     [ExpectedException(typeof(ObjectDisposedException))]
     public void TestUsingStatement()
     {
-      mSocket!.Dispose();
+      mSocket.Dispose();
       mSocket = null;
 
       CanCtrlType ctrlType;
-      ICanControl? control;
-      using (control = mBal!.OpenSocket(0, typeof(Ixxat.Vci4.Bal.Can.ICanControl)) as Ixxat.Vci4.Bal.Can.ICanControl)
+      ICanControl control;
+      using (control = mBal.OpenSocket(0, typeof(Ixxat.Vci4.Bal.Can.ICanControl)) as Ixxat.Vci4.Bal.Can.ICanControl)
       {
-        ctrlType = control!.ControllerType;
+        ctrlType = control.ControllerType;
       }
 
       // This call must throw an ObjectDisposedException
-      ctrlType = control!.ControllerType;
+      ctrlType = control.ControllerType;
     }
 
     #endregion

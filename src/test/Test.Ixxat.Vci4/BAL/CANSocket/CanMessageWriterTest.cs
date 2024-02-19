@@ -5,6 +5,7 @@ using System.Threading;
 using Ixxat.Vci4;
 using Ixxat.Vci4.Bal;
 using Ixxat.Vci4.Bal.Can;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 
 namespace Vci4Tests
@@ -15,8 +16,8 @@ namespace Vci4Tests
   {
     #region Member variables
 
-    private Ixxat.Vci4.Bal.Can.ICanChannel? mSocket;
-    private Ixxat.Vci4.Bal.Can.ICanMessageWriter? mWriter;
+    private Ixxat.Vci4.Bal.Can.ICanChannel mSocket;
+    private Ixxat.Vci4.Bal.Can.ICanMessageWriter mWriter;
 
     #endregion
 
@@ -25,17 +26,17 @@ namespace Vci4Tests
     [TestInitialize]
     public void TestSetup()
     {
-      Ixxat.Vci4.IVciDevice? device = GetDevice();
-      Ixxat.Vci4.Bal.IBalObject? bal = device!.OpenBusAccessLayer();
+      Ixxat.Vci4.IVciDevice device = GetDevice();
+      Ixxat.Vci4.Bal.IBalObject bal = device.OpenBusAccessLayer();
 
-      mSocket = bal!.OpenSocket(0, typeof(Ixxat.Vci4.Bal.Can.ICanChannel)) as Ixxat.Vci4.Bal.Can.ICanChannel;
-      mSocket!.Initialize(10, 10, false);
-      mSocket!.Activate();
+      mSocket = bal.OpenSocket(0, typeof(Ixxat.Vci4.Bal.Can.ICanChannel)) as Ixxat.Vci4.Bal.Can.ICanChannel;
+      mSocket.Initialize(10, 10, false);
+      mSocket.Activate();
 
-      bal!.Dispose();
-      device!.Dispose();
+      bal.Dispose();
+      device.Dispose();
 
-      mWriter = mSocket!.GetMessageWriter();
+      mWriter = mSocket.GetMessageWriter();
     }
 
     [TestCleanup]
@@ -43,13 +44,13 @@ namespace Vci4Tests
     {
       if (null != mWriter)
       {
-        mWriter!.Dispose();
+        mWriter.Dispose();
         mWriter = null;
       }
 
       if (null != mSocket)
       {
-        mSocket!.Dispose();
+        mSocket.Dispose();
         mSocket = null;
       }
     }
@@ -64,9 +65,9 @@ namespace Vci4Tests
     /// </summary>
     public void CapacityIsConstant()
     {
-      ushort refValue = mWriter!.Capacity;
+      ushort refValue = mWriter.Capacity;
       
-      ushort testValue = mWriter!.Capacity;
+      ushort testValue = mWriter.Capacity;
       Assert.IsTrue(refValue == testValue);
     }
 
@@ -76,8 +77,8 @@ namespace Vci4Tests
     /// </summary>
     public void CapacityMustNotThrowObjectDisposedException()
     {
-      mWriter!.Dispose();
-      ushort refValue = mWriter!.Capacity;
+      mWriter.Dispose();
+      ushort refValue = mWriter.Capacity;
       Assert.IsTrue(0 == refValue);
     }
 
@@ -91,9 +92,9 @@ namespace Vci4Tests
     /// </summary>
     public void FreeCountIsConstant()
     {
-      ushort refValue = mWriter!.FreeCount;
+      ushort refValue = mWriter.FreeCount;
       
-      ushort testValue = mWriter!.FreeCount;
+      ushort testValue = mWriter.FreeCount;
       Assert.IsTrue(refValue == testValue);
     }
 
@@ -103,8 +104,8 @@ namespace Vci4Tests
     /// </summary>
     public void FreeCountMustNotThrowObjectDisposedException()
     {
-      mWriter!.Dispose();
-      ushort refValue = mWriter!.FreeCount;
+      mWriter.Dispose();
+      ushort refValue = mWriter.FreeCount;
       Assert.IsTrue(0 == refValue);
     }
 
@@ -118,12 +119,12 @@ namespace Vci4Tests
     /// </summary>
     public void ThresholdIsConstant()
     {
-      ushort refValue = mWriter!.Threshold;
+      ushort refValue = mWriter.Threshold;
       
-      ushort testValue = mWriter!.Threshold;
+      ushort testValue = mWriter.Threshold;
       Assert.IsTrue(refValue == testValue);
       refValue++;
-      mWriter!.Threshold = refValue;
+      mWriter.Threshold = refValue;
     }
 
     [TestMethod]
@@ -132,8 +133,8 @@ namespace Vci4Tests
     /// </summary>
     public void ThresholdReadMustNotThrowObjectDisposedException()
     {
-      mWriter!.Dispose();
-      ushort refValue = mWriter!.Threshold;
+      mWriter.Dispose();
+      ushort refValue = mWriter.Threshold;
       Assert.IsTrue(0 == refValue);
     }
 
@@ -144,8 +145,8 @@ namespace Vci4Tests
     [ExpectedException(typeof(ObjectDisposedException))]
     public void ThresholdWriteMustThrowObjectDisposedException()
     {
-      mWriter!.Dispose();
-      mWriter!.Threshold = 5;
+      mWriter.Dispose();
+      mWriter.Threshold = 5;
     }
 
     #endregion
@@ -161,8 +162,8 @@ namespace Vci4Tests
       ManualResetEvent manualEvent = new ManualResetEvent(false);
       AutoResetEvent autoEvent = new AutoResetEvent(false);
 
-      mWriter!.AssignEvent(autoEvent);
-      mWriter!.AssignEvent(manualEvent);
+      mWriter.AssignEvent(autoEvent);
+      mWriter.AssignEvent(manualEvent);
     }
 
     [TestMethod]
@@ -172,10 +173,10 @@ namespace Vci4Tests
     [ExpectedException(typeof(ObjectDisposedException))]
     public void AssignEventAutoMustThrowObjectDisposedException()
     {
-      mWriter!.Dispose();
+      mWriter.Dispose();
 
       AutoResetEvent changeEvent = new AutoResetEvent(false);
-      mWriter!.AssignEvent(changeEvent);
+      mWriter.AssignEvent(changeEvent);
     }
 
     [TestMethod]
@@ -185,10 +186,10 @@ namespace Vci4Tests
     [ExpectedException(typeof(ObjectDisposedException))]
     public void AssignEventManualMustThrowObjectDisposedException()
     {
-      mWriter!.Dispose();
+      mWriter.Dispose();
 
       ManualResetEvent changeEvent = new ManualResetEvent(false);
-      mWriter!.AssignEvent(changeEvent);
+      mWriter.AssignEvent(changeEvent);
     }
 
     #endregion
@@ -201,11 +202,11 @@ namespace Vci4Tests
     /// </summary>
     public void SendMessageReturnsTrue()
     {
-      ICanMessage? msg;
-      IMessageFactory? factory = VciServer.Instance()!.MsgFactory;
-      msg = (ICanMessage)factory!.CreateMsg(typeof(ICanMessage));
+      ICanMessage msg;
+      IMessageFactory factory = VciServer.Instance().MsgFactory;
+      msg = (ICanMessage)factory.CreateMsg(typeof(ICanMessage));
 
-      Assert.IsTrue(mWriter!.SendMessage(msg));
+      Assert.IsTrue(mWriter.SendMessage(msg));
     }
 
     #endregion
@@ -220,11 +221,11 @@ namespace Vci4Tests
     [ExpectedException(typeof(ObjectDisposedException))]
     public void TestUsingStatement()
     {
-      mWriter!.Dispose();
+      mWriter.Dispose();
       mWriter = null;
 
       ICanMessageWriter writer;
-      using (writer = mSocket!.GetMessageWriter())
+      using (writer = mSocket.GetMessageWriter())
       {
         writer.AssignEvent(new AutoResetEvent(false));
       }

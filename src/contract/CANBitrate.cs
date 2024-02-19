@@ -65,7 +65,7 @@ namespace Ixxat.Vci4.Bal.Can
     //--------------------------------------------------------------------
     private byte    m_bBtr0;  // value for bit timing register 0
     private byte    m_bBtr1;  // value for bit timing register 1
-    private string? m_sName;  // human readable name of the bit rate
+    private string  m_sName;  // human readable name of the bit rate
 
 
     //--------------------------------------------------------------------
@@ -432,7 +432,7 @@ namespace Ixxat.Vci4.Bal.Can
       ///   otherwise, false.
       /// </returns>
       //*****************************************************************************
-      public override bool Equals(Object? obj)
+      public override bool Equals(Object obj)
       {
         // Check for null values and compare run-time types.
         if (!(obj is CanBitrate))
@@ -564,7 +564,7 @@ namespace Ixxat.Vci4.Bal.Can
     private ushort  m_wSJW;   // re-synchronisation jump width in quantas
     private ushort  m_wTDO;   // transceiver delay compensation offset in quantas
                               // (0 = disabled)
-    private string? m_sName;  // human readable name of the bit rate
+    private string  m_sName;  // human readable name of the bit rate
 
     //--------------------------------------------------------------------
     // properties
@@ -1376,7 +1376,7 @@ namespace Ixxat.Vci4.Bal.Can
       ///   otherwise, false.
       /// </returns>
       //*****************************************************************************
-      public override bool Equals(Object? obj)
+      public override bool Equals(Object obj)
       {
         // Check for null values and compare run-time types.
         if (!(obj is CanBitrate2))

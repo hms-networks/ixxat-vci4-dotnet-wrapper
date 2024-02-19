@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Ixxat.Vci4;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Vci4Tests
 {
@@ -16,14 +17,14 @@ namespace Vci4Tests
     /// </summary>
     public void GetDeviceListNotNull()
     {
-      IVciDeviceManager mgr = VciServer.Instance()!.DeviceManager;
+      IVciDeviceManager mgr = VciServer.Instance().DeviceManager;
       Assert.IsNotNull(mgr);
 
       IVciDeviceList list = mgr.GetDeviceList();
       Assert.IsNotNull(list);
       list.Dispose();
 
-      mgr!.Dispose();
+      mgr.Dispose();
     }
 
     [TestMethod]
@@ -33,9 +34,9 @@ namespace Vci4Tests
     [ExpectedException(typeof(ObjectDisposedException))]
     public void GetDeviceListThrowsObjectDisposeException()
     {
-      IVciDeviceManager mgr = VciServer.Instance()!.DeviceManager;
-      mgr!.Dispose();
-      IVciDeviceList list = mgr!.GetDeviceList();
+      IVciDeviceManager mgr = VciServer.Instance().DeviceManager;
+      mgr.Dispose();
+      IVciDeviceList list = mgr.GetDeviceList();
     }
 
     [TestMethod]
@@ -46,14 +47,14 @@ namespace Vci4Tests
     public void TestUsingStatement()
     {
       IVciDeviceManager manager;
-      using (manager = VciServer.Instance()!.DeviceManager)
+      using (manager = VciServer.Instance().DeviceManager)
       {
-        IVciDeviceList list = manager!.GetDeviceList();
+        IVciDeviceList list = manager.GetDeviceList();
         list.Dispose();
       }
 
       // This call must throw an ObjectDisposedException
-      manager!.GetDeviceList();
+      manager.GetDeviceList();
     }
   }
 }

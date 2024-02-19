@@ -1,4 +1,9 @@
-# VCI4 .NET Wrapper
+# VCI4 .NET Wrapper (for VS2008/.NET35)
+
+## Attention
+
+Note, that this is a special variant compiled with VS2008 targeting .NET 3.5.
+Reference this package only in .NET 3.5 projects.
 
 ## Introduction
 
@@ -8,8 +13,8 @@ VCI4 is a driver/application framework to access HMS CAN or LIN interfaces on th
 for details see https://www.ixxat.com/technical-support/support/windows-driver-software
 
 This package is released as a binary package via NuGet for application developers,
-for details see https://www.nuget.org/packages/Ixxat.Vci4
-There is also a strong named variant which is available from https://www.nuget.org/packages/Ixxat.Vci4.StrongName
+for details see https://www.nuget.org/packages/Ixxat.Vci4.net35
+There is also a strong named variant which is available from https://www.nuget.org/packages/Ixxat.Vci4.net35.StrongName
 
 ## Open source
 
@@ -47,13 +52,13 @@ If you want to create a strong named version add the AssemblyKeyFile parameter
 
     PS> .\build.ps1 -Version=4.1.0 -AssemblyKeyFile=mykeyfile.snk
 
-For more information have a look at the build script .\build.ps1 and the msbuild project .\vci4net.prj.
+For more information have a look at the build script .\build.ps1
 
 ### Prerequisites
 
-- VisualStudio 2022
+- VisualStudio 2008
 - nuget.exe client version 6.3.0
-- Sandcastle Help File Builder version 2021.11.7.0
+- optional Sandcastle Help File Builder version 2021.11.7.0
 
 The VCI4 .NET wrapper sits on top of the VCI4 C++ API so you need the VCI4 driver setup installed.
 

@@ -5,6 +5,7 @@ using System.Threading;
 using Ixxat.Vci4;
 using Ixxat.Vci4.Bal;
 using Ixxat.Vci4.Bal.Can;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Vci4Tests
 {
@@ -23,20 +24,20 @@ namespace Vci4Tests
     [TestInitialize]
     public void TestSetup()
     {
-      Ixxat.Vci4.IVciDevice? device = GetDevice();
-      Ixxat.Vci4.Bal.IBalObject? bal = device!.OpenBusAccessLayer();
-      Ixxat.Vci4.Bal.Can.ICanControl? socket = bal!.OpenSocket(0, typeof(Ixxat.Vci4.Bal.Can.ICanControl)) as Ixxat.Vci4.Bal.Can.ICanControl;
+      Ixxat.Vci4.IVciDevice device = GetDevice();
+      Ixxat.Vci4.Bal.IBalObject bal = device.OpenBusAccessLayer();
+      Ixxat.Vci4.Bal.Can.ICanControl socket = bal.OpenSocket(0, typeof(Ixxat.Vci4.Bal.Can.ICanControl)) as Ixxat.Vci4.Bal.Can.ICanControl;
 
-      socket!.InitLine(CanOperatingModes.Standard, CanBitrate.Cia500KBit);
+      socket.InitLine(CanOperatingModes.Standard, CanBitrate.Cia500KBit);
 
       // wait time to actualize the status
       System.Threading.Thread.Sleep(500);
 
-      mStatus = socket!.LineStatus;
+      mStatus = socket.LineStatus;
 
-      socket!.Dispose();
-      bal!.Dispose();
-      device!.Dispose();
+      socket.Dispose();
+      bal.Dispose();
+      device.Dispose();
     }
 
     #endregion

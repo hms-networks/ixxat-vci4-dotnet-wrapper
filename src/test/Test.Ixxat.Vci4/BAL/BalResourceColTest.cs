@@ -4,6 +4,7 @@ using System.Text;
 using System.Threading;
 using Ixxat.Vci4;
 using Ixxat.Vci4.Bal;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 
 namespace Vci4Tests
@@ -14,7 +15,7 @@ namespace Vci4Tests
   {
     #region Member variables
 
-    private BalResourceCollection? mCollection = null;
+    private BalResourceCollection mCollection = null;
 
     #endregion
 
@@ -23,13 +24,13 @@ namespace Vci4Tests
     [TestInitialize]
     public void TestSetup()
     {
-      Ixxat.Vci4.IVciDevice? device = GetDevice();
-      Ixxat.Vci4.Bal.IBalObject? bal = device!.OpenBusAccessLayer();
+      Ixxat.Vci4.IVciDevice device = GetDevice();
+      Ixxat.Vci4.Bal.IBalObject bal = device.OpenBusAccessLayer();
 
-      mCollection = bal!.Resources;
+      mCollection = bal.Resources;
 
-      bal!.Dispose();
-      device!.Dispose();
+      bal.Dispose();
+      device.Dispose();
     }
 
     #endregion
@@ -42,9 +43,9 @@ namespace Vci4Tests
     /// </summary>
     public void ItemMustNotBeNull()
     {
-      for (int index = 0; index < mCollection!.Count; ++index)
+      for (int index = 0; index < mCollection.Count; ++index)
       {
-        IBalResource? res = mCollection![index];
+        IBalResource res = mCollection[index];
         Assert.IsNotNull(res);
         res.Dispose();
       }
@@ -57,7 +58,7 @@ namespace Vci4Tests
     [ExpectedException(typeof(ArgumentOutOfRangeException))]
     public void ItemMustThrowArgumentOutOfRangeException()
     {
-      IBalResource? res = mCollection![mCollection!.Count];
+      IBalResource res = mCollection[mCollection.Count];
     }
 
     #endregion

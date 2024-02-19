@@ -33,27 +33,27 @@ namespace Ixxat.Vci4.Samples.LinConNet
     /// <summary>
     ///   Reference to the used VCI device.
     /// </summary>
-    static IVciDevice? mDevice;
+    static IVciDevice mDevice;
 
     /// <summary>
     ///   Reference to the LIN controller.
     /// </summary>
-    static ILinControl? mLinCtl;
+    static ILinControl mLinCtl;
 
     /// <summary>
     ///   Reference to the LIN communication monitor.
     /// </summary>
-    static ILinMonitor? mLinMon;
+    static ILinMonitor mLinMon;
 
     /// <summary>
     ///   Reference to the message reader of the LIN monitor.
     /// </summary>
-    static ILinMessageReader? mReader;
+    static ILinMessageReader mReader;
 
     /// <summary>
     ///   Thread that handles the message reception.
     /// </summary>
-    static Thread? rxThread;
+    static Thread rxThread;
 
     /// <summary>
     ///   Quit flag for the receive thread.
@@ -63,7 +63,7 @@ namespace Ixxat.Vci4.Samples.LinConNet
     /// <summary>
     ///   Event that's set if at least one message was received.
     /// </summary>
-    static AutoResetEvent? mRxEvent;
+    static AutoResetEvent mRxEvent;
 
     #endregion
 
@@ -144,16 +144,16 @@ namespace Ixxat.Vci4.Samples.LinConNet
     static bool SelectDevice()
     {
       bool               succeeded     = false;
-      IVciDeviceManager? deviceManager = null;
-      IVciDeviceList?    deviceList    = null;
-      IEnumerator?       deviceEnum    = null;
+      IVciDeviceManager  deviceManager = null;
+      IVciDeviceList     deviceList    = null;
+      IEnumerator        deviceEnum    = null;
 
       try
       {
         //
         // Get device manager from VCI server
         //
-        deviceManager = VciServer.Instance()!.DeviceManager;
+        deviceManager = VciServer.Instance().DeviceManager;
 
         //
         // Get the list of installed VCI devices
@@ -176,7 +176,7 @@ namespace Ixxat.Vci4.Samples.LinConNet
           //
           // print bus type and controller type of first controller
           //
-          IVciCtrlInfo? info = mDevice.Equipment[0];
+          IVciCtrlInfo info = mDevice.Equipment[0];
           Console.Write(" BusType    : {0}\n", info.BusType);
           Console.Write(" CtrlType   : {0}\n", info.ControllerType);
 
@@ -226,8 +226,8 @@ namespace Ixxat.Vci4.Samples.LinConNet
     {
       if (null != mLinCtl)
       {
-        IMessageFactory? factory = VciServer.Instance()!.MsgFactory;
-        ILinMessage? linMessage = (ILinMessage)factory.CreateMsg(typeof(ILinMessage));
+        IMessageFactory factory = VciServer.Instance().MsgFactory;
+        ILinMessage linMessage = (ILinMessage)factory.CreateMsg(typeof(ILinMessage));
 
         linMessage.ExtendedCrc = true;
         linMessage.SenderOfResponse = false;
@@ -274,7 +274,7 @@ namespace Ixxat.Vci4.Samples.LinConNet
     //************************************************************************
     static bool InitSocket()
     {
-      IBalObject? bal = null;
+      IBalObject bal = null;
       bool succeeded = false;
 
       if (null == mDevice)
@@ -574,11 +574,11 @@ namespace Ixxat.Vci4.Samples.LinConNet
     ///   Otherwise native memory and resource leaks may occure.
     /// </remarks>
     //************************************************************************
-    static void DisposeVciObject(object? obj)
+    static void DisposeVciObject(object obj)
     {
       if (null != obj)
       {
-        IDisposable? dispose = obj as IDisposable;
+        IDisposable dispose = obj as IDisposable;
         if (null != dispose)
         {
           dispose.Dispose();

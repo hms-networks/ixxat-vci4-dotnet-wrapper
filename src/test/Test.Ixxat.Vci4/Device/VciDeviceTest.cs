@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using Ixxat.Vci4;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Vci4Tests
 {
@@ -10,7 +11,7 @@ namespace Vci4Tests
   {
     #region Member variables
 
-    Ixxat.Vci4.IVciDevice? mDevice = null;
+    Ixxat.Vci4.IVciDevice mDevice = null;
 
     #endregion
 
@@ -27,7 +28,7 @@ namespace Vci4Tests
     {
       if (null != mDevice)
       {
-        mDevice!.Dispose();
+        mDevice.Dispose();
         mDevice = null;
       }
     }
@@ -40,11 +41,11 @@ namespace Vci4Tests
     /// </summary>
     public void DeviceDescriptionHasConstantValue()
     {
-      String refValue = mDevice!.Description;
+      String refValue = mDevice.Description;
       Assert.IsNotNull(refValue);
       Assert.IsTrue(0 < refValue.Length);
 
-      String testValue = mDevice!.Description;
+      String testValue = mDevice.Description;
       Assert.IsNotNull(testValue);
       Assert.IsTrue(testValue == refValue);
     }
@@ -56,7 +57,7 @@ namespace Vci4Tests
     [ExpectedException(typeof(ObjectDisposedException))]
     public void DescriptionMustThrowObjectDisposedException()
     {
-      mDevice!.Dispose();
+      mDevice.Dispose();
       String refValue = mDevice.Description;
     }
 
@@ -66,7 +67,7 @@ namespace Vci4Tests
     /// </summary>
     public void DeviceClassHasConstantValue()
     {
-      Guid DeviceClass = mDevice!.DeviceClass;
+      Guid DeviceClass = mDevice.DeviceClass;
       Assert.IsTrue(DeviceClass == mDevice.DeviceClass);
     }
 
@@ -77,8 +78,8 @@ namespace Vci4Tests
     [ExpectedException(typeof(ObjectDisposedException))]
     public void DeviceClassMustThrowObjectDisposedException()
     {
-      mDevice!.Dispose();
-      Guid DeviceClass = mDevice!.DeviceClass;
+      mDevice.Dispose();
+      Guid DeviceClass = mDevice.DeviceClass;
     }
 
     [TestMethod]
@@ -87,12 +88,12 @@ namespace Vci4Tests
     /// </summary>
     public void UniqueHardwareIdIsConstant()
     {
-      object id = mDevice!.UniqueHardwareId;
+      object id = mDevice.UniqueHardwareId;
       Assert.IsNotNull(id);
       Assert.IsTrue((typeof(string) == id.GetType()) || (typeof(Guid) == id.GetType()));
       if (typeof(string) == id.GetType())
       {
-        Assert.IsTrue(0 < (id as string)!.Length);
+        Assert.IsTrue(0 < (id as string).Length);
       }
 
       object testId = mDevice.UniqueHardwareId;
@@ -107,8 +108,8 @@ namespace Vci4Tests
     [ExpectedException(typeof(ObjectDisposedException))]
     public void UniqueHardwareIdMustThrowObjectDisposedException()
     {
-      mDevice!.Dispose();
-      object id = mDevice!.UniqueHardwareId;
+      mDevice.Dispose();
+      object id = mDevice.UniqueHardwareId;
     }
 
     [TestMethod]
@@ -117,7 +118,7 @@ namespace Vci4Tests
     /// </summary>
     public void DriverVersionIsConstant()
     {
-      Version version = mDevice!.DriverVersion;
+      Version version = mDevice.DriverVersion;
 
       Version testVersion = mDevice.DriverVersion;
       Assert.IsNotNull(testVersion);
@@ -131,8 +132,8 @@ namespace Vci4Tests
     [ExpectedException(typeof(ObjectDisposedException))]
     public void DriverVersionMustThrowObjectDisposedException()
     {
-      mDevice!.Dispose();
-      Version version = mDevice!.DriverVersion;
+      mDevice.Dispose();
+      Version version = mDevice.DriverVersion;
     }
 
     [TestMethod]
@@ -141,9 +142,9 @@ namespace Vci4Tests
     /// </summary>
     public void HardwareVersionIsConstant()
     {
-      Version version = mDevice!.HardwareVersion;
+      Version version = mDevice.HardwareVersion;
 
-      Version testVersion = mDevice!.HardwareVersion;
+      Version testVersion = mDevice.HardwareVersion;
       Assert.IsNotNull(testVersion);
       Assert.IsTrue(version == testVersion);
     }
@@ -155,8 +156,8 @@ namespace Vci4Tests
     [ExpectedException(typeof(ObjectDisposedException))]
     public void HardwareVersionMustThrowObjectDisposedException()
     {
-      mDevice!.Dispose();
-      Version version = mDevice!.HardwareVersion;
+      mDevice.Dispose();
+      Version version = mDevice.HardwareVersion;
     }
 
     [TestMethod]
@@ -165,11 +166,11 @@ namespace Vci4Tests
     /// </summary>
     public void ManufacturerHasConstantValue()
     {
-      String refValue = mDevice!.Manufacturer;
+      String refValue = mDevice.Manufacturer;
       Assert.IsNotNull(refValue);
       Assert.IsTrue(0 < refValue.Length);
 
-      String testValue = mDevice!.Manufacturer;
+      String testValue = mDevice.Manufacturer;
       Assert.IsNotNull(testValue);
       Assert.IsTrue(testValue == refValue);
     }
@@ -181,8 +182,8 @@ namespace Vci4Tests
     [ExpectedException(typeof(ObjectDisposedException))]
     public void ManufacturerMustThrowObjectDisposedException()
     {
-      mDevice!.Dispose();
-      String refValue = mDevice!.Manufacturer;
+      mDevice.Dispose();
+      String refValue = mDevice.Manufacturer;
     }
 
     [TestMethod]
@@ -191,9 +192,9 @@ namespace Vci4Tests
     /// </summary>
     public void VciObjectIdIsConstant()
     {
-      long id = mDevice!.VciObjectId;
+      long id = mDevice.VciObjectId;
 
-      long testId = mDevice!.VciObjectId;
+      long testId = mDevice.VciObjectId;
       Assert.IsNotNull(testId);
       Assert.IsTrue(id == testId);
     }
@@ -205,8 +206,8 @@ namespace Vci4Tests
     [ExpectedException(typeof(ObjectDisposedException))]
     public void VciObjectIdMustThrowObjectDisposedException()
     {
-      mDevice!.Dispose();
-      long id = mDevice!.VciObjectId;
+      mDevice.Dispose();
+      long id = mDevice.VciObjectId;
     }
 
     [TestMethod]
@@ -215,11 +216,11 @@ namespace Vci4Tests
     /// </summary>
     public void EquipmentHasConstantValue()
     {
-      IVciCtrlInfo[] refValue = mDevice!.Equipment;
+      IVciCtrlInfo[] refValue = mDevice.Equipment;
       Assert.IsNotNull(refValue);
       Assert.IsTrue(0 < refValue.Length);
 
-      IVciCtrlInfo[] testValue = mDevice!.Equipment;
+      IVciCtrlInfo[] testValue = mDevice.Equipment;
       Assert.IsNotNull(testValue);
       Assert.IsTrue(refValue.Length == testValue.Length);
     }
@@ -231,8 +232,8 @@ namespace Vci4Tests
     [ExpectedException(typeof(ObjectDisposedException))]
     public void EquipmentMustThrowObjectDisposedException()
     {
-      mDevice!.Dispose();
-      IVciCtrlInfo[] refValue = mDevice!.Equipment;
+      mDevice.Dispose();
+      IVciCtrlInfo[] refValue = mDevice.Equipment;
     }
 
     [TestMethod]
@@ -241,7 +242,7 @@ namespace Vci4Tests
     /// </summary>
     public void OpenBusAccessLayerReturnsValidRef()
     {
-      Ixxat.Vci4.Bal.IBalObject bal = mDevice!.OpenBusAccessLayer();
+      Ixxat.Vci4.Bal.IBalObject bal = mDevice.OpenBusAccessLayer();
       Assert.IsNotNull(bal);
       bal.Dispose();
     }
@@ -253,8 +254,8 @@ namespace Vci4Tests
     [ExpectedException(typeof(ObjectDisposedException))]
     public void OpenBusAccessLayerMustThrowObjectDisposedException()
     {
-      mDevice!.Dispose();
-      Ixxat.Vci4.Bal.IBalObject bal = mDevice!.OpenBusAccessLayer();
+      mDevice.Dispose();
+      Ixxat.Vci4.Bal.IBalObject bal = mDevice.OpenBusAccessLayer();
     }
 
     [TestMethod]
@@ -266,7 +267,7 @@ namespace Vci4Tests
     {
       Version version;
       IVciDevice device;
-      using (device = GetDevice()!)
+      using (device = GetDevice())
       {
         version = device.DriverVersion;
       }

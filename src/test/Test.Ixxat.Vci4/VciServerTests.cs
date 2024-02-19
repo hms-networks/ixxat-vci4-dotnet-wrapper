@@ -1,5 +1,6 @@
 using Ixxat.Vci4;
 using Ixxat.Vci4.Bal.Can;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Vci4Tests
 {
@@ -12,7 +13,7 @@ namespace Vci4Tests
     /// </summary>
     public void TestVciServerVersion()
     {
-      Version vciVersion = VciServer.Instance()!.Version;
+      System.Version vciVersion = VciServer.Instance().Version;
       Assert.IsNotNull(vciVersion);
       Assert.AreEqual(vciVersion.Major, 4);
       Assert.AreEqual(vciVersion.Minor, 0);
@@ -24,7 +25,7 @@ namespace Vci4Tests
     /// </summary>
     public void TestGetDeviceManager()
     {
-      IVciDeviceManager mgr = VciServer.Instance()!.DeviceManager;
+      IVciDeviceManager mgr = VciServer.Instance().DeviceManager;
       Assert.IsNotNull(mgr);
       mgr.Dispose();
     }
@@ -35,13 +36,13 @@ namespace Vci4Tests
     /// </summary>
     public void TestGetMsgFactory()
     {
-      IVciServer? srv = VciServer.Instance();
+      IVciServer srv = VciServer.Instance();
       Assert.IsNotNull(srv);
 
-      IMessageFactory factory = srv!.MsgFactory;
+      IMessageFactory factory = srv.MsgFactory;
       Assert.IsNotNull(factory);
 
-      ICanMessage? txMessage;
+      ICanMessage txMessage;
       txMessage = (ICanMessage)factory.CreateMsg(typeof(ICanMessage));
       txMessage.Identifier = 100;
       txMessage.ExtendedFrameFormat = true;

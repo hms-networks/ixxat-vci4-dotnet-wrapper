@@ -4,6 +4,7 @@ using System.Text;
 using System.Threading;
 using Ixxat.Vci4;
 using Ixxat.Vci4.Bal;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 
 namespace Vci4Tests
@@ -14,7 +15,7 @@ namespace Vci4Tests
   {
     #region Member variables
 
-    private Ixxat.Vci4.Bal.IBalObject? mBal;
+    private Ixxat.Vci4.Bal.IBalObject mBal;
 
     #endregion
 
@@ -23,11 +24,11 @@ namespace Vci4Tests
     [TestInitialize]
     public void TestSetup()
     {
-      Ixxat.Vci4.IVciDevice? device = GetDevice();
+      Ixxat.Vci4.IVciDevice device = GetDevice();
 
-      mBal = device!.OpenBusAccessLayer();
+      mBal = device.OpenBusAccessLayer();
 
-      device!.Dispose();
+      device.Dispose();
     }
 
     [TestCleanup]
@@ -35,7 +36,7 @@ namespace Vci4Tests
     {
       if (null != mBal)
       {
-        mBal!.Dispose();
+        mBal.Dispose();
         mBal = null;
       }
     }
@@ -50,9 +51,9 @@ namespace Vci4Tests
     /// </summary>
     public void FirmwareVersionIsConstant()
     {
-      Version version = mBal!.FirmwareVersion;
+      Version version = mBal.FirmwareVersion;
       
-      Version testVersion = mBal!.FirmwareVersion;
+      Version testVersion = mBal.FirmwareVersion;
       Assert.IsNotNull(testVersion);
       Assert.IsTrue(version == testVersion);
     }
@@ -64,8 +65,8 @@ namespace Vci4Tests
     [ExpectedException(typeof(ObjectDisposedException))]
     public void FirmwareVersionMustThrowObjectDisposedException()
     {
-      mBal!.Dispose();
-      Version version = mBal!.FirmwareVersion;
+      mBal.Dispose();
+      Version version = mBal.FirmwareVersion;
     }
 
     #endregion
@@ -78,11 +79,11 @@ namespace Vci4Tests
     /// </summary>
     public void ResourcesIsConstant()
     {
-      BalResourceCollection refValue = mBal!.Resources;
+      BalResourceCollection refValue = mBal.Resources;
       Assert.IsNotNull(refValue);
       Assert.IsTrue(0 < refValue.Count);
 
-      BalResourceCollection testValue = mBal!.Resources;
+      BalResourceCollection testValue = mBal.Resources;
       Assert.IsNotNull(refValue);
       Assert.IsTrue(refValue.Count == testValue.Count);
     }
@@ -94,8 +95,8 @@ namespace Vci4Tests
     [ExpectedException(typeof(ObjectDisposedException))]
     public void ResourcesMustThrowObjectDisposedException()
     {
-      mBal!.Dispose();
-      BalResourceCollection refValue = mBal!.Resources;
+      mBal.Dispose();
+      BalResourceCollection refValue = mBal.Resources;
     }
 
     #endregion
@@ -108,9 +109,9 @@ namespace Vci4Tests
     /// </summary>
     public void OpenSocketMustNotReturnNull()
     {
-      Ixxat.Vci4.Bal.Can.ICanSocket? socket = mBal!.OpenSocket(0, typeof(Ixxat.Vci4.Bal.Can.ICanSocket)) as Ixxat.Vci4.Bal.Can.ICanSocket;
+      Ixxat.Vci4.Bal.Can.ICanSocket socket = mBal.OpenSocket(0, typeof(Ixxat.Vci4.Bal.Can.ICanSocket)) as Ixxat.Vci4.Bal.Can.ICanSocket;
       Assert.IsNotNull(socket);
-      socket!.Dispose();
+      socket.Dispose();
     }
 
     [TestMethod]
@@ -120,7 +121,7 @@ namespace Vci4Tests
     [ExpectedException(typeof(ArgumentOutOfRangeException))]
     public void OpenSocketWithInvalidPortNum()
     {
-      IBalResource socket = mBal!.OpenSocket(10, typeof(IBalResource));
+      IBalResource socket = mBal.OpenSocket(10, typeof(IBalResource));
     }
 
     [TestMethod]
@@ -130,7 +131,7 @@ namespace Vci4Tests
     [ExpectedException(typeof(NotImplementedException))]
     public void OpenSocketWithInvalidSocketType()
     {
-      IBalResource socket = mBal!.OpenSocket(0, typeof(string));
+      IBalResource socket = mBal.OpenSocket(0, typeof(string));
     }
 
     [TestMethod]
@@ -139,14 +140,14 @@ namespace Vci4Tests
     /// </summary>
     public void OpenSocketICanControlTwice()
     {
-      Ixxat.Vci4.Bal.Can.ICanControl? canCtrl1 = null;
-      Ixxat.Vci4.Bal.Can.ICanControl? canCtrl2 = null;
+      Ixxat.Vci4.Bal.Can.ICanControl canCtrl1 = null;
+      Ixxat.Vci4.Bal.Can.ICanControl canCtrl2 = null;
 
-      canCtrl1 = mBal!.OpenSocket(0, typeof(Ixxat.Vci4.Bal.Can.ICanControl)) as Ixxat.Vci4.Bal.Can.ICanControl;
+      canCtrl1 = mBal.OpenSocket(0, typeof(Ixxat.Vci4.Bal.Can.ICanControl)) as Ixxat.Vci4.Bal.Can.ICanControl;
       Assert.IsNotNull(canCtrl1);
       try
       {
-        canCtrl2 = mBal!.OpenSocket(0, typeof(Ixxat.Vci4.Bal.Can.ICanControl)) as Ixxat.Vci4.Bal.Can.ICanControl;
+        canCtrl2 = mBal.OpenSocket(0, typeof(Ixxat.Vci4.Bal.Can.ICanControl)) as Ixxat.Vci4.Bal.Can.ICanControl;
         if (canCtrl2 != null)
         {
           canCtrl2.Dispose();
@@ -166,14 +167,14 @@ namespace Vci4Tests
     /// </summary>
     public void OpenSocketICanControlTwice2()
     {
-      Ixxat.Vci4.Bal.Can.ICanControl2? canCtrl1 = null;
-      Ixxat.Vci4.Bal.Can.ICanControl2? canCtrl2 = null;
+      Ixxat.Vci4.Bal.Can.ICanControl2 canCtrl1 = null;
+      Ixxat.Vci4.Bal.Can.ICanControl2 canCtrl2 = null;
 
-      canCtrl1 = mBal!.OpenSocket(0, typeof(Ixxat.Vci4.Bal.Can.ICanControl2)) as Ixxat.Vci4.Bal.Can.ICanControl2;
+      canCtrl1 = mBal.OpenSocket(0, typeof(Ixxat.Vci4.Bal.Can.ICanControl2)) as Ixxat.Vci4.Bal.Can.ICanControl2;
       Assert.IsNotNull(canCtrl1);
       try
       {
-        canCtrl2 = mBal!.OpenSocket(0, typeof(Ixxat.Vci4.Bal.Can.ICanControl2)) as Ixxat.Vci4.Bal.Can.ICanControl2;
+        canCtrl2 = mBal.OpenSocket(0, typeof(Ixxat.Vci4.Bal.Can.ICanControl2)) as Ixxat.Vci4.Bal.Can.ICanControl2;
         if (canCtrl2 != null)
         {
           canCtrl2.Dispose();
@@ -196,18 +197,18 @@ namespace Vci4Tests
       // Because not all of the available fieldbus adapter support
       // the ICanScheduler socket we use the first call to determine this.
 
-      Ixxat.Vci4.Bal.Can.ICanScheduler? canSched1 = null;
-      Ixxat.Vci4.Bal.Can.ICanScheduler? canSched2 = null;
+      Ixxat.Vci4.Bal.Can.ICanScheduler canSched1 = null;
+      Ixxat.Vci4.Bal.Can.ICanScheduler canSched2 = null;
 
       try
       {
         // First OpenSocket
-        canSched1 = mBal!.OpenSocket(0, typeof(Ixxat.Vci4.Bal.Can.ICanScheduler)) as Ixxat.Vci4.Bal.Can.ICanScheduler;
+        canSched1 = mBal.OpenSocket(0, typeof(Ixxat.Vci4.Bal.Can.ICanScheduler)) as Ixxat.Vci4.Bal.Can.ICanScheduler;
 
         try
         {
           // Second OpenSocket
-          canSched2 = mBal!.OpenSocket(0, typeof(Ixxat.Vci4.Bal.Can.ICanScheduler)) as Ixxat.Vci4.Bal.Can.ICanScheduler;
+          canSched2 = mBal.OpenSocket(0, typeof(Ixxat.Vci4.Bal.Can.ICanScheduler)) as Ixxat.Vci4.Bal.Can.ICanScheduler;
           Assert.IsTrue(false);
         }
         catch (VciException)
@@ -243,18 +244,18 @@ namespace Vci4Tests
       // Because not all of the available fieldbus adapter support
       // the ICanScheduler socket we use the first call to determine this.
 
-      Ixxat.Vci4.Bal.Can.ICanScheduler2? canSched1 = null;
-      Ixxat.Vci4.Bal.Can.ICanScheduler2? canSched2 = null;
+      Ixxat.Vci4.Bal.Can.ICanScheduler2 canSched1 = null;
+      Ixxat.Vci4.Bal.Can.ICanScheduler2 canSched2 = null;
 
       try
       {
         // First OpenSocket
-        canSched1 = mBal!.OpenSocket(0, typeof(Ixxat.Vci4.Bal.Can.ICanScheduler2)) as Ixxat.Vci4.Bal.Can.ICanScheduler2;
+        canSched1 = mBal.OpenSocket(0, typeof(Ixxat.Vci4.Bal.Can.ICanScheduler2)) as Ixxat.Vci4.Bal.Can.ICanScheduler2;
 
         try
         {
           // Second OpenSocket
-          canSched2 = mBal!.OpenSocket(0, typeof(Ixxat.Vci4.Bal.Can.ICanScheduler2)) as Ixxat.Vci4.Bal.Can.ICanScheduler2;
+          canSched2 = mBal.OpenSocket(0, typeof(Ixxat.Vci4.Bal.Can.ICanScheduler2)) as Ixxat.Vci4.Bal.Can.ICanScheduler2;
           Assert.IsTrue(false);
         }
         catch (VciException)
@@ -287,17 +288,17 @@ namespace Vci4Tests
     /// </summary>
     public void OpenSocketICanSocketTwice()
     {
-      Ixxat.Vci4.Bal.Can.ICanSocket? canSocket1;
-      Ixxat.Vci4.Bal.Can.ICanSocket? canSocket2;
+      Ixxat.Vci4.Bal.Can.ICanSocket canSocket1;
+      Ixxat.Vci4.Bal.Can.ICanSocket canSocket2;
 
-      canSocket1 = mBal!.OpenSocket(0, typeof(Ixxat.Vci4.Bal.Can.ICanSocket)) as Ixxat.Vci4.Bal.Can.ICanSocket;
-      canSocket2 = mBal!.OpenSocket(0, typeof(Ixxat.Vci4.Bal.Can.ICanSocket)) as Ixxat.Vci4.Bal.Can.ICanSocket;
+      canSocket1 = mBal.OpenSocket(0, typeof(Ixxat.Vci4.Bal.Can.ICanSocket)) as Ixxat.Vci4.Bal.Can.ICanSocket;
+      canSocket2 = mBal.OpenSocket(0, typeof(Ixxat.Vci4.Bal.Can.ICanSocket)) as Ixxat.Vci4.Bal.Can.ICanSocket;
 
       Assert.IsNotNull(canSocket1);
       Assert.IsNotNull(canSocket2);
 
-      canSocket1!.Dispose();
-      canSocket2!.Dispose();
+      canSocket1.Dispose();
+      canSocket2.Dispose();
     }
 
     [TestMethod]
@@ -306,11 +307,11 @@ namespace Vci4Tests
     /// </summary>
     public void OpenSocketICanChannelTwice()
     {
-      Ixxat.Vci4.Bal.Can.ICanChannel? canChannel1;
-      Ixxat.Vci4.Bal.Can.ICanChannel? canChannel2;
+      Ixxat.Vci4.Bal.Can.ICanChannel canChannel1;
+      Ixxat.Vci4.Bal.Can.ICanChannel canChannel2;
 
-      canChannel1 = mBal!.OpenSocket(0, typeof(Ixxat.Vci4.Bal.Can.ICanChannel)) as Ixxat.Vci4.Bal.Can.ICanChannel;
-      canChannel2 = mBal!.OpenSocket(0, typeof(Ixxat.Vci4.Bal.Can.ICanChannel)) as Ixxat.Vci4.Bal.Can.ICanChannel;
+      canChannel1 = mBal.OpenSocket(0, typeof(Ixxat.Vci4.Bal.Can.ICanChannel)) as Ixxat.Vci4.Bal.Can.ICanChannel;
+      canChannel2 = mBal.OpenSocket(0, typeof(Ixxat.Vci4.Bal.Can.ICanChannel)) as Ixxat.Vci4.Bal.Can.ICanChannel;
 
       Assert.IsNotNull(canChannel1);
       Assert.IsNotNull(canChannel2);
@@ -326,8 +327,8 @@ namespace Vci4Tests
     [ExpectedException(typeof(ObjectDisposedException))]
     public void OpenSocketMustThrowObjectDisposedException()
     {
-      mBal!.Dispose();
-      IBalResource socket = mBal!.OpenSocket(0, typeof(IBalResource)) as IBalResource;
+      mBal.Dispose();
+      IBalResource socket = mBal.OpenSocket(0, typeof(IBalResource)) as IBalResource;
     }
 
     #endregion
@@ -344,9 +345,9 @@ namespace Vci4Tests
       IBalObject bal;
       BalResourceCollection resources;
 
-      using (IVciDevice? device = GetDevice())
+      using (IVciDevice device = GetDevice())
       {
-        using(bal = device!.OpenBusAccessLayer())
+        using(bal = device.OpenBusAccessLayer())
         {
           resources = bal.Resources;
         }

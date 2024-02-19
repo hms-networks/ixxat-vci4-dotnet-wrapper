@@ -3,19 +3,20 @@ using System.Collections;
 using System.Text;
 using System.Threading;
 using Ixxat.Vci4;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Vci4Tests
 {
   [TestClass]
   public class VciDeviceListTest
   {
-    IVciDeviceList? mList = null;
+    IVciDeviceList mList = null;
 
     [TestInitialize]
     public void TestSetup()
     {
-      IVciDeviceManager manager = VciServer.Instance()!.DeviceManager;
-      mList = manager!.GetDeviceList();
+      IVciDeviceManager manager = VciServer.Instance().DeviceManager;
+      mList = manager.GetDeviceList();
       manager.Dispose();
     }
 
@@ -40,8 +41,8 @@ namespace Vci4Tests
       ManualResetEvent manualEvent = new ManualResetEvent(false);
       AutoResetEvent autoEvent = new AutoResetEvent(false);
 
-      mList!.AssignEvent(autoEvent);
-      mList!.AssignEvent(manualEvent);
+      mList.AssignEvent(autoEvent);
+      mList.AssignEvent(manualEvent);
     }
 
     [TestMethod]
@@ -51,10 +52,10 @@ namespace Vci4Tests
     [ExpectedException(typeof(ObjectDisposedException))]
     public void AssignEventAutoMustThrowObjectDisposedException()
     {
-      mList!.Dispose();
+      mList.Dispose();
 
       AutoResetEvent changeEvent = new AutoResetEvent(false);
-      mList!.AssignEvent(changeEvent);
+      mList.AssignEvent(changeEvent);
     }
 
     [TestMethod]
@@ -64,10 +65,10 @@ namespace Vci4Tests
     [ExpectedException(typeof(ObjectDisposedException))]
     public void AssignEventManualMustThrowObjectDisposedException()
     {
-      mList!.Dispose();
+      mList.Dispose();
 
       ManualResetEvent changeEvent = new ManualResetEvent(false);
-      mList!.AssignEvent(changeEvent);
+      mList.AssignEvent(changeEvent);
     }
 
     #endregion
@@ -80,7 +81,7 @@ namespace Vci4Tests
     /// </summary>
     public void GetEnumeratorMustNotReturnNull()
     {
-      IEnumerator enumerator = mList!.GetEnumerator();
+      IEnumerator enumerator = mList.GetEnumerator();
       Assert.IsNotNull(enumerator);
     }
 
@@ -91,7 +92,7 @@ namespace Vci4Tests
     [ExpectedException(typeof(ObjectDisposedException))]
     public void GetEnumeratorMustThrowObjectDisposedException()
     {
-      mList!.Dispose();
+      mList.Dispose();
 
       mList.GetEnumerator();
     }
@@ -107,7 +108,7 @@ namespace Vci4Tests
     [ExpectedException(typeof(ObjectDisposedException))]
     public void TestUsingStatement()
     {
-      using (IVciDeviceManager manager = VciServer.Instance()!.DeviceManager)
+      using (IVciDeviceManager manager = VciServer.Instance().DeviceManager)
       {
         IVciDeviceList list;
         using (list = manager.GetDeviceList())

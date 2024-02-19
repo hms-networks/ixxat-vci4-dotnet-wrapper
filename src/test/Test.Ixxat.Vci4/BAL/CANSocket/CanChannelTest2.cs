@@ -5,18 +5,19 @@ using System.Threading;
 using Ixxat.Vci4;
 using Ixxat.Vci4.Bal;
 using Ixxat.Vci4.Bal.Can;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 
 namespace Vci4Tests
 {
   [TestClass]
-  class CanChannelTest2
+  public class CanChannelTest2
     : VciDeviceTestBase
   {
     #region Member variables
 
-    private Ixxat.Vci4.Bal.Can.ICanChannel2? mSocket;
-    private Ixxat.Vci4.Bal.IBalObject? mBal;
+    private Ixxat.Vci4.Bal.Can.ICanChannel2 mSocket;
+    private Ixxat.Vci4.Bal.IBalObject mBal;
 
     #endregion
 
@@ -25,12 +26,12 @@ namespace Vci4Tests
     [TestInitialize]
     public void TestSetup()
     {
-      Ixxat.Vci4.IVciDevice? device = GetDevice();
-      mBal = device!.OpenBusAccessLayer();
+      Ixxat.Vci4.IVciDevice device = GetDevice();
+      mBal = device.OpenBusAccessLayer();
 
-      device!.Dispose();
+      device.Dispose();
 
-      mSocket = mBal!.OpenSocket(0, typeof(Ixxat.Vci4.Bal.Can.ICanChannel2)) as Ixxat.Vci4.Bal.Can.ICanChannel2;
+      mSocket = mBal.OpenSocket(0, typeof(Ixxat.Vci4.Bal.Can.ICanChannel2)) as Ixxat.Vci4.Bal.Can.ICanChannel2;
     }
 
     [TestCleanup]
@@ -38,12 +39,12 @@ namespace Vci4Tests
     {
       if (null != mSocket)
       {
-        mSocket!.Dispose();
+        mSocket.Dispose();
         mSocket = null;
       }
       if (null != mBal)
       {
-        mBal!.Dispose();
+        mBal.Dispose();
         mBal = null;
       }
     }
@@ -59,7 +60,7 @@ namespace Vci4Tests
     [ExpectedException(typeof(ObjectDisposedException))]
     public void ChannelStatusBeforeInit()
     {
-      CanChannelStatus refValue = mSocket!.ChannelStatus;
+      CanChannelStatus refValue = mSocket.ChannelStatus;
     }
 
     [TestMethod]
@@ -68,10 +69,10 @@ namespace Vci4Tests
     /// </summary>
     public void ChannelStatusAfterInit()
     {
-      mSocket!.Initialize(100, 100, 1, CanFilterModes.Pass, false);
-      CanChannelStatus refValue = mSocket!.ChannelStatus;
+      mSocket.Initialize(100, 100, 1, CanFilterModes.Pass, false);
+      CanChannelStatus refValue = mSocket.ChannelStatus;
 
-      CanChannelStatus testValue = mSocket!.ChannelStatus;
+      CanChannelStatus testValue = mSocket.ChannelStatus;
       Assert.IsTrue(refValue.IsActivated == testValue.IsActivated);
     }
 
@@ -82,8 +83,8 @@ namespace Vci4Tests
     [ExpectedException(typeof(ObjectDisposedException))]
     public void ChannelStatusMustThrowObjectDisposedException()
     {
-      mSocket!.Dispose();
-      CanChannelStatus refValue = mSocket!.ChannelStatus;
+      mSocket.Dispose();
+      CanChannelStatus refValue = mSocket.ChannelStatus;
     }
 
     #endregion
@@ -96,8 +97,8 @@ namespace Vci4Tests
     /// </summary>
     public void InitializeValidCalls()
     {
-      mSocket!.Initialize(100, 100, 1, CanFilterModes.Pass, false);
-      mSocket!.Initialize(100, 100, 1, CanFilterModes.Pass, true);
+      mSocket.Initialize(100, 100, 1, CanFilterModes.Pass, false);
+      mSocket.Initialize(100, 100, 1, CanFilterModes.Pass, true);
     }
 
     [TestMethod]
@@ -107,7 +108,7 @@ namespace Vci4Tests
     [ExpectedException(typeof(VciException))]
     public void InitializeWithRxFifoSize0()
     {
-      mSocket!.Initialize(0, 100, 1, CanFilterModes.Pass, false);
+      mSocket.Initialize(0, 100, 1, CanFilterModes.Pass, false);
     }
 
     [TestMethod]
@@ -116,7 +117,7 @@ namespace Vci4Tests
     /// </summary>
     public void InitializeWithTxFifoSize0()
     {
-      mSocket!.Initialize(100, 0, 1, CanFilterModes.Pass, false);
+      mSocket.Initialize(100, 0, 1, CanFilterModes.Pass, false);
       Assert.IsTrue(true);
     }
 
@@ -127,8 +128,8 @@ namespace Vci4Tests
     [ExpectedException(typeof(VciException))]
     public void InitializeWithTxFifoSize0AndGetWriter()
     {
-      mSocket!.Initialize(100, 0, 1, CanFilterModes.Pass, false);
-      ICanMessageWriter writer = mSocket!.GetMessageWriter();
+      mSocket.Initialize(100, 0, 1, CanFilterModes.Pass, false);
+      ICanMessageWriter writer = mSocket.GetMessageWriter();
     }
 
     [TestMethod]
@@ -138,8 +139,8 @@ namespace Vci4Tests
     [ExpectedException(typeof(ObjectDisposedException))]
     public void InitializeMustThrowObjectDisposedException()
     {
-      mSocket!.Dispose();
-      mSocket!.Initialize(100, 100, 1, CanFilterModes.Pass, false);
+      mSocket.Dispose();
+      mSocket.Initialize(100, 100, 1, CanFilterModes.Pass, false);
     }
 
     #endregion
@@ -153,7 +154,7 @@ namespace Vci4Tests
     [ExpectedException(typeof(ObjectDisposedException))]
     public void ActivateBeforeInit()
     {
-      mSocket!.Activate();
+      mSocket.Activate();
     }
 
     [TestMethod]
@@ -162,9 +163,9 @@ namespace Vci4Tests
     /// </summary>
     public void ActivateValidCalls()
     {
-      mSocket!.Initialize(100, 100, 1, CanFilterModes.Pass, false);
+      mSocket.Initialize(100, 100, 1, CanFilterModes.Pass, false);
 
-      mSocket!.Activate();
+      mSocket.Activate();
     }
 
     [TestMethod]
@@ -173,22 +174,22 @@ namespace Vci4Tests
     /// </summary>
     public void ActivateSecondExclusive()
     {
-      mSocket!.Initialize(100, 100, 1, CanFilterModes.Pass, true);
-      mSocket!.Activate();
+      mSocket.Initialize(100, 100, 1, CanFilterModes.Pass, true);
+      mSocket.Activate();
 
-      Ixxat.Vci4.Bal.Can.ICanChannel2? socket2;
-      socket2 = mBal!.OpenSocket(0, typeof(Ixxat.Vci4.Bal.Can.ICanChannel2)) as Ixxat.Vci4.Bal.Can.ICanChannel2;
+      Ixxat.Vci4.Bal.Can.ICanChannel2 socket2;
+      socket2 = mBal.OpenSocket(0, typeof(Ixxat.Vci4.Bal.Can.ICanChannel2)) as Ixxat.Vci4.Bal.Can.ICanChannel2;
       try
       {
-        socket2!.Initialize(100, 100, 1, CanFilterModes.Pass, true);
-        socket2!.Activate();
+        socket2.Initialize(100, 100, 1, CanFilterModes.Pass, true);
+        socket2.Activate();
         Assert.IsTrue(false);
       }
       catch (VciException)
       {
       }
 
-      socket2!.Dispose();
+      socket2.Dispose();
     }
 
     [TestMethod]
@@ -198,8 +199,8 @@ namespace Vci4Tests
     [ExpectedException(typeof(ObjectDisposedException))]
     public void ActivateMustThrowObjectDisposedException()
     {
-      mSocket!.Dispose();
-      mSocket!.Activate();
+      mSocket.Dispose();
+      mSocket.Activate();
     }
 
     #endregion
@@ -213,7 +214,7 @@ namespace Vci4Tests
     [ExpectedException(typeof(ObjectDisposedException))]
     public void DeactivateBeforeInit()
     {
-      mSocket!.Deactivate();
+      mSocket.Deactivate();
     }
 
     [TestMethod]
@@ -222,9 +223,9 @@ namespace Vci4Tests
     /// </summary>
     public void DeactivateValidCalls()
     {
-      mSocket!.Initialize(100, 100, 1, CanFilterModes.Pass, false);
+      mSocket.Initialize(100, 100, 1, CanFilterModes.Pass, false);
 
-      mSocket!.Deactivate();
+      mSocket.Deactivate();
     }
 
     [TestMethod]
@@ -234,8 +235,8 @@ namespace Vci4Tests
     [ExpectedException(typeof(ObjectDisposedException))]
     public void DeactivateMustThrowObjectDisposedException()
     {
-      mSocket!.Dispose();
-      mSocket!.Deactivate();
+      mSocket.Dispose();
+      mSocket.Deactivate();
     }
 
     #endregion
@@ -249,7 +250,7 @@ namespace Vci4Tests
     [ExpectedException(typeof(ObjectDisposedException))]
     public void GetMessageReaderBeforeInit()
     {
-      ICanMessageReader reader = mSocket!.GetMessageReader();
+      ICanMessageReader reader = mSocket.GetMessageReader();
     }
 
     [TestMethod]
@@ -258,9 +259,9 @@ namespace Vci4Tests
     /// </summary>
     public void GetMessageReaderValidCalls()
     {
-      mSocket!.Initialize(100, 100, 1, CanFilterModes.Pass, false);
+      mSocket.Initialize(100, 100, 1, CanFilterModes.Pass, false);
       
-      ICanMessageReader reader = mSocket!.GetMessageReader();
+      ICanMessageReader reader = mSocket.GetMessageReader();
       Assert.IsNotNull(reader);
       reader.Dispose();
     }
@@ -272,8 +273,8 @@ namespace Vci4Tests
     [ExpectedException(typeof(ObjectDisposedException))]
     public void GetMessageReaderMustThrowObjectDisposedException()
     {
-      mSocket!.Dispose();
-      ICanMessageReader reader = mSocket!.GetMessageReader();
+      mSocket.Dispose();
+      ICanMessageReader reader = mSocket.GetMessageReader();
     }
 
     #endregion
@@ -287,7 +288,7 @@ namespace Vci4Tests
     [ExpectedException(typeof(ObjectDisposedException))]
     public void GetMessageWriterBeforeInit()
     {
-      ICanMessageWriter reader = mSocket!.GetMessageWriter();
+      ICanMessageWriter reader = mSocket.GetMessageWriter();
     }
 
     [TestMethod]
@@ -296,9 +297,9 @@ namespace Vci4Tests
     /// </summary>
     public void GetMessageWriterValidCalls()
     {
-      mSocket!.Initialize(100, 100, 1, CanFilterModes.Pass, false);
+      mSocket.Initialize(100, 100, 1, CanFilterModes.Pass, false);
       
-      ICanMessageWriter reader = mSocket!.GetMessageWriter();
+      ICanMessageWriter reader = mSocket.GetMessageWriter();
       Assert.IsNotNull(reader);
       reader.Dispose();
     }
@@ -310,8 +311,8 @@ namespace Vci4Tests
     [ExpectedException(typeof(ObjectDisposedException))]
     public void GetMessageWriterMustThrowObjectDisposedException()
     {
-      mSocket!.Dispose();
-      ICanMessageWriter reader = mSocket!.GetMessageWriter();
+      mSocket.Dispose();
+      ICanMessageWriter reader = mSocket.GetMessageWriter();
     }
 
     #endregion
@@ -325,17 +326,17 @@ namespace Vci4Tests
     [ExpectedException(typeof(ObjectDisposedException))]
     public void TestUsingStatement()
     {
-      mSocket!.Dispose();
+      mSocket.Dispose();
       mSocket = null;
 
-      ICanChannel2? channel;
-      using (channel = mBal!.OpenSocket(0, typeof(Ixxat.Vci4.Bal.Can.ICanChannel2)) as Ixxat.Vci4.Bal.Can.ICanChannel2)
+      ICanChannel2 channel;
+      using (channel = mBal.OpenSocket(0, typeof(Ixxat.Vci4.Bal.Can.ICanChannel2)) as Ixxat.Vci4.Bal.Can.ICanChannel2)
       {
-        channel!.Deactivate();
+        channel.Deactivate();
       }
 
       // This call must throw an ObjectDisposedException
-      channel!.Deactivate();
+      channel.Deactivate();
     }
 
     #endregion

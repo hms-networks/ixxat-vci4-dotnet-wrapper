@@ -1,6 +1,6 @@
 # Open source releases
 
-## 4.1.6	16/02/2024
+## 4.1.6	19/02/2024
 
 - fix signing of StrongName variant
 - move build logic trom  msbuild .prj file to build.ps1

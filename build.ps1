@@ -108,8 +108,26 @@ function CreateVersionFileContent {
 "
 }
 
-$WinSdkPath = (Get-ItemProperty -Path Registry::"HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\Microsoft\Microsoft SDKs\Windows" -Name "CurrentInstallFolder").CurrentInstallFolder
-$SnExe = Join-Path -Path $WinSdkPath -ChildPath "Bin\sn.exe"
+$SnExePaths = @( 
+    "c:\Program Files (x86)\Microsoft SDKs\Windows\v10.0A\bin\NETFX 4.8.1 Tools",
+    "c:\Program Files (x86)\Microsoft SDKs\Windows\v10.0A\bin\NETFX 4.8 Tools",
+    "c:\Program Files (x86)\Microsoft SDKs\Windows\v8.0A\bin\NETFX 4.0 Tools",
+    "c:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin" )
+
+$SnExe = ""
+foreach($p in $SnExePaths) {
+    $checkpath = Join-Path -Path $p -ChildPath "sn.exe"
+    if (Test-Path $checkpath -PathType Leaf) {
+        $SnExe = $checkpath
+        break
+    }
+}
+
+if ($SnExe -eq "")
+{
+    throw "Failed to locate sn.exe"
+}
+Write-Host "sn.exe:  $SnExe"
 
 function RebuildVSProject {
 
@@ -227,8 +245,6 @@ Write-Host "Building ..."
 
 # create version file
 CreateVersionFileContent -Major $Major -Minor $Minor -Patch $Patch -Copyright $Copyright -CompanyName $CompanyName - SourceRevisionId $SourceRevisionId | Out-File "./src/inc/libver.h"
-
-Write-Host "Rebuild ..."
 
 # build 
 RebuildVSProject

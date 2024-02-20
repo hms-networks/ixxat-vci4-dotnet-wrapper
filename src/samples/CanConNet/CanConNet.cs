@@ -86,28 +86,28 @@ namespace CanConNet
     //************************************************************************
     static void Main(string[] args)
     {
-      Console.WriteLine(" >>>> VCI - .NET 2.0 - API Example V1.1 <<<<");
+      Console.WriteLine(" >>>> VCI.NET - API Example V1.1 <<<<");
       Console.WriteLine(" initializes the CAN with 125 kBaud");
-      Console.WriteLine(" starts a cyclic message object with id 200H");
+      Console.WriteLine(" creates a cyclic message object with id 200H");
       Console.WriteLine(" key 'c' starts/stops a cyclic message object with id 200H");
       Console.WriteLine(" key 't' sends a message with id 100H");
       Console.WriteLine(" shows all received messages");
-      Console.WriteLine(" Quit the application with ESC\n");
+      Console.WriteLine(" Quit the application with ESC");
 
-      Console.Write(" Select Adapter...\n");
+      Console.WriteLine(" Select Adapter...");
       if (SelectDevice())
       {
-        Console.WriteLine(" Select Adapter.......... OK !\n");
+        Console.WriteLine(" Select Adapter.......... OK !");
 
-        Console.Write(" Initialize CAN...\n");
+        Console.WriteLine(" Initialize CAN...");
 
         if (!InitSocket(0))
         {
-          Console.WriteLine(" Initialize CAN............ FAILED !\n");
+          Console.WriteLine(" Initialize CAN............ FAILED !");
         }
         else
         {
-          Console.WriteLine(" Initialize CAN............ OK !\n");
+          Console.WriteLine(" Initialize CAN............ OK !");
 
           //
           // start the receive thread
@@ -134,7 +134,7 @@ namespace CanConNet
 
             for (Byte i = 0; i < cyclicMsg.DataLength; i++)
             {
-                cyclicMsg[i] = i;
+              cyclicMsg[i] = i;
             }
           }
 
@@ -199,12 +199,12 @@ namespace CanConNet
           rxThread.Join();
         }
 
-        Console.Write("\n Free VCI - Resources...\n");
+        Console.WriteLine(" Free VCI - Resources...");
         FinalizeApp();
-        Console.WriteLine(" Free VCI - Resources........ OK !\n");
+        Console.WriteLine(" Free VCI - Resources........ OK !");
       }
 
-      Console.Write(" Done");
+      Console.WriteLine(" Done");
       Console.ReadLine();
     }
 
@@ -254,13 +254,13 @@ namespace CanConNet
           // print bus type and controller type of first controller
           //
           IVciCtrlInfo? info = mDevice.Equipment[0];
-          Console.Write(" BusType    : {0}\n", info.BusType);
-          Console.Write(" CtrlType   : {0}\n", info.ControllerType);
+          Console.WriteLine(" BusType    : {0}", info.BusType);
+          Console.WriteLine(" CtrlType   : {0}", info.ControllerType);
 
           // show the device name and serial number
           string serialNumberText = mDevice.UniqueHardwareId.ToString() ?? "<device id not available>";
-          Console.Write(" Interface    : " + mDevice.Description + "\n");
-          Console.Write(" Serial number: " + serialNumberText + "\n");
+          Console.WriteLine(" Interface    : " + mDevice.Description);
+          Console.WriteLine(" Serial number: " + serialNumberText);
 
           succeeded = true;
         }
@@ -337,6 +337,12 @@ namespace CanConNet
             // Open the scheduler of the CAN controller
             //
             mCanSched = bal.OpenSocket(canNo, typeof(ICanScheduler)) as ICanScheduler;
+            if (null != mCanSched)
+            {
+              // take scheduler into defined state (no messages, running)
+              mCanSched.Reset();
+              mCanSched.Resume();
+            }
           }
 
           // Initialize the message channel
@@ -462,7 +468,7 @@ namespace CanConNet
           {
             if (!canMessage.RemoteTransmissionRequest)
             {
-              Console.Write("\nTime: {0,10}  ID: {1,3:X}  DLC: {2,1}  Data:",
+              Console.Write("Time: {0,10}  ID: {1,3:X}  DLC: {2,1}  Data:",
                             canMessage.TimeStamp,
                             canMessage.Identifier,
                             canMessage.DataLength);
@@ -471,10 +477,11 @@ namespace CanConNet
               {
                 Console.Write(" {0,2:X}", canMessage[index]);
               }
+              Console.Write("\n");
             }
             else
             {
-              Console.Write("\nTime: {0,10}  ID: {1,3:X}  DLC: {2,1}  Remote Frame",
+              Console.WriteLine("Time: {0,10}  ID: {1,3:X}  DLC: {2,1}  Remote Frame",
                             canMessage.TimeStamp,
                             canMessage.Identifier,
                             canMessage.DataLength);
@@ -490,13 +497,13 @@ namespace CanConNet
             switch ((CanMsgInfoValue)canMessage[0])
             {
               case CanMsgInfoValue.Start:
-                Console.Write("\nCAN started...");
+                Console.WriteLine("CAN started...");
                 break;
               case CanMsgInfoValue.Stop:
-                Console.Write("\nCAN stopped...");
+                Console.WriteLine("CAN stopped...");
                 break;
               case CanMsgInfoValue.Reset:
-                Console.Write("\nCAN reseted...");
+                Console.WriteLine("CAN reseted...");
                 break;
             }
             break;
@@ -510,28 +517,28 @@ namespace CanConNet
             switch ((CanMsgError)canMessage[0])
             {
               case CanMsgError.Stuff:
-                Console.Write("\nstuff error...");
+                Console.WriteLine("stuff error...");
                 break;
               case CanMsgError.Form:
-                Console.Write("\nform error...");
+                Console.WriteLine("form error...");
                 break;
               case CanMsgError.Acknowledge:
-                Console.Write("\nacknowledgment error...");
+                Console.WriteLine("acknowledgment error...");
                 break;
               case CanMsgError.Bit:
-                Console.Write("\nbit error...");
+                Console.WriteLine("bit error...");
                 break;
               case CanMsgError.Fdb:
-                Console.Write("\nfast data bit error...");
+                Console.WriteLine("fast data bit error...");
                 break;
               case CanMsgError.Crc:
-                Console.Write("\nCRC error...");
+                Console.WriteLine("CRC error...");
                 break;
               case CanMsgError.Dlc:
-                Console.Write("\nData length error...");
+                Console.WriteLine("Data length error...");
                 break;
               case CanMsgError.Other:
-                Console.Write("\nother error...");
+                Console.WriteLine("other error...");
                 break;
             }
             break;

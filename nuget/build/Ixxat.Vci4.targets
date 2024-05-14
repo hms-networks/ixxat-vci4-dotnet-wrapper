@@ -11,6 +11,12 @@
     </ItemGroup>
     <Copy SourceFiles="@(NativeLibs_x64)"    DestinationFolder="$(OutDir)\vcinet\x64" />
   </Target>
+  <Target Name="CopyNativeLibs_arm64_Build" AfterTargets="Build">
+    <ItemGroup>
+      <NativeLibs_arm64  Include="$(MSBuildThisFileDirectory)\arm64\vcinet.arm64.dll" />
+    </ItemGroup>
+    <Copy SourceFiles="@(NativeLibs_arm64)"  DestinationFolder="$(OutDir)\vcinet\arm64" />
+  </Target>
 
   <Target Name="CopyNativeLibs_x86_Publish" AfterTargets="Publish">
     <ItemGroup>
@@ -23,5 +29,11 @@
       <NativeLibs_x64    Include="$(MSBuildThisFileDirectory)\x64\vcinet.x64.dll" />
     </ItemGroup>
     <Copy SourceFiles="@(NativeLibs_x64)"    DestinationFolder="$(PublishDir)\vcinet\x64" />
+  </Target>
+  <Target Name="CopyNativeLibs_arm64_Publish" AfterTargets="Publish">
+    <ItemGroup>
+      <NativeLibs_arm64  Include="$(MSBuildThisFileDirectory)\arm64\vcinet.arm64.dll" />
+    </ItemGroup>
+    <Copy SourceFiles="@(NativeLibs_arm64)"  DestinationFolder="$(PublishDir)\vcinet\arm64" />
   </Target>
 </Project>

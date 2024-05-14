@@ -2,6 +2,7 @@
 
   <PropertyGroup Label="Globals">
     <ProjectGuid>7bcffb2b-75c1-4325-bed2-443d15908221</ProjectGuid>
+    <Platforms>AnyCPU</Platforms>
   </PropertyGroup>
 
   <PropertyGroup>

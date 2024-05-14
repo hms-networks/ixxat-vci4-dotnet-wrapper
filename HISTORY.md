@@ -1,5 +1,9 @@
 # Open source releases
 
+## 4.1.7	14/05/2024
+
+- add support for ARM and ARM64 targets (tested on Raspberry Pi with Windows 11 ARM64)
+
 ## 4.1.6	19/02/2024
 
 - fix signing of StrongName variant

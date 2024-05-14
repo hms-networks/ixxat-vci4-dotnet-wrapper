@@ -11,6 +11,14 @@ This package is released as a binary package via NuGet for application developer
 for details see https://www.nuget.org/packages/Ixxat.Vci4
 There is also a strong named variant which is available from https://www.nuget.org/packages/Ixxat.Vci4.StrongName
 
+## Prerequisites
+
+The VCI4 .NET wrapper sits on top of the VCI4 C++ API so you need the VCI4 driver setup installed.
+
+The target dependent mixed assemblies are dynamically linked against the VC runtime. Make sure the appropriate
+runtime library is installed.
+For information and downloads see https://learn.microsoft.com/en-us/cpp/windows/latest-supported-vc-redist
+
 ## Usage
 
 Simply install the package reference to your project via NuGet. 
@@ -31,7 +39,14 @@ https://github.com/hms-networks/ixxat-vci4-dotnet-wrapper.
 
 ## Internals
 
-The package supports different targets:
+The package supports different platforms:
+
+    - x86 (aka. Win32)
+    - x64
+    - arm (not supported for net40)
+    - arm64
+
+and targets:
 
     - net40 (Framework)
     - netcoreapp3.1 (NetCore)
@@ -58,9 +73,15 @@ So the layout of the target bin directory is as follows:
             /x86
               Ijwhost.dll       (not for net40)
               vcinet.x86.dll
+            /arm
+              Ijwhost.dll       (not for net40)
+              vcinet.arm.dll
+            /arm64
+              Ijwhost.dll       (not for net40)
+              vcinet.arm64.dll
 
 The app will reference Ixxat.Vci4.dll and Ixxat.Vci4.Contract.dll,
-vcinet.x64.dll or vcinet.x86.dll are loaded on demand depending on the platform
+The specific vcinet.<platform>.dll is loaded on demand depending on the platform
 the app is running on.
 By default this path is below a directory (/vcinet/<platform>) where the Ixxat.Vci4.dll is placed,
 but VciServer.Instance() takes a parameter for the basepath you want to load the 

@@ -10,6 +10,7 @@ namespace Ixxat.Vci4
   using System;
   using System.IO;
   using System.Reflection;
+  using System.Runtime.InteropServices;
   using Ixxat.Vci4.Bal.Can;
   using Ixxat.Vci4.Bal.Lin;
 
@@ -29,6 +30,99 @@ namespace Ixxat.Vci4
     // The singleton VciServer instance
     private static IVciServer? ms_instance = null;
 
+
+    private const int PROCESSOR_ARCHITECTURE_AMD64 = 9;
+    private const int PROCESSOR_ARCHITECTURE_INTEL = 0;
+    private const int PROCESSOR_ARCHITECTURE_ARM = 5;
+    private const int PROCESSOR_ARCHITECTURE_ARM64 = 12;
+
+    [DllImport("kernel32")]
+    private static extern void GetSystemInfo(ref SYSTEM_INFO lpSystemInfo);
+
+    [DllImport("kernel32")]
+    private static extern void GetNativeSystemInfo(ref SYSTEM_INFO lpSystemInfo);
+
+    [StructLayout(LayoutKind.Sequential)]
+    private struct SYSTEM_INFO
+    {
+      public short wProcessorArchitecture;
+      public short wReserved;
+      public int dwPageSize;
+      public IntPtr lpMinimumApplicationAddress;
+      public IntPtr lpMaximumApplicationAddress;
+      public IntPtr dwActiveProcessorMask;
+      public int dwNumberOfProcessors;
+      public int dwProcessorType;
+      public int dwAllocationGranularity;
+      public short wProcessorLevel;
+      public short wProcessorRevision;
+    }
+
+    /// <summary>
+    /// Arch enumeration
+    /// </summary>
+    private enum Architecture
+    {
+      Unknown,
+      x86,
+      x64,
+      arm32,
+      arm64,
+    }
+
+    /// <summary>
+    /// Turn content of system info into arch enumeration
+    /// </summary>
+    /// <param name="si">system info struct</param>
+    /// <returns>arch enumeration</returns>
+    /// <exception cref="PlatformNotSupportedException"></exception>
+    private static Architecture GetArchitecture(ref SYSTEM_INFO si)
+    {
+      switch (si.wProcessorArchitecture)
+      {
+        case PROCESSOR_ARCHITECTURE_AMD64:
+          return Architecture.x64;
+
+        case PROCESSOR_ARCHITECTURE_ARM64:
+          return Architecture.arm64;
+
+        case PROCESSOR_ARCHITECTURE_ARM:
+          return Architecture.arm32;
+
+        case PROCESSOR_ARCHITECTURE_INTEL:
+          return Architecture.x86;
+
+        default:
+          throw new PlatformNotSupportedException("Unsupported architecture: Only x86, x64, arm and arm64 supported.");
+      }
+    }
+
+    /// <summary>
+    /// return arch of current process
+    /// </summary>
+    private static Architecture ProcessArchitecture
+    {
+      get
+      {
+        var si = new SYSTEM_INFO();
+        GetSystemInfo(ref si);
+        return GetArchitecture(ref si);
+      }
+    }
+
+    /// <summary>
+    /// return arch of current machine
+    /// </summary>
+    private static Architecture MachineArchitecture
+    {
+      get
+      {
+        var si = new SYSTEM_INFO();
+        GetNativeSystemInfo(ref si);
+        return GetArchitecture(ref si);
+      }
+    }
+
     //*****************************************************************************
     /// <summary>
     ///   Dynamically loads the platform dependent (x86, x64) server component.
@@ -47,9 +141,17 @@ namespace Ixxat.Vci4
     //*****************************************************************************
     static private void LoadServer(string assemblyloadpath) 
     {
-      bool isRunningAs64Bit = (IntPtr.Size == 8);
+      Architecture arch = ProcessArchitecture;
 
-      string archstr = (isRunningAs64Bit ? "x64" : "x86");
+      string archstr = "unknown";
+      switch (arch)
+      {
+        case Architecture.x86: archstr = "x86"; break;
+        case Architecture.x64: archstr = "x64"; break;
+        case Architecture.arm32: archstr = "arm"; break;
+        case Architecture.arm64: archstr = "arm64"; break;
+      }
+
       string assemblyName = "vcinet\\" + archstr + "\\vcinet." + archstr + ".dll";
 
       string archSpecificPath;

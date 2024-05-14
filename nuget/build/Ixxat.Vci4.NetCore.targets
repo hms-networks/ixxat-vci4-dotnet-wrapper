@@ -15,6 +15,22 @@
     <Copy SourceFiles="@(NativeLibs_x64)"    DestinationFolder="$(OutDir)\vcinet\x64" />
     <Copy SourceFiles="@(DotNetHostLib_x64)" DestinationFolder="$(OutDir)\vcinet\x64" />
   </Target>
+  <Target Name="CopyNativeLibs_arm_Build" AfterTargets="Build">
+    <ItemGroup>
+      <NativeLibs_arm    Include="$(MSBuildThisFileDirectory)\arm\vcinet.arm.dll" />
+      <DotNetHostLib_arm Include="$(MSBuildThisFileDirectory)\arm\Ijwhost.dll" />
+    </ItemGroup>
+    <Copy SourceFiles="@(NativeLibs_arm)"    DestinationFolder="$(OutDir)\vcinet\arm" />
+    <Copy SourceFiles="@(DotNetHostLib_arm)" DestinationFolder="$(OutDir)\vcinet\arm" />
+  </Target>
+  <Target Name="CopyNativeLibs_arm64_Build" AfterTargets="Build">
+    <ItemGroup>
+      <NativeLibs_arm64    Include="$(MSBuildThisFileDirectory)\arm64\vcinet.arm64.dll" />
+      <DotNetHostLib_arm64 Include="$(MSBuildThisFileDirectory)\arm64\Ijwhost.dll" />
+    </ItemGroup>
+    <Copy SourceFiles="@(NativeLibs_arm64)"    DestinationFolder="$(OutDir)\vcinet\arm64" />
+    <Copy SourceFiles="@(DotNetHostLib_arm64)" DestinationFolder="$(OutDir)\vcinet\arm64" />
+  </Target>
 
   <Target Name="CopyNativeLibs_x86_Publish" AfterTargets="Publish">
     <ItemGroup>
@@ -31,5 +47,21 @@
     </ItemGroup>
     <Copy SourceFiles="@(NativeLibs_x64)"    DestinationFolder="$(PublishDir)\vcinet\x64" />
     <Copy SourceFiles="@(DotNetHostLib_x64)" DestinationFolder="$(PublishDir)\vcinet\x64" />
+  </Target>
+  <Target Name="CopyNativeLibs_arm_Publish" AfterTargets="Publish">
+    <ItemGroup>
+      <NativeLibs_arm    Include="$(MSBuildThisFileDirectory)\arm\vcinet.arm.dll" />
+      <DotNetHostLib_arm Include="$(MSBuildThisFileDirectory)\arm\Ijwhost.dll" />
+    </ItemGroup>
+    <Copy SourceFiles="@(NativeLibs_arm)"    DestinationFolder="$(PublishDir)\vcinet\arm" />
+    <Copy SourceFiles="@(DotNetHostLib_arm)" DestinationFolder="$(PublishDir)\vcinet\arm" />
+  </Target>
+  <Target Name="CopyNativeLibs_arm64_Publish" AfterTargets="Publish">
+    <ItemGroup>
+      <NativeLibs_arm64    Include="$(MSBuildThisFileDirectory)\arm64\vcinet.arm64.dll" />
+      <DotNetHostLib_arm64 Include="$(MSBuildThisFileDirectory)\arm64\Ijwhost.dll" />
+    </ItemGroup>
+    <Copy SourceFiles="@(NativeLibs_arm64)"    DestinationFolder="$(PublishDir)\vcinet\arm64" />
+    <Copy SourceFiles="@(DotNetHostLib_arm64)" DestinationFolder="$(PublishDir)\vcinet\arm64" />
   </Target>
 </Project>

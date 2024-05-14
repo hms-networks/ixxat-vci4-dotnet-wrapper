@@ -41,21 +41,29 @@ The loader checks the platform and loads the corresponding target specific assem
 
 To compile the component start a Powershell console and execute
 
-    PS> .\build.ps1 -Version=4.1.0
+    PS> .\build.ps1 -Version 4.1.0
 
 If you want to create a strong named version add the AssemblyKeyFile parameter
 
-    PS> .\build.ps1 -Version=4.1.0 -AssemblyKeyFile=mykeyfile.snk
+    PS> .\build.ps1 -Version 4.1.0 -AssemblyKeyFile mykeyfile.snk
 
 For more information have a look at the build script .\build.ps1
 
 ### Prerequisites
 
+#### For development
+
 - VisualStudio 2022
 - nuget.exe client version 6.3.0
 - Sandcastle Help File Builder version 2021.11.7.0
 
+#### For users
+
 The VCI4 .NET wrapper sits on top of the VCI4 C++ API so you need the VCI4 driver setup installed.
+
+The target dependent mixed assemblies are dynamically linked against the VC runtime. Make sure the appropriate
+runtime library is installed.
+For information and downloads see https://learn.microsoft.com/en-us/cpp/windows/latest-supported-vc-redist
 
 ### Source tree overview
 

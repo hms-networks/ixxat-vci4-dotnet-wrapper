@@ -59,6 +59,8 @@ bin/
 obj/
 Win32/
 x64/
+ARM/
+ARM64/
 downloads/
 
 # Generated documentation xml files

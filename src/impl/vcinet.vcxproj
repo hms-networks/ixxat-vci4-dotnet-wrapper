@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build" ToolsVersion="4.5" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|ARM">
       <Configuration>Debug</Configuration>
@@ -37,7 +37,7 @@
   <PropertyGroup Label="Globals">
     <ProjectGuid>{0EAE5A22-FA4F-85F8-E30A-994CCF4B0C49}</ProjectGuid>
     <Framework Condition="'$(Framework)' == ''">net6.0-windows</Framework>
-    <TargetFrameworkVersion Condition="'$(Framework)' == 'net40'">v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion Condition="'$(Framework)' == 'net40'">v4.8</TargetFrameworkVersion>
     <TargetFramework Condition="'$(Framework)' == 'netcoreapp3.1'">netcoreapp3.1</TargetFramework>
     <TargetFramework Condition="'$(Framework)' == 'net5.0-windows'">net5.0-windows</TargetFramework>
     <TargetFramework Condition="'$(Framework)' == 'net6.0-windows'">net6.0-windows</TargetFramework>

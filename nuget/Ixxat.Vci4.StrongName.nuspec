@@ -11,9 +11,8 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Use Ixxat.Vci4 package to access CAN interfaces from Ixxat/HMS Networks via .NET and VCI4-API. This package provides strongly named assemblies and supports net40/net5.0-windows/net6.0-windows and netcoreapp3.1. Mixed assemblies depend on universal runtime (VCRUNTIME140.dll).</description>
     <releaseNotes>Resolved issues:
-- fix CanCyclicTXMsg2::AutoIncrementIndex maximum check (CANFD data len, 0..63)
-- update sample to set cyclicMsg.AutoIncrementMode
-- fix internal dirty flag handling in cyclic message objects: setting the same AutoIncrementMode cleared the internal dirty flag and led to msg start to fail
+- add support for ARM and ARM64 targets (tested on Raspberry Pi with Windows 11 ARM64)
+- switch native component project to .NET SDK 4.8 to fix error MSB3644
     </releaseNotes>
     <readme>docs\README.md</readme>
     <repository type="git" url="https://github.com/hms-networks/ixxat-vci4-dotnet-wrapper" branch="net35" commit="$SourceRevisionId$" />

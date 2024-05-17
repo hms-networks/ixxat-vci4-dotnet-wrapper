@@ -1,8 +1,9 @@
 # Open source releases
 
-## 4.1.7	14/05/2024
+## 4.1.7	17/05/2024
 
 - add support for ARM and ARM64 targets (tested on Raspberry Pi with Windows 11 ARM64)
+- switch native component project to .NET SDK 4.8 to fix error MSB3644
 
 ## 4.1.6	19/02/2024
 

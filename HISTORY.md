@@ -1,5 +1,9 @@
 # Open source releases
 
+## 4.1.8	08/01/2024
+
+- fix copying of transitive native components
+
 ## 4.1.7	17/05/2024
 
 - add support for ARM and ARM64 targets (tested on Raspberry Pi with Windows 11 ARM64)

@@ -1,6 +1,6 @@
 # Open source releases
 
-## 4.1.8	16/01/2024
+## 4.1.8	16/01/2025
 
 - NuGet package: fix copying of transitive native components
 

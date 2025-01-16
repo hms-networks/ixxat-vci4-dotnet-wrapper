@@ -1,5 +1,9 @@
 # Open source releases
 
+## 4.1.9	16/01/2025
+
+- NuGet package: fix path to arm native component
+
 ## 4.1.8	16/01/2025
 
 - NuGet package: fix copying of transitive native components

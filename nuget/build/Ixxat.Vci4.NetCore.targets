@@ -12,7 +12,7 @@
     <Content Include="$(MSBuildThisFileDirectory)\x64\Ijwhost.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="$(MSBuildThisFileDirectory)\arm\vcinet.arm64.dll">
+    <Content Include="$(MSBuildThisFileDirectory)\arm\vcinet.arm.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="$(MSBuildThisFileDirectory)\arm\Ijwhost.dll">

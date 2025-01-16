@@ -1,5 +1,10 @@
 # Open source releases
 
+## 4.1.10	16/01/2025
+
+- NuGet package: fix path to arm native component
+- update history
+
 ## 4.1.9	16/01/2025
 
 - NuGet package: fix path to arm native component

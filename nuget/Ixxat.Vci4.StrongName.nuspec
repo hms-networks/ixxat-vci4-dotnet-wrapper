@@ -11,7 +11,7 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Use Ixxat.Vci4 package to access CAN interfaces from Ixxat/HMS Networks via .NET and VCI4-API. This package provides strongly named assemblies and supports net40/net5.0-windows/net6.0-windows and netcoreapp3.1. Mixed assemblies depend on universal runtime (VCRUNTIME140.dll).</description>
     <releaseNotes>Resolved issues:
-- fix copying of transitive native components
+- NuGet package: fix copying of transitive native components
     </releaseNotes>
     <readme>docs\README.md</readme>
     <repository type="git" url="https://github.com/hms-networks/ixxat-vci4-dotnet-wrapper" branch="net35" commit="$SourceRevisionId$" />
@@ -88,37 +88,5 @@
     <file src="..\bin\Release\netcoreapp3.1\vcinet\arm\Ijwhost.dll" target="build\netcoreapp3.1\arm" />
     <file src="..\bin\Release\netcoreapp3.1\vcinet\arm64\vcinet.arm64.dll" target="build\netcoreapp3.1\arm64" />
     <file src="..\bin\Release\netcoreapp3.1\vcinet\arm64\Ijwhost.dll" target="build\netcoreapp3.1\arm64" />
-    <!-- transitive components -->
-    <file src="build\Ixxat.Vci4.targets" target="buildTransitive\net40\Ixxat.Vci4.StrongName.targets" />
-    <file src="build\Ixxat.Vci4.NetCore.targets" target="buildTransitive\net5.0-windows10.0\Ixxat.Vci4.StrongName.targets" />
-    <file src="build\Ixxat.Vci4.NetCore.targets" target="buildTransitive\net6.0-windows10.0\Ixxat.Vci4.StrongName.targets" />
-    <file src="build\Ixxat.Vci4.NetCore.targets" target="buildTransitive\netcoreapp3.1\Ixxat.Vci4.StrongName.targets" />
-    <file src="..\bin\Release\net40\vcinet\x86\vcinet.x86.dll" target="buildTransitive\net40\x86" />
-    <file src="..\bin\Release\net40\vcinet\x64\vcinet.x64.dll" target="buildTransitive\net40\x64" />
-    <file src="..\bin\Release\net40\vcinet\arm64\vcinet.arm64.dll" target="buildTransitive\net40\arm64" />
-    <file src="..\bin\Release\net5.0-windows\vcinet\x86\vcinet.x86.dll" target="buildTransitive\net5.0-windows10.0\x86" />
-    <file src="..\bin\Release\net5.0-windows\vcinet\x86\Ijwhost.dll" target="buildTransitive\net5.0-windows10.0\x86" />
-    <file src="..\bin\Release\net5.0-windows\vcinet\x64\vcinet.x64.dll" target="buildTransitive\net5.0-windows10.0\x64" />
-    <file src="..\bin\Release\net5.0-windows\vcinet\x64\Ijwhost.dll" target="buildTransitive\net5.0-windows10.0\x64" />
-    <file src="..\bin\Release\net5.0-windows\vcinet\arm\vcinet.arm.dll" target="buildTransitive\net5.0-windows10.0\arm" />
-    <file src="..\bin\Release\net5.0-windows\vcinet\arm\Ijwhost.dll" target="buildTransitive\net5.0-windows10.0\arm" />
-    <file src="..\bin\Release\net5.0-windows\vcinet\arm64\vcinet.arm64.dll" target="buildTransitive\net5.0-windows10.0\arm64" />
-    <file src="..\bin\Release\net5.0-windows\vcinet\arm64\Ijwhost.dll" target="buildTransitive\net5.0-windows10.0\arm64" />
-    <file src="..\bin\Release\net6.0-windows\vcinet\x86\vcinet.x86.dll" target="buildTransitive\net6.0-windows10.0\x86" />
-    <file src="..\bin\Release\net6.0-windows\vcinet\x86\Ijwhost.dll" target="buildTransitive\net6.0-windows10.0\x86" />
-    <file src="..\bin\Release\net6.0-windows\vcinet\x64\vcinet.x64.dll" target="buildTransitive\net6.0-windows10.0\x64" />
-    <file src="..\bin\Release\net6.0-windows\vcinet\x64\Ijwhost.dll" target="buildTransitive\net6.0-windows10.0\x64" />
-    <file src="..\bin\Release\net6.0-windows\vcinet\arm\vcinet.arm.dll" target="buildTransitive\net6.0-windows10.0\arm" />
-    <file src="..\bin\Release\net6.0-windows\vcinet\arm\Ijwhost.dll" target="buildTransitive\net6.0-windows10.0\arm" />
-    <file src="..\bin\Release\net6.0-windows\vcinet\arm64\vcinet.arm64.dll" target="buildTransitive\net6.0-windows10.0\arm64" />
-    <file src="..\bin\Release\net6.0-windows\vcinet\arm64\Ijwhost.dll" target="buildTransitive\net6.0-windows10.0\arm64" />
-    <file src="..\bin\Release\netcoreapp3.1\vcinet\x86\vcinet.x86.dll" target="buildTransitive\netcoreapp3.1\x86" />
-    <file src="..\bin\Release\netcoreapp3.1\vcinet\x86\Ijwhost.dll" target="buildTransitive\netcoreapp3.1\x86" />
-    <file src="..\bin\Release\netcoreapp3.1\vcinet\x64\vcinet.x64.dll" target="buildTransitive\netcoreapp3.1\x64" />
-    <file src="..\bin\Release\netcoreapp3.1\vcinet\x64\Ijwhost.dll" target="buildTransitive\netcoreapp3.1\x64" />
-    <file src="..\bin\Release\netcoreapp3.1\vcinet\arm\vcinet.arm.dll" target="buildTransitive\netcoreapp3.1\arm" />
-    <file src="..\bin\Release\netcoreapp3.1\vcinet\arm\Ijwhost.dll" target="buildTransitive\netcoreapp3.1\arm" />
-    <file src="..\bin\Release\netcoreapp3.1\vcinet\arm64\vcinet.arm64.dll" target="buildTransitive\netcoreapp3.1\arm64" />
-    <file src="..\bin\Release\netcoreapp3.1\vcinet\arm64\Ijwhost.dll" target="buildTransitive\netcoreapp3.1\arm64" />
   </files>
 </package>

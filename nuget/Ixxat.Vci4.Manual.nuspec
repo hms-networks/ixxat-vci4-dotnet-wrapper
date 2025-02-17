@@ -13,7 +13,7 @@
     <releaseNotes>
     </releaseNotes>
     <repository type="git" url="https://github.com/hms-networks/ixxat-vci4-dotnet-wrapper" branch="net35" commit="$SourceRevisionId$" />
-    <copyright>Copyright (C) 2016-2024</copyright>
+    <copyright>Copyright (C) 2016-2025</copyright>
     <tags>VCI4 CAN Lin Ixxat HMS manuals help</tags>
   </metadata>
   <files>

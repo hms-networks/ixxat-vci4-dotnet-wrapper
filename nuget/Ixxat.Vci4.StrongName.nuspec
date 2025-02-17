@@ -11,11 +11,11 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Use Ixxat.Vci4 package to access CAN interfaces from Ixxat/HMS Networks via .NET and VCI4-API. This package provides strongly named assemblies and supports net40/net5.0-windows/net6.0-windows and netcoreapp3.1. Mixed assemblies depend on universal runtime (VCRUNTIME140.dll).</description>
     <releaseNotes>Resolved issues:
-- NuGet package: fix path to arm native component (32bit)
+- NuGet package: fix destination paths of native components
     </releaseNotes>
     <readme>docs\README.md</readme>
     <repository type="git" url="https://github.com/hms-networks/ixxat-vci4-dotnet-wrapper" branch="net35" commit="$SourceRevisionId$" />
-    <copyright>Copyright (C) 2018-2024</copyright>
+    <copyright>Copyright (C) 2018-2025</copyright>
     <tags>VCI4 CAN Lin Ixxat HMS strongname</tags>
     <dependencies>
       <group targetFramework="net40">

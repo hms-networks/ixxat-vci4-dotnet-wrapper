@@ -1,5 +1,9 @@
 # Open source releases
 
+## 4.1.11	07/02/2025
+
+- NuGet package: fix destination paths of native components
+
 ## 4.1.10	16/01/2025
 
 - NuGet package: fix path to arm native component

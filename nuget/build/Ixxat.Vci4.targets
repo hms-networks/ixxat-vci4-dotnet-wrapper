@@ -2,12 +2,15 @@
   <ItemGroup>
     <Content Include="$(MSBuildThisFileDirectory)\x86\vcinet.x86.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <Link>\vcinet\x86\%(Filename)%(Extension)</Link>
     </Content>
     <Content Include="$(MSBuildThisFileDirectory)\x64\vcinet.x64.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <Link>\vcinet\x64\%(Filename)%(Extension)</Link>
     </Content>
     <Content Include="$(MSBuildThisFileDirectory)\arm64\vcinet.arm64.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <Link>\vcinet\arm64\%(Filename)%(Extension)</Link>
     </Content>
   </ItemGroup>
 </Project>

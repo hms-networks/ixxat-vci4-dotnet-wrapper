@@ -1,16 +1,16 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Content Include="$(MSBuildThisFileDirectory)\x86\vcinet.x86.dll">
+    <Content Include="$(MSBuildThisFileDirectory)x86\vcinet.x86.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <Link>\vcinet\x86\%(Filename)%(Extension)</Link>
+      <Link>vcinet\x86\%(Filename)%(Extension)</Link>
     </Content>
-    <Content Include="$(MSBuildThisFileDirectory)\x64\vcinet.x64.dll">
+    <Content Include="$(MSBuildThisFileDirectory)x64\vcinet.x64.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <Link>\vcinet\x64\%(Filename)%(Extension)</Link>
+      <Link>vcinet\x64\%(Filename)%(Extension)</Link>
     </Content>
-    <Content Include="$(MSBuildThisFileDirectory)\arm64\vcinet.arm64.dll">
+    <Content Include="$(MSBuildThisFileDirectory)arm64\vcinet.arm64.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <Link>\vcinet\arm64\%(Filename)%(Extension)</Link>
+      <Link>vcinet\arm64\%(Filename)%(Extension)</Link>
     </Content>
   </ItemGroup>
 </Project>

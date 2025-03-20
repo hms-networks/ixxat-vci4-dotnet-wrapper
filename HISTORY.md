@@ -1,5 +1,9 @@
 # Open source releases
 
+## 4.1.12	07/02/2025
+
+- NuGet package: fix manifest generation step for ClickOnce projects by fixing link element file names in .targets files
+
 ## 4.1.11	07/02/2025
 
 - NuGet package: fix destination paths of native components

@@ -157,10 +157,6 @@ function RebuildVSProject {
     foreach($f in $frameworks) {
         & "$MSBuild" "src\vcinetnative.sln" -t:Rebuild -p:Configuration=Release /p:Platform=x86 /p:Framework=$f
         & "$MSBuild" "src\vcinetnative.sln" -t:Rebuild -p:Configuration=Release /p:Platform=x64 /p:Framework=$f
-        if ($f -notlike "net40") {
-            # arm target not supported for net40 framework
-            & "$MSBuild" "src\vcinetnative.sln" -t:Rebuild -p:Configuration=Release /p:Platform=arm /p:Framework=$f
-        }
         & "$MSBuild" "src\vcinetnative.sln" -t:Rebuild -p:Configuration=Release /p:Platform=arm64 /p:Framework=$f
     }
 

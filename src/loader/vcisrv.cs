@@ -86,14 +86,11 @@ namespace Ixxat.Vci4
         case PROCESSOR_ARCHITECTURE_ARM64:
           return Architecture.arm64;
 
-        case PROCESSOR_ARCHITECTURE_ARM:
-          return Architecture.arm32;
-
         case PROCESSOR_ARCHITECTURE_INTEL:
           return Architecture.x86;
 
         default:
-          throw new PlatformNotSupportedException("Unsupported architecture: Only x86, x64, arm and arm64 supported.");
+          throw new PlatformNotSupportedException("Unsupported architecture: Only x86, x64 and arm64 supported.");
       }
     }
 
@@ -148,7 +145,6 @@ namespace Ixxat.Vci4
       {
         case Architecture.x86: archstr = "x86"; break;
         case Architecture.x64: archstr = "x64"; break;
-        case Architecture.arm32: archstr = "arm"; break;
         case Architecture.arm64: archstr = "arm64"; break;
       }
 

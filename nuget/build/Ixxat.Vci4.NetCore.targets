@@ -16,14 +16,6 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <Link>vcinet\x64\%(Filename)%(Extension)</Link>
     </Content>
-    <Content Include="$(MSBuildThisFileDirectory)arm\vcinet.arm.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <Link>vcinet\arm\%(Filename)%(Extension)</Link>
-    </Content>
-    <Content Include="$(MSBuildThisFileDirectory)arm\Ijwhost.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <Link>vcinet\arm\%(Filename)%(Extension)</Link>
-    </Content>
     <Content Include="$(MSBuildThisFileDirectory)arm64\vcinet.arm64.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <Link>vcinet\arm64\%(Filename)%(Extension)</Link>

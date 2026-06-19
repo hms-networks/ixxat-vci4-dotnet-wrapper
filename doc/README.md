@@ -43,8 +43,11 @@ The package supports different platforms:
 
     - x86 (aka. Win32)
     - x64
-    - arm (not supported for net40)
     - arm64
+
+Remark: Arm32 support was available up to version 4.1.12
+but had been removed with 4.1.13 because Microsoft dropped arm32 support.
+The net40 target never supported arm32.
 
 and targets:
 
@@ -73,9 +76,6 @@ So the layout of the target bin directory is as follows:
             /x86
               Ijwhost.dll       (not for net40)
               vcinet.x86.dll
-            /arm
-              Ijwhost.dll       (not for net40)
-              vcinet.arm.dll
             /arm64
               Ijwhost.dll       (not for net40)
               vcinet.arm64.dll

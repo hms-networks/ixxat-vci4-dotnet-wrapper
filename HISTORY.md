@@ -1,5 +1,16 @@
 # Open source releases
 
+## 4.1.13	22/06/2026
+
+- build binaries for .NET Core 7.0, .NET Core 8.0 and .NET Core 9.0
+- remove ARM32 support (support removed in Windows SDK version 10.0.26100.0)
+- add .net7.0/.net8.0/.net9.0 targets (prevents projects to reference the wrong binaries due to a fallback to netcoreapp3.1)
+- switch samples to target .net9.0
+- fix path to vswhere in start scripts
+- sync examples from example repo
+- fix missing dispose of CAN scheduler
+- add predefined bitrates according to CANopen specification (CiA 1301)
+
 ## 4.1.12	07/02/2025
 
 - NuGet package: fix manifest generation step for ClickOnce projects by fixing link element file names in .targets files

@@ -43,6 +43,8 @@ else
 
 if ($MSBuild -ne "")
 {
+	Write-Host "MSBuild: "$MSBuild
+
     $MSBuildVersion = [Version](Invoke-Command { . $MSBuild /nologo /version })
     if ($MSBuildVersion.Major -lt $MinimumMSBuildVersion)
     {
@@ -153,7 +155,7 @@ function RebuildVSProject {
     & "$MSBuild" $LoaderProject -t:Rebuild -p:Configuration="Release"
 
     # rebuild mixed assemblies
-    $frameworks = @( "net40", "netcoreapp3.1", "net5.0-windows", "net6.0-windows" )
+    $frameworks = @( "net40", "netcoreapp3.1", "net5.0-windows", "net6.0-windows", "net7.0-windows", "net8.0-windows", "net9.0-windows" )
     foreach($f in $frameworks) {
         & "$MSBuild" "src\vcinetnative.sln" -t:Rebuild -p:Configuration=Release /p:Platform=x86 /p:Framework=$f
         & "$MSBuild" "src\vcinetnative.sln" -t:Rebuild -p:Configuration=Release /p:Platform=x64 /p:Framework=$f

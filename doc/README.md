@@ -53,8 +53,11 @@ and targets:
 
     - net40 (Framework)
     - netcoreapp3.1 (NetCore)
-    - net5.0-windows10.0 (NetCore)
-    - net6.0-windows10.0 (NetCore)
+    - net5.0-windows (NetCore)
+    - net6.0-windows (NetCore)
+    - net7.0-windows (NetCore)
+    - net8.0-windows (NetCore)
+    - net9.0-windows (NetCore)
 
 There is a subtle difference between Framework and the NetCore targets:
 NetCore targets need a special .NET Core app host DLL (ijwhost.dll) 

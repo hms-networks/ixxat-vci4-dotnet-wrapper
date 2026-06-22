@@ -28,11 +28,14 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{0EAE5A22-FA4F-85F8-E30A-994CCF4B0C49}</ProjectGuid>
-    <Framework Condition="'$(Framework)' == ''">net6.0-windows</Framework>
+    <Framework Condition="'$(Framework)' == ''">net9.0-windows</Framework>
     <TargetFrameworkVersion Condition="'$(Framework)' == 'net40'">v4.8</TargetFrameworkVersion>
     <TargetFramework Condition="'$(Framework)' == 'netcoreapp3.1'">netcoreapp3.1</TargetFramework>
-    <TargetFramework Condition="'$(Framework)' == 'net5.0-windows'">net5.0-windows</TargetFramework>
-    <TargetFramework Condition="'$(Framework)' == 'net6.0-windows'">net6.0-windows</TargetFramework>
+    <TargetFramework Condition="'$(Framework)' == 'net5.0-windows'">net5.0</TargetFramework>
+    <TargetFramework Condition="'$(Framework)' == 'net6.0-windows'">net8.0</TargetFramework>
+    <TargetFramework Condition="'$(Framework)' == 'net7.0-windows'">net7.0</TargetFramework>
+    <TargetFramework Condition="'$(Framework)' == 'net8.0-windows'">net8.0</TargetFramework>
+    <TargetFramework Condition="'$(Framework)' == 'net9.0-windows'">net9.0</TargetFramework>
     <BinBaseDir>..\..\bin\$(Configuration)\$(Framework)\</BinBaseDir>
     <NativeBinBaseDir Condition="'$(Platform)' == 'x64'">$(BinBaseDir)\vcinet\x64\</NativeBinBaseDir>
     <NativeBinBaseDir Condition="'$(Platform)'=='ARM64'">$(BinBaseDir)\vcinet\arm64\</NativeBinBaseDir>
@@ -41,6 +44,7 @@
     <Keyword>ManagedCProj</Keyword>
     <RootNamespace>vcinet</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformMinVersion>7.0</WindowsTargetPlatformMinVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Framework)' == 'net40' ">
     <DefineConstants>NET40</DefineConstants>
@@ -54,12 +58,24 @@
   <PropertyGroup Condition=" '$(Framework)' == 'net6.0-windows' ">
     <DefineConstants>NETCORE</DefineConstants>
   </PropertyGroup>
+  <PropertyGroup Condition=" '$(Framework)' == 'net7.0-windows' ">
+    <DefineConstants>NETCORE</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Framework)' == 'net8.0-windows' ">
+    <DefineConstants>NETCORE</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Framework)' == 'net9.0-windows' ">
+    <DefineConstants>NETCORE</DefineConstants>
+  </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup>
     <CLRSupport Condition=" '$(Framework)' == 'net40' ">true</CLRSupport>
     <CLRSupport Condition=" '$(Framework)' == 'netcoreapp3.1' ">NetCore</CLRSupport>
     <CLRSupport Condition=" '$(Framework)' == 'net5.0-windows' ">NetCore</CLRSupport>
     <CLRSupport Condition=" '$(Framework)' == 'net6.0-windows' ">NetCore</CLRSupport>
+    <CLRSupport Condition=" '$(Framework)' == 'net7.0-windows' ">NetCore</CLRSupport>
+    <CLRSupport Condition=" '$(Framework)' == 'net8.0-windows' ">NetCore</CLRSupport>
+    <CLRSupport Condition=" '$(Framework)' == 'net9.0-windows' ">NetCore</CLRSupport>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Framework)' == 'netcoreapp3.1' ">
     <DefaultAppHostRuntimeIdentifier Condition=" '$(PlatformTarget)' == 'x86' " >win-x86</DefaultAppHostRuntimeIdentifier>

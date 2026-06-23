@@ -9,13 +9,22 @@
     <projectUrl>https://github.com/hms-networks/ixxat-vci4-dotnet-wrapper</projectUrl>
     <icon>images\HMSLogo.png</icon>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>Use Ixxat.Vci4 package to access CAN interfaces from Ixxat/HMS Networks via .NET and VCI4-API. This package provides strongly named assemblies and supports net40/net5.0-windows/net6.0-windows and netcoreapp3.1. Mixed assemblies depend on universal runtime (VCRUNTIME140.dll).</description>
+    <description>Use Ixxat.Vci4 package to access CAN interfaces from Ixxat/HMS Networks via .NET and VCI4-API. This package provides strongly named assemblies and supports net40/net[5|6|7|8|9].0-windows and netcoreapp3.1. Mixed assemblies depend on universal runtime (VCRUNTIME140.dll).</description>
     <releaseNotes>Resolved issues:
-- NuGet package: fix manifest generation step for ClickOnce projects by fixing link element file names in .targets files
+- split build script into build and pack operation steps to enable signing between steps
+- apply correct version and copyright to managed components during build
+- build binaries for .NET Core 7.0, .NET Core 8.0 and .NET Core 9.0
+- remove ARM32 support (support removed in Windows SDK version 10.0.26100.0)
+- add .net7.0/.net8.0/.net9.0 targets (prevents projects to reference the wrong binaries due to a fallback to netcoreapp3.1)
+- switch samples to target .net9.0
+- fix path to vswhere in start scripts
+- sync examples from example repo
+- fix missing dispose of CAN scheduler
+- add predefined bitrates according to CANopen specification (CiA 1301)
     </releaseNotes>
     <readme>docs\README.md</readme>
-    <repository type="git" url="https://github.com/hms-networks/ixxat-vci4-dotnet-wrapper" branch="net35" commit="$SourceRevisionId$" />
-    <copyright>Copyright (C) 2018-2025</copyright>
+    <repository type="git" url="https://github.com/hms-networks/ixxat-vci4-dotnet-wrapper" branch="main" commit="$SourceRevisionId$" />
+    <copyright>Copyright (C) 2018-2026</copyright>
     <tags>VCI4 CAN Lin Ixxat HMS strongname</tags>
     <dependencies>
       <group targetFramework="net40">
@@ -24,11 +33,15 @@
       </group>
       <group targetFramework="net6.0-windows10.0">
       </group>
+      <group targetFramework="net7.0-windows10.0">
+      </group>
+      <group targetFramework="net8.0-windows10.0">
+      </group>
+      <group targetFramework="net9.0-windows10.0">
+      </group>
       <group targetFramework="netcoreapp3.1">
       </group>
     </dependencies>
-    <references>
-    </references>
   </metadata>
   <files>
     <file src="..\images\HMSLogo.png" target="images\" />
@@ -36,6 +49,9 @@
     <file src="build\Ixxat.Vci4.targets" target="build\net40\Ixxat.Vci4.StrongName.targets" />
     <file src="build\Ixxat.Vci4.NetCore.targets" target="build\net5.0-windows10.0\Ixxat.Vci4.StrongName.targets" />
     <file src="build\Ixxat.Vci4.NetCore.targets" target="build\net6.0-windows10.0\Ixxat.Vci4.StrongName.targets" />
+    <file src="build\Ixxat.Vci4.NetCore.targets" target="build\net7.0-windows10.0\Ixxat.Vci4.StrongName.targets" />
+    <file src="build\Ixxat.Vci4.NetCore.targets" target="build\net8.0-windows10.0\Ixxat.Vci4.StrongName.targets" />
+    <file src="build\Ixxat.Vci4.NetCore.targets" target="build\net9.0-windows10.0\Ixxat.Vci4.StrongName.targets" />
     <file src="build\Ixxat.Vci4.NetCore.targets" target="build\netcoreapp3.1\Ixxat.Vci4.StrongName.targets" />
     <file src="..\bin\Release\net40\Ixxat.Vci4.dll" target="lib\net40" />
     <file src="..\bin\Release\net40\Ixxat.Vci4.xml" target="lib\net40" />
@@ -70,6 +86,42 @@
     <file src="..\bin\Release\net6.0-windows\vcinet\x64\Ijwhost.dll" target="build\net6.0-windows10.0\x64" />
     <file src="..\bin\Release\net6.0-windows\vcinet\arm64\vcinet.arm64.dll" target="build\net6.0-windows10.0\arm64" />
     <file src="..\bin\Release\net6.0-windows\vcinet\arm64\Ijwhost.dll" target="build\net6.0-windows10.0\arm64" />
+    <file src="..\bin\Release\net7.0-windows\Ixxat.Vci4.dll" target="lib\net7.0-windows10.0" />
+    <file src="..\bin\Release\net7.0-windows\Ixxat.Vci4.xml" target="lib\net7.0-windows10.0" />
+    <file src="..\bin\Release\net7.0-windows\Ixxat.Vci4.pdb" target="lib\net7.0-windows10.0" />
+    <file src="..\bin\Release\net7.0-windows\Ixxat.Vci4.Contract.dll" target="lib\net7.0-windows10.0" />
+    <file src="..\bin\Release\net7.0-windows\Ixxat.Vci4.Contract.xml" target="lib\net7.0-windows10.0" />
+    <file src="..\bin\Release\net7.0-windows\Ixxat.Vci4.Contract.pdb" target="lib\net7.0-windows10.0" />
+    <file src="..\bin\Release\net7.0-windows\vcinet\x86\vcinet.x86.dll" target="build\net7.0-windows10.0\x86" />
+    <file src="..\bin\Release\net7.0-windows\vcinet\x86\Ijwhost.dll" target="build\net7.0-windows10.0\x86" />
+    <file src="..\bin\Release\net7.0-windows\vcinet\x64\vcinet.x64.dll" target="build\net7.0-windows10.0\x64" />
+    <file src="..\bin\Release\net7.0-windows\vcinet\x64\Ijwhost.dll" target="build\net7.0-windows10.0\x64" />
+    <file src="..\bin\Release\net7.0-windows\vcinet\arm64\vcinet.arm64.dll" target="build\net7.0-windows10.0\arm64" />
+    <file src="..\bin\Release\net7.0-windows\vcinet\arm64\Ijwhost.dll" target="build\net7.0-windows10.0\arm64" />
+    <file src="..\bin\Release\net8.0-windows\Ixxat.Vci4.dll" target="lib\net8.0-windows10.0" />
+    <file src="..\bin\Release\net8.0-windows\Ixxat.Vci4.xml" target="lib\net8.0-windows10.0" />
+    <file src="..\bin\Release\net8.0-windows\Ixxat.Vci4.pdb" target="lib\net8.0-windows10.0" />
+    <file src="..\bin\Release\net8.0-windows\Ixxat.Vci4.Contract.dll" target="lib\net8.0-windows10.0" />
+    <file src="..\bin\Release\net8.0-windows\Ixxat.Vci4.Contract.xml" target="lib\net8.0-windows10.0" />
+    <file src="..\bin\Release\net8.0-windows\Ixxat.Vci4.Contract.pdb" target="lib\net8.0-windows10.0" />
+    <file src="..\bin\Release\net8.0-windows\vcinet\x86\vcinet.x86.dll" target="build\net8.0-windows10.0\x86" />
+    <file src="..\bin\Release\net8.0-windows\vcinet\x86\Ijwhost.dll" target="build\net8.0-windows10.0\x86" />
+    <file src="..\bin\Release\net8.0-windows\vcinet\x64\vcinet.x64.dll" target="build\net8.0-windows10.0\x64" />
+    <file src="..\bin\Release\net8.0-windows\vcinet\x64\Ijwhost.dll" target="build\net8.0-windows10.0\x64" />
+    <file src="..\bin\Release\net8.0-windows\vcinet\arm64\vcinet.arm64.dll" target="build\net8.0-windows10.0\arm64" />
+    <file src="..\bin\Release\net8.0-windows\vcinet\arm64\Ijwhost.dll" target="build\net8.0-windows10.0\arm64" />
+    <file src="..\bin\Release\net9.0-windows\Ixxat.Vci4.dll" target="lib\net9.0-windows10.0" />
+    <file src="..\bin\Release\net9.0-windows\Ixxat.Vci4.xml" target="lib\net9.0-windows10.0" />
+    <file src="..\bin\Release\net9.0-windows\Ixxat.Vci4.pdb" target="lib\net9.0-windows10.0" />
+    <file src="..\bin\Release\net9.0-windows\Ixxat.Vci4.Contract.dll" target="lib\net9.0-windows10.0" />
+    <file src="..\bin\Release\net9.0-windows\Ixxat.Vci4.Contract.xml" target="lib\net9.0-windows10.0" />
+    <file src="..\bin\Release\net9.0-windows\Ixxat.Vci4.Contract.pdb" target="lib\net9.0-windows10.0" />
+    <file src="..\bin\Release\net9.0-windows\vcinet\x86\vcinet.x86.dll" target="build\net9.0-windows10.0\x86" />
+    <file src="..\bin\Release\net9.0-windows\vcinet\x86\Ijwhost.dll" target="build\net9.0-windows10.0\x86" />
+    <file src="..\bin\Release\net9.0-windows\vcinet\x64\vcinet.x64.dll" target="build\net9.0-windows10.0\x64" />
+    <file src="..\bin\Release\net9.0-windows\vcinet\x64\Ijwhost.dll" target="build\net9.0-windows10.0\x64" />
+    <file src="..\bin\Release\net9.0-windows\vcinet\arm64\vcinet.arm64.dll" target="build\net9.0-windows10.0\arm64" />
+    <file src="..\bin\Release\net9.0-windows\vcinet\arm64\Ijwhost.dll" target="build\net9.0-windows10.0\arm64" />
     <file src="..\bin\Release\netcoreapp3.1\Ixxat.Vci4.dll" target="lib\netcoreapp3.1" />
     <file src="..\bin\Release\netcoreapp3.1\Ixxat.Vci4.xml" target="lib\netcoreapp3.1" />
     <file src="..\bin\Release\netcoreapp3.1\Ixxat.Vci4.pdb" target="lib\netcoreapp3.1" />

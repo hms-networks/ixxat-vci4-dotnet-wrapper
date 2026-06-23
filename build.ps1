@@ -2,7 +2,10 @@ Param (
     [Parameter(Mandatory=$true, ValueFromPipeline=$true)]
     [string]$Version= $(throw "-Version is required."),
     [Parameter(Mandatory=$false, ValueFromPipeline=$true)]
-    [string]$AssemblyKeyFile=""
+    [string]$AssemblyKeyFile="",
+    [Parameter(Mandatory=$false)]
+    [ValidateSet("All","Build","Pack")]
+    [string]$Operation="All"
 )
 
 #
@@ -134,7 +137,7 @@ Write-Host "sn.exe:  $SnExe"
 function RebuildVSProject {
 
     # specify key file attribute
-    if ($AssemblyKeyFile -notlike '') {
+    if ($AssemblyKeyFile -ne '') {
         $Env:BuildSignAssembly = "True"
         $Env:BuildAssemblyKeyFile = $AssemblyKeyFile
     }
@@ -150,9 +153,29 @@ function RebuildVSProject {
     & "dotnet.exe" restore $ContractProject
     & "dotnet.exe" restore $LoaderProject
 
+    # escape copyright for msbuild command line
+    $copyrightSanitized = $Copyright -replace ',', '%2C' -replace '"', ''
+    $paramCopyright = "-p:Copyright=$copyrightSanitized"
+
+    $contractArgs = @(
+        $ContractProject
+        "-t:Rebuild"
+        "-p:Configuration=Release"
+        "-p:Version=$AssemblyVersion"
+        $paramCopyright
+    )
+
+    $loaderArgs = @(
+        $LoaderProject
+        "-t:Rebuild"
+        "-p:Configuration=Release"
+        "-p:Version=$AssemblyVersion"
+        $paramCopyright
+    )
+
     # rebuild managed components
-    & "$MSBuild" $ContractProject -t:Rebuild -p:Configuration="Release"
-    & "$MSBuild" $LoaderProject -t:Rebuild -p:Configuration="Release"
+    & "$MSBuild" @contractArgs
+    & "$MSBuild" @loaderArgs
 
     # rebuild mixed assemblies
     $frameworks = @( "net40", "netcoreapp3.1", "net5.0-windows", "net6.0-windows", "net7.0-windows", "net8.0-windows", "net9.0-windows" )
@@ -163,7 +186,7 @@ function RebuildVSProject {
     }
 
     # check if assemblies are strong named
-    if ($AssemblyKeyFile -notlike '') {
+    if ($AssemblyKeyFile -ne '') {
         foreach ($file in Get-ChildItem -Path "bin\Release\" -Recurse -Filter "*.dll" -Exclude "Ijwhost.dll" ) {
             & "$SnExe" -T $file || $(throw "Assembly `"$file`" not signed")
         }
@@ -189,7 +212,7 @@ function CreateNugetPackages {
     Push-Location -Path "$NugetTargetDir"
 
     # delete any .nupkg files
-    Remove-Item "*.nupkg"
+    Remove-Item "*.nupkg" -Force -ErrorAction SilentlyContinue
 
     Pop-Location
     
@@ -234,29 +257,46 @@ $RepositoryType =   "git"
 $RepositoryBranch = "main"
 
 $AssemblyVersion= ($Version -split "-")[0]
-$FileVersion    = ($Version -split "-")[0]
 
-$AssemblyVersion -match "(\d+).(\d+).(\d+).*"
+if ($AssemblyVersion -notmatch '^(\d+)\.(\d+)\.(\d+)$') {
+    throw "Invalid version format: $AssemblyVersion (expected Major.Minor.Patch)"
+}
 $Major = $Matches[1]
 $Minor = $Matches[2]
 $Patch = $Matches[3]
 
-$InformationalVersion = ($InformationalVersion -like '') ? $Version : $InformationalVersion
 $Authors =     "HMS Networks"
-$CompanyName = "HMS Technology Center Ravensburg GmbH"
+$CompanyName = "HMS Technology Center GmbH"
 $Description = "Access CAN interfaces from Ixxat/HMS Networks via .NET and VCI4-API"
-$Copyright =   "Copyright (C) 2016-2022 HMS Technology Center Ravensburg GmbH, all rights reserved"
+$Copyright =   "Copyright (C) 2016-2026 $CompanyName, all rights reserved"
 
-Write-Host "Download Nuget client..."
-DownloadNugetClient
+# Handle composite operation first
+if ($Operation -eq "All") {
+    $commonArgs = @{
+        Version         = $Version
+        AssemblyKeyFile = $AssemblyKeyFile
+    }
 
-Write-Host "Building ..."
+    & $PSCommandPath @commonArgs -Operation Build
+    if ($LASTEXITCODE -ne 0) { throw "Build step failed." }
 
-# create version file
-CreateVersionFileContent -Major $Major -Minor $Minor -Patch $Patch -Copyright $Copyright -CompanyName $CompanyName - SourceRevisionId $SourceRevisionId | Out-File "./src/inc/libver.h"
+    & $PSCommandPath @commonArgs -Operation Pack
+    if ($LASTEXITCODE -ne 0) { throw "Pack step failed." }
 
-# build 
-RebuildVSProject
+    return
+}
 
-Write-Host "Create packages ..."
-CreateNugetPackages
+switch ($Operation) {
+    "Build" {
+        Write-Host "Building ..."
+        CreateVersionFileContent -Major $Major -Minor $Minor -Patch $Patch -Copyright $Copyright -CompanyName $CompanyName -SourceRevisionId $SourceRevisionId |
+            Out-File "./src/inc/libver.h" -Encoding utf8
+        RebuildVSProject
+    }
+
+    "Pack" {
+        Write-Host "Packing ..."
+        DownloadNugetClient
+        CreateNugetPackages
+    }
+}

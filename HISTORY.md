@@ -1,7 +1,9 @@
 # Open source releases
 
-## 4.1.13	22/06/2026
+## 4.1.13	23/06/2026
 
+- split build script into build and pack operation steps to enable signing between steps
+- apply correct version and copyright to managed components during build
 - build binaries for .NET Core 7.0, .NET Core 8.0 and .NET Core 9.0
 - remove ARM32 support (support removed in Windows SDK version 10.0.26100.0)
 - add .net7.0/.net8.0/.net9.0 targets (prevents projects to reference the wrong binaries due to a fallback to netcoreapp3.1)

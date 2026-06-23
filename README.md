@@ -21,11 +21,9 @@ nethertheless access to the source could help clarify unclear behaviour or help 
 Developers which need more control could alter the component or use it as a template to implement their own 
 device access component on top of the VCI4 C++-API.
 
-
 ## For users
 
 See the user documentation in /doc/README.md
-
 
 ## For developers
 
@@ -54,7 +52,7 @@ For more information have a look at the build script .\build.ps1
 #### For development
 
 - VisualStudio 2022
-- nuget.exe client version 6.3.0
+- nuget.exe client version 6.3.0 (at least, build script downloads latest)
 - Sandcastle Help File Builder version 2021.11.7.0
 
 #### For users
@@ -75,9 +73,16 @@ For information and downloads see https://learn.microsoft.com/en-us/cpp/windows/
     \src\loader    Loader component (API entry point)
     \src\impl      Component implementation (mixed assembly source)
     \samples       minimal set of samples
+	\test          MSTest based tests
 
 ## Further documentation
 
 See the folder /doc/manual for the user manuals which also gives a system overview.
 
 Installing the VCI4 Setup provides additional manuals for the available VCI4 APIs.
+
+## Additional examples
+
+There is a separate repository for additional examples at
+
+https://github.com/hms-networks/ixxat-vci4-dotnet-samples

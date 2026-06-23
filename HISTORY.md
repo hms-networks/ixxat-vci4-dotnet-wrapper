@@ -6,7 +6,8 @@
 - apply correct version and copyright to managed components during build
 - build binaries for .NET Core 7.0, .NET Core 8.0 and .NET Core 9.0
 - remove ARM32 support (support removed in Windows SDK version 10.0.26100.0)
-- add .net7.0/.net8.0/.net9.0 targets (prevents projects to reference the wrong binaries due to a fallback to netcoreapp3.1)
+- add .net7.0/.net8.0/.net9.0 targets 
+- add .net5.0 target without OS and version specifier (prevents projects to resolve references to the wrong binaries due to a fallback to netcoreapp3.1)
 - switch samples to target .net9.0
 - fix path to vswhere in start scripts
 - sync examples from example repo

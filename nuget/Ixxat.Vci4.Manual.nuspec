@@ -17,7 +17,7 @@
     <tags>VCI4 CAN Lin Ixxat HMS manuals help</tags>
   </metadata>
   <files>
-    <file src="..\images\HMSLogo.png" target="images\" />
+    <file src="..\images\HMSLogo.png" target="images/HMSLogo.png" />
     <file src="..\src\help\Help\vci4net4.chm" target="content" />
     <file src="..\doc\manual\4.02.0250.10021-.NET-SoftwareDesignGuide-DE.pdf" target="content\Net-API_de.pdf" />
     <file src="..\doc\manual\4.02.0250.20021-.NET-SoftwareDesignGuide-EN.pdf" target="content\Net-API_en.pdf" />
